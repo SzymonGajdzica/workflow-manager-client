@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">workflow-manager-client</string>
+    <string name="title_account">Account</string>
+    <string name="title_stats">Statistics</string>
+    <string name="title_tasks">Tasks</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="loginToSystem">Login to system</string>
+    <string name="username">Username</string>
+    <string name="cannotBeBlank">Can not be blank</string>
+    <string name="passwordToShort">PasswordTooShort</string>
+    <string name="unknownError">Unknown error</string>
+    <string name="account">Account</string>
+    <string name="failedToLoad">Failed to load</string>
+    <string name="clickToTryAgain">Click to try again</string>
+    <string name="cause">Cause</string>
+    <string name="groupManager">Group manager</string>
+    <string name="group">Group</string>
+    <string name="logout">Logout</string>
+    <string name="remainingSessionTime">Remaining session time</string>
+    <string name="groupMembers">Group members</string>
+</resources>
