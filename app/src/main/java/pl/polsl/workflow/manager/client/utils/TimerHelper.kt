@@ -7,7 +7,8 @@ import kotlinx.coroutines.launch
 
 class TimerHelper(
     private val scope: CoroutineScope,
-    private val onLoop: () -> Unit) {
+    private val onLoop: () -> Unit
+) {
 
     private var currentJob: Job? = null
 

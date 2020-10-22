@@ -1,14 +1,9 @@
 package pl.polsl.workflow.manager.client
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
-import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputLayout
-
-val Context.preferences: SharedPreferences
-    get() = PreferenceManager.getDefaultSharedPreferences(this)
 
 fun Context.showToast(text: String): Toast {
     return Toast.makeText(this, text, Toast.LENGTH_SHORT).apply {

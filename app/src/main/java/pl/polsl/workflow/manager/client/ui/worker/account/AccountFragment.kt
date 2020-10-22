@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_account.view.*
+import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountBinding
 import pl.polsl.workflow.manager.client.millisecondsToHoursMinutesSeconds
 import pl.polsl.workflow.manager.client.model.data.UserView
@@ -16,8 +16,8 @@ class AccountFragment : BaseFragment<AccountViewModel>() {
 
     private lateinit var viewDataBinding: FragmentAccountBinding
 
-    override val viewModel: AccountViewModel?
-        get() = viewDataBinding.viewModel
+    override val viewModel: AccountViewModel
+        get() = viewDataBinding.viewModel ?: throw IllegalStateException()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -25,10 +25,14 @@ class AccountFragment : BaseFragment<AccountViewModel>() {
             savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = FragmentAccountBinding.inflate(inflater, container, false).apply {
-            viewModel = ViewModelProvider(this@AccountFragment).get(AccountViewModelImpl::class.java)
+            viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
         }
         return viewDataBinding.root
+    }
+
+    override fun inject(app: App) {
+        app.accountComponent.inject(this)
     }
 
     override fun setupViews(view: View) {
@@ -36,7 +40,7 @@ class AccountFragment : BaseFragment<AccountViewModel>() {
         val userView: UserView? = activity?.intent?.getSerializableExtra("user") as? UserView
         view.accountFragmentUsername.text = userView?.username
         view.accountFragmentLogoutButton.setOnClickListener {
-            activity?.let { viewModel?.logout(it) }
+            activity?.let { viewModel.logout(it) }
         }
     }
 

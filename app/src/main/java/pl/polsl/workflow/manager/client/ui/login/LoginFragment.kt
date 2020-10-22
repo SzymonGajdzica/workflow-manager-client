@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.login_fragment.view.*
+import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
 import pl.polsl.workflow.manager.client.disableErrorOnWrite
 import pl.polsl.workflow.manager.client.ui.BaseFragment
@@ -16,18 +16,23 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     private lateinit var viewDataBinding: LoginFragmentBinding
 
-    override val viewModel: LoginViewModel?
-        get() = viewDataBinding.viewModel
+    override val viewModel: LoginViewModel
+        get() = viewDataBinding.viewModel ?: throw IllegalStateException()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = LoginFragmentBinding.inflate(inflater, container, false).apply {
-            viewModel = ViewModelProvider(this@LoginFragment).get(LoginViewModelImpl::class.java)
+            viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
         }
         return viewDataBinding.root
+    }
+
+    override fun inject(app: App) {
+        super.inject(app)
+        app.loginComponent.inject(this)
     }
 
     override fun setupOnLayoutInteractions(view: View) {
@@ -35,7 +40,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         view.loginFragmentLoginContainer.disableErrorOnWrite()
         view.loginFragmentPasswordContainer.disableErrorOnWrite()
         view.loginFragmentLoginButton.setOnClickListener {
-            viewModel?.login(
+            viewModel.login(
                 username = this.view?.loginFragmentLogin?.text.toString(),
                 password = this.view?.loginFragmentPassword?.text.toString()
             )
