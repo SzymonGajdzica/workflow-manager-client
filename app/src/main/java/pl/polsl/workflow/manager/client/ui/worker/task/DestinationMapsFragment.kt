@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
@@ -18,33 +19,7 @@ import pl.polsl.workflow.manager.client.mGetColor
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.toGoogleLatLng
 
-class DestinationMapsFragment : Fragment() {
-
-    @SuppressLint("MissingPermission")
-    private val callback = OnMapReadyCallback { googleMap ->
-        val destinationLocalization: Localization? = arguments?.getParcelable("localization")
-        val context = context
-        if(context == null || destinationLocalization == null)
-            return@OnMapReadyCallback
-        googleMap.uiSettings.apply {
-            isCompassEnabled = true
-            isMyLocationButtonEnabled = true
-            isMapToolbarEnabled = true
-        }
-        if(context.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
-            googleMap.isMyLocationEnabled = true
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(destinationLocalization.latLng.toGoogleLatLng())
-                .title(destinationLocalization.name)
-        ).showInfoWindow()
-        googleMap.addCircle(
-                CircleOptions()
-                        .center(destinationLocalization.latLng.toGoogleLatLng())
-                        .radius(destinationLocalization.radius)
-                        .fillColor(context.mGetColor(R.color.listBackgroundColor)))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLocalization.latLng.toGoogleLatLng(), 18.0f))
-    }
+class DestinationMapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +32,32 @@ class DestinationMapsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapsFragmentMap) as? SupportMapFragment
-        mapFragment?.getMapAsync(callback)
+        mapFragment?.getMapAsync(this)
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onMapReady(googleMap: GoogleMap?) {
+        val destinationLocalization: Localization? = arguments?.getParcelable("localization")
+        val context = context
+        if(context == null || destinationLocalization == null || googleMap == null)
+            return
+        googleMap.uiSettings.apply {
+            isCompassEnabled = true
+            isMyLocationButtonEnabled = true
+            isMapToolbarEnabled = true
+        }
+        if(context.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION))
+            googleMap.isMyLocationEnabled = true
+        googleMap.addMarker(
+                MarkerOptions()
+                        .position(destinationLocalization.latLng.toGoogleLatLng())
+                        .title(destinationLocalization.name)
+        ).showInfoWindow()
+        googleMap.addCircle(
+                CircleOptions()
+                        .center(destinationLocalization.latLng.toGoogleLatLng())
+                        .radius(destinationLocalization.radius)
+                        .fillColor(context.mGetColor(R.color.mapCircleBackground)))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destinationLocalization.latLng.toGoogleLatLng(), 18.0f))
     }
 }

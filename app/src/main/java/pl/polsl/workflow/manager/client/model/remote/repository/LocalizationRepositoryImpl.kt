@@ -11,16 +11,12 @@ class LocalizationRepositoryImpl(
     private val localizationApi: LocalizationApi
 ) : LocalizationRepository {
 
-    override suspend fun getAllLocalizations(): RepositoryResult<List<Localization>> {
-        return safeCall {
-            localizationApi.getAllLocalizations().map { it.map() }
-        }
+    override suspend fun getAllLocalizations(): RepositoryResult<List<Localization>> = safeCall {
+        localizationApi.getAllLocalizations().map { it.map() }
     }
 
-    override suspend fun addLocalization(localizationPost: LocalizationPost): RepositoryResult<Localization> {
-        return safeCall {
-            localizationApi.addLocalization(localizationPost.map()).map()
-        }
+    override suspend fun addLocalization(localizationPost: LocalizationPost): RepositoryResult<Localization> = safeCall {
+        localizationApi.addLocalization(localizationPost.map()).map()
     }
 
 }

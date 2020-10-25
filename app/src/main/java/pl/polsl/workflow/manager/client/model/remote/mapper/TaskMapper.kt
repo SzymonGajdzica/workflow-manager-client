@@ -1,9 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.mapper
 
-import pl.polsl.workflow.manager.client.model.data.Task
-import pl.polsl.workflow.manager.client.model.data.TaskManagerReport
-import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
-import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
+import pl.polsl.workflow.manager.client.model.data.*
 import pl.polsl.workflow.manager.client.model.remote.data.*
 import java.time.Instant
 
@@ -50,5 +47,19 @@ fun TaskWorkerReportPost.map(): TaskWorkerReportApiModelPost {
         description = description,
         success = success,
         taskId = task.id
+    )
+}
+
+fun TaskPost.map(): TaskApiModelPost {
+    return TaskApiModelPost(
+            autoAssign = autoAssign,
+            groupId = group.id,
+            description = description,
+            deadline = deadline,
+            name = name,
+            workerId = worker?.id,
+            estimatedExecutionTimeInMillis = estimatedExecutionTime.toEpochMilli(),
+            localizationId = localization.id,
+            subTaskId = subTask?.id
     )
 }

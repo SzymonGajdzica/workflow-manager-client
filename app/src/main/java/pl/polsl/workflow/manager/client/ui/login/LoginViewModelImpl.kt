@@ -3,6 +3,7 @@ package pl.polsl.workflow.manager.client.ui.login
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.hasLocationPermission
 import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.repository.AuthenticationRepository
@@ -11,11 +12,11 @@ import pl.polsl.workflow.manager.client.utils.TokenHolder
 import javax.inject.Inject
 
 class LoginViewModelImpl @Inject constructor(
-        application: Application,
+        private val app: Application,
         private val authenticationRepository: AuthenticationRepository,
         private val userRepository: UserRepository,
         private val tokenHolder: TokenHolder
-): LoginViewModel(application) {
+): LoginViewModel(app) {
 
     override val user: MutableLiveData<User> = MutableLiveData()
     override val usernameInputError: MutableLiveData<String> = MutableLiveData()
@@ -56,6 +57,8 @@ class LoginViewModelImpl @Inject constructor(
     }
 
     private fun updateLoggedUserDetails() = launchWithLoader {
+        if(!app.hasLocationPermission())
+            return@launchWithLoader showToast(getString(R.string.locationPermissionRequired))
         when (val result = userRepository.getSelf()) {
             is RepositoryResult.Success -> user.value = result.data
             is RepositoryResult.Error -> showError(result.error)

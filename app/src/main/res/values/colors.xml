@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="mapCircleBackground">#807D7D7D</color>
+
     <color name="overlayColor">#E6FFFFFF</color>
     <color name="separatorColor">#1f000000</color>
     <color name="listBackgroundColor">#E1E1E1</color>

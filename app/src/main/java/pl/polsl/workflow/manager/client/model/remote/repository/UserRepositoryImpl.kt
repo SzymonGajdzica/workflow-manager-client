@@ -1,6 +1,7 @@
 package pl.polsl.workflow.manager.client.model.remote.repository
 
 import pl.polsl.workflow.manager.client.model.data.User
+import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.api.UserApi
 import pl.polsl.workflow.manager.client.model.remote.mapper.map
@@ -17,4 +18,9 @@ class UserRepositoryImpl(
     override suspend fun getAllUsers(): RepositoryResult<List<User>> = safeCall {
         userApi.getAllUsers().map { it.map() }
     }
+
+    override suspend fun createUser(userPost: UserPost): RepositoryResult<User> = safeCall {
+        userApi.createUser(userPost.map()).map()
+    }
+
 }

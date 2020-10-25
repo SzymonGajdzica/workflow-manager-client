@@ -1,6 +1,7 @@
 package pl.polsl.workflow.manager.client.model.data
 
 import android.location.Location
+import pl.polsl.workflow.manager.client.model.Identifiable
 import java.time.Instant
 
 val Authentication.checkedToken: String?
@@ -17,3 +18,6 @@ fun Localization.checkDistance(latLng: LatLng): Boolean {
     return this.latLng.getDistance(latLng) <= radius
 }
 
+fun <T : Identifiable>Collection<T>.toMap(): Map<Long, T> {
+    return map { it.id to it }.toMap()
+}

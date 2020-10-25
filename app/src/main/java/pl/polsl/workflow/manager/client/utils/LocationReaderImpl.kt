@@ -2,10 +2,7 @@ package pl.polsl.workflow.manager.client.utils
 
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import pl.polsl.workflow.manager.client.model.data.LatLng
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -24,7 +21,9 @@ class LocationReaderImpl(
         }
     }
 
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+    private val fusedLocationClient: FusedLocationProviderClient by lazy {
+        LocationServices.getFusedLocationProviderClient(context)
+    }
 
     @RequiresPermission(value = android.Manifest.permission.ACCESS_FINE_LOCATION)
     override fun startLocationUpdates(locationUpdateCallback: ((LatLng?) -> Unit)?) {

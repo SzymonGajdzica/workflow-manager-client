@@ -1,5 +1,6 @@
 package pl.polsl.workflow.manager.client.ui.worker
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,8 +10,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.utils.LocationReader
+import pl.polsl.workflow.manager.client.utils.LocationReaderImpl
 
 class WorkerActivity : AppCompatActivity() {
+
+    private val locationReader: LocationReader = LocationReaderImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,5 +32,17 @@ class WorkerActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean = findNavController(R.id.mainActivityFragment).navigateUp()
+
+    @SuppressLint("MissingPermission")
+    override fun onResume() {
+        super.onResume()
+        if(hasLocationPermission())
+            locationReader.startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        locationReader.stopLocationUpdates()
+    }
 
 }

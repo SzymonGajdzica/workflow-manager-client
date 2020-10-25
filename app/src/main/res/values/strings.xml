@@ -31,5 +31,6 @@
     <string name="taskFinished">Task finished</string>
     <string name="couldNotLoadCurrentLocation">Could not load current location</string>
     <string name="tooFarFromTaskDestination">Too far from task destination</string>
+    <string name="locationPermissionRequired">Location permission required</string>
 
 </resources>

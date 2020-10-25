@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
 import pl.polsl.workflow.manager.client.disableErrorOnWrite
+import pl.polsl.workflow.manager.client.hasLocationPermission
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.worker.WorkerActivity
 
@@ -33,6 +35,13 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     override fun inject(app: App) {
         super.inject(app)
         app.loginComponent.inject(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val activity = activity
+        if(activity?.hasLocationPermission() == false)
+            ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 0)
     }
 
     override fun setupOnLayoutInteractions(view: View) {

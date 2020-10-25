@@ -2,9 +2,7 @@ package pl.polsl.workflow.manager.client.model.remote.repository
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import pl.polsl.workflow.manager.client.model.data.Task
-import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
-import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
+import pl.polsl.workflow.manager.client.model.data.*
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.api.LocalizationApi
 import pl.polsl.workflow.manager.client.model.remote.api.TaskApi
@@ -28,12 +26,37 @@ class TaskRepositoryImpl @Inject constructor(
 
     private suspend fun getTask(pendingTaskModel: suspend () -> TaskApiModel): RepositoryResult<Task> = safeCall {
         val localizationsPending = GlobalScope.async { localizationApi.getAllLocalizations() }
-        val taskPending = GlobalScope.async { pendingTaskModel() }
-        taskPending.await().map(null, localizationsPending.await().map { it.id to it }.toMap())
+        pendingTaskModel().map(null, localizationsPending.await().toMap())
     }
 
     override suspend fun sendTaskReport(taskWorkerReportPost: TaskWorkerReportPost): RepositoryResult<TaskWorkerReport> = safeCall {
         taskApi.finishTask(taskWorkerReportPost.map()).map()
+    }
+
+    override suspend fun addTask(taskPost: TaskPost): RepositoryResult<Task> = safeCall {
+        val localizationsPending = GlobalScope.async { localizationApi.getAllLocalizations() }
+        val tasksPending = GlobalScope.async { taskApi.getTasks(taskPost.group.id) }
+        taskApi.addTask(taskPost.map()).map(
+                tasks = tasksPending.await().toMap(),
+                localizations = localizationsPending.await().toMap()
+        )
+    }
+
+    override suspend fun removeTask(task: Task): RepositoryResult<Unit> = safeCall {
+        taskApi.removeTask(task.id)
+    }
+
+    override suspend fun getTasks(group: Group): RepositoryResult<List<Task>> = safeCall {
+        val localizationsPending = GlobalScope.async { localizationApi.getAllLocalizations() }
+        val tasks = taskApi.getTasks(group.id)
+        val tasksMap = tasks.toMap()
+        val localizationsMap = localizationsPending.await().toMap()
+        tasks.map { task ->
+            task.map(
+                    tasks = tasksMap,
+                    localizations = localizationsMap
+            )
+        }
     }
 
 }
