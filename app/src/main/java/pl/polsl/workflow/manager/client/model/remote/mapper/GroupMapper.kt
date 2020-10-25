@@ -1,11 +1,11 @@
 package pl.polsl.workflow.manager.client.model.remote.mapper
 
-import pl.polsl.workflow.manager.client.model.data.GroupView
-import pl.polsl.workflow.manager.client.model.remote.data.GroupApiView
-import pl.polsl.workflow.manager.client.model.remote.data.UserApiView
+import pl.polsl.workflow.manager.client.model.data.Group
+import pl.polsl.workflow.manager.client.model.remote.data.GroupApiModel
+import pl.polsl.workflow.manager.client.model.remote.data.UserApiModel
 
-fun GroupApiView.map(users: Map<Long, UserApiView>): GroupView {
-    return GroupView(
+fun GroupApiModel.map(users: Map<Long, UserApiModel>): Group {
+    return Group(
         id = id,
         name = name,
         manager = users.getValue(managerId).map(),

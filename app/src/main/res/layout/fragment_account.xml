@@ -56,7 +56,7 @@
             android:layout_marginTop="4dp"
             android:textAppearance="?attr/textAppearanceHeadline5"
             tools:text="Grupa2"
-            android:text="@{viewModel.groupView.name}"
+            android:text="@{viewModel.group.name}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -88,7 +88,7 @@
             android:layout_marginTop="4dp"
             android:textAppearance="?attr/textAppearanceHeadline5"
             tools:text="Wladyslaw"
-            android:text="@{viewModel.groupView.manager.username}"
+            android:text="@{viewModel.group.manager.username}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -112,7 +112,7 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"/>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/accountFragmentGroupMembersList"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"

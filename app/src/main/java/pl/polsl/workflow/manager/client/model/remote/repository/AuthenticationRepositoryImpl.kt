@@ -1,10 +1,10 @@
 package pl.polsl.workflow.manager.client.model.remote.repository
 
-import pl.polsl.workflow.manager.client.model.data.AuthenticationView
+import pl.polsl.workflow.manager.client.model.data.Authentication
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.api.AuthenticationApi
 import pl.polsl.workflow.manager.client.model.remote.mapper.map
-import pl.polsl.workflow.manager.client.model.remote.toRepositoryResult
+import pl.polsl.workflow.manager.client.model.remote.safeCall
 import javax.inject.Inject
 
 class AuthenticationRepositoryImpl @Inject constructor(
@@ -14,10 +14,8 @@ class AuthenticationRepositoryImpl @Inject constructor(
     override suspend fun getAuthenticationToken(
         username: String,
         password: String
-    ): RepositoryResult<AuthenticationView> {
-        return runCatching {
-            authenticationApi.getAuthenticationToken(username, password).map()
-        }.toRepositoryResult()
+    ): RepositoryResult<Authentication> = safeCall {
+        authenticationApi.getAuthenticationToken(username, password).map()
     }
 
 }

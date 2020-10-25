@@ -2,9 +2,8 @@ package pl.polsl.workflow.manager.client.ui.login
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.model.data.UserView
+import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.repository.AuthenticationRepository
 import pl.polsl.workflow.manager.client.model.remote.repository.UserRepository
@@ -18,7 +17,7 @@ class LoginViewModelImpl @Inject constructor(
         private val tokenHolder: TokenHolder
 ): LoginViewModel(application) {
 
-    override val userView: MutableLiveData<UserView> = MutableLiveData()
+    override val user: MutableLiveData<User> = MutableLiveData()
     override val usernameInputError: MutableLiveData<String> = MutableLiveData()
     override val passwordInputError: MutableLiveData<String> = MutableLiveData()
 
@@ -54,12 +53,11 @@ class LoginViewModelImpl @Inject constructor(
         val authenticationView = tokenHolder.token
         if(authenticationView != null)
             updateLoggedUserDetails()
-        App.log(authenticationView)
     }
 
     private fun updateLoggedUserDetails() = launchWithLoader {
         when (val result = userRepository.getSelf()) {
-            is RepositoryResult.Success -> userView.value = result.data
+            is RepositoryResult.Success -> user.value = result.data
             is RepositoryResult.Error -> showError(result.error)
         }
     }

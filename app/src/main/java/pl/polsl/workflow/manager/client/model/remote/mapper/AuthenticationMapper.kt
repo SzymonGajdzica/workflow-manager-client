@@ -1,10 +1,10 @@
 package pl.polsl.workflow.manager.client.model.remote.mapper
 
-import pl.polsl.workflow.manager.client.model.data.AuthenticationView
-import pl.polsl.workflow.manager.client.model.remote.data.AuthenticationApiView
+import pl.polsl.workflow.manager.client.model.data.Authentication
+import pl.polsl.workflow.manager.client.model.remote.data.AuthenticationApiModel
 
-fun AuthenticationApiView.map(): AuthenticationView {
-    return AuthenticationView(
+fun AuthenticationApiModel.map(): Authentication {
+    return Authentication(
         token = token,
         expirationDate = expirationDate
     )

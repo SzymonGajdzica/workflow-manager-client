@@ -1,18 +1,19 @@
 package pl.polsl.workflow.manager.client.model.data
 
-enum class Role {
+object Role {
 
-    WORKER, MANAGER, COORDINATOR;
+    const val WORKER = 0
+    const val MANAGER = 1
+    const val COORDINATOR = 2
 
-    companion object {
-        fun fromString(roleString: String): Role {
-            return when (roleString) {
-                "WORKER" -> WORKER
-                "MANAGER" -> MANAGER
-                "COORDINATOR" -> COORDINATOR
-                else -> throw IllegalArgumentException()
-            }
+    fun fromString(roleString: String): Int {
+        return when (roleString) {
+            "WORKER" -> WORKER
+            "MANAGER" -> MANAGER
+            "COORDINATOR" -> COORDINATOR
+            else -> throw IllegalArgumentException()
         }
     }
+
 
 }

@@ -9,6 +9,7 @@ buildscript {
         dagger_version = "2.27"
         lifecycle_version = "2.2.0"
         navigation_version = "2.3.1"
+        google_maps_version = "17.0.0"
     }
     repositories {
         google()

@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.login_fragment.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
 import pl.polsl.workflow.manager.client.disableErrorOnWrite
-import pl.polsl.workflow.manager.client.ui.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.worker.WorkerActivity
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
@@ -55,7 +55,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         viewModel.passwordInputError.observe(viewLifecycleOwner) {
             this.view?.loginFragmentPasswordContainer?.error = it
         }
-        viewModel.userView.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) {
             activity?.run {
                 val intent = Intent(this, WorkerActivity::class.java).apply {
                     putExtra("user", it)

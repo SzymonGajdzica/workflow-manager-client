@@ -1,16 +1,18 @@
 package pl.polsl.workflow.manager.client.ui.worker.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_account.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountBinding
-import pl.polsl.workflow.manager.client.millisecondsToHoursMinutesSeconds
-import pl.polsl.workflow.manager.client.model.data.UserView
-import pl.polsl.workflow.manager.client.ui.BaseFragment
+import pl.polsl.workflow.manager.client.model.data.User
+import pl.polsl.workflow.manager.client.setupSimpleAdapterSingle
+import pl.polsl.workflow.manager.client.toHoursMinutesSeconds
+import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.login.LoginActivity
 
 class AccountFragment : BaseFragment<AccountViewModel>() {
 
@@ -32,31 +34,32 @@ class AccountFragment : BaseFragment<AccountViewModel>() {
     }
 
     override fun inject(app: App) {
+        super.inject(app)
         app.accountComponent.inject(this)
     }
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        val userView: UserView? = activity?.intent?.getSerializableExtra("user") as? UserView
-        view.accountFragmentUsername.text = userView?.username
+        val user: User? = activity?.intent?.getParcelableExtra("user") as? User
+        view.accountFragmentUsername.text = user?.username
         view.accountFragmentLogoutButton.setOnClickListener {
-            activity?.let { viewModel.logout(it) }
+            viewModel.logout()
+            activity?.apply {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         }
     }
 
     override fun setupObservables(viewModel: AccountViewModel) {
         super.setupObservables(viewModel)
-        viewModel.groupView.observe(viewLifecycleOwner) {
-            view?.let { view ->
-                view.accountFragmentGroupMembersList?.adapter = ArrayAdapter(
-                    view.context,
-                    android.R.layout.simple_list_item_1,
-                    it.workers.map { it.username }
-                )
-            }
+        viewModel.group.observe(viewLifecycleOwner) { group ->
+            view?.accountFragmentGroupMembersList?.setupSimpleAdapterSingle(
+                    list = group.workers.map { it.username }
+            )
         }
         viewModel.remainingTime.observe(viewLifecycleOwner) {
-            view?.accountFragmentRemainingSessionTime?.text = it.millisecondsToHoursMinutesSeconds()
+            view?.accountFragmentRemainingSessionTime?.text = it.toHoursMinutesSeconds()
         }
     }
 
@@ -64,5 +67,7 @@ class AccountFragment : BaseFragment<AccountViewModel>() {
         super.startLoadingData(viewModel)
         viewModel.loadAccountDetails()
     }
+
+
 
 }

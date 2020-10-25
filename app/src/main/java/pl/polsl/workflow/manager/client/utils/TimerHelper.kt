@@ -1,32 +1,27 @@
 package pl.polsl.workflow.manager.client.utils
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class TimerHelper(
-    private val scope: CoroutineScope,
+class TimerHelper private constructor(
+    private val viewModel: ViewModel,
     private val onLoop: () -> Unit
 ) {
 
-    private var currentJob: Job? = null
-
-    var running: Boolean
-        get() = currentJob?.isActive == true
-        set(value) {
-            stop()
-            if (value)
-                start()
+    companion object {
+        fun register(viewModel: ViewModel, onLoop: () -> Unit) {
+            TimerHelper(viewModel, onLoop)
         }
+    }
 
-    private fun stop() {
-        currentJob?.cancel()
-        currentJob = null
+    init {
+        start()
     }
 
     private fun start() {
-        currentJob = scope.launch {
+        viewModel.viewModelScope.launch {
             onLoop()
             delay(200)
             start()

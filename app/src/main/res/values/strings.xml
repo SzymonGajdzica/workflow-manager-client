@@ -19,4 +19,17 @@
     <string name="logout">Logout</string>
     <string name="remainingSessionTime">Remaining session time</string>
     <string name="groupMembers">Group members</string>
+    <string name="location">Location</string>
+    <string name="start">Start</string>
+    <string name="finish">Finish</string>
+    <string name="timeToCompleteTask">Time to complete task</string>
+    <string name="map">Map</string>
+    <string name="workerReport">Worker report</string>
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
+    <string name="description">Description</string>
+    <string name="taskFinished">Task finished</string>
+    <string name="couldNotLoadCurrentLocation">Could not load current location</string>
+    <string name="tooFarFromTaskDestination">Too far from task destination</string>
+
 </resources>

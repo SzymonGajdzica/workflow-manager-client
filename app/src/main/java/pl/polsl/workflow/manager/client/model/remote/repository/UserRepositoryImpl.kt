@@ -1,24 +1,20 @@
 package pl.polsl.workflow.manager.client.model.remote.repository
 
-import pl.polsl.workflow.manager.client.model.data.UserView
+import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.api.UserApi
 import pl.polsl.workflow.manager.client.model.remote.mapper.map
-import pl.polsl.workflow.manager.client.model.remote.toRepositoryResult
+import pl.polsl.workflow.manager.client.model.remote.safeCall
 
 class UserRepositoryImpl(
     private val userApi: UserApi
 ) : UserRepository {
 
-    override suspend fun getSelf(): RepositoryResult<UserView> {
-        return runCatching {
-            userApi.getSelf().map()
-        }.toRepositoryResult()
+    override suspend fun getSelf(): RepositoryResult<User> = safeCall {
+        userApi.getSelf().map()
     }
 
-    override suspend fun getAllUsers(): RepositoryResult<List<UserView>> {
-        return runCatching {
-            userApi.getAllUsers().map { it.map() }
-        }.toRepositoryResult()
+    override suspend fun getAllUsers(): RepositoryResult<List<User>> = safeCall {
+        userApi.getAllUsers().map { it.map() }
     }
 }

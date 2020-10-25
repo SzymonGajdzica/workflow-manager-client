@@ -19,10 +19,12 @@ class WorkerActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.mainActivityNavigationView)
         val navController = findNavController(R.id.mainActivityFragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_account, R.id.navigation_notifications
+            R.id.navigation_task, R.id.navigation_account, R.id.navigation_notifications
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.mainActivityFragment).navigateUp()
 
 }

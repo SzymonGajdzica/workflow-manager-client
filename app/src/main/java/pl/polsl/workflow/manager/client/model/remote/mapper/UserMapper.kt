@@ -1,11 +1,11 @@
 package pl.polsl.workflow.manager.client.model.remote.mapper
 
 import pl.polsl.workflow.manager.client.model.data.Role
-import pl.polsl.workflow.manager.client.model.data.UserView
-import pl.polsl.workflow.manager.client.model.remote.data.UserApiView
+import pl.polsl.workflow.manager.client.model.data.User
+import pl.polsl.workflow.manager.client.model.remote.data.UserApiModel
 
-fun UserApiView.map(): UserView {
-    return UserView(
+fun UserApiModel.map(): User {
+    return User(
         id = id,
         username = username,
         role = Role.fromString(role),
