@@ -16,7 +16,7 @@ fun LatLng.getDistance(latLng: LatLng): Double {
 }
 
 fun Localization.checkDistance(latLng: LatLng): Boolean {
-    return true
+    return true // todo
     return this.latLng.getDistance(latLng) <= radius
 }
 

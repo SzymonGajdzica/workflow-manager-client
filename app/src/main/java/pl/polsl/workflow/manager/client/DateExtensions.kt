@@ -2,6 +2,7 @@ package pl.polsl.workflow.manager.client
 
 import java.time.Instant
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
@@ -9,11 +10,8 @@ import kotlin.math.abs
 
 fun Instant.toHoursMinutesSeconds(): String {
     val prefix = if(toEpochMilli() < 0L) "-" else ""
-    val millis = abs(toEpochMilli())
-    val seconds = (millis / 1000L) % 60L
-    val minutes = (millis / (1000L * 60L) % 60L)
-    val hours = (millis / (1000L * 60L * 60L) % 24L)
-    return String.format("$prefix%02d:%02d:%02d", hours, minutes, seconds)
+    val time = Instant.ofEpochMilli(abs(toEpochMilli())).atZone(ZoneOffset.UTC).toLocalTime()
+    return String.format("$prefix%02d:%02d:%02d", time.hour, time.minute, time.second)
 }
 
 fun Instant.formatDate(): String {

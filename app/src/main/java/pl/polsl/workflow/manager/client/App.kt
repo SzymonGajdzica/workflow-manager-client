@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.multidex.MultiDexApplication
 import pl.polsl.workflow.manager.client.ui.di.login.DaggerLoginComponent
 import pl.polsl.workflow.manager.client.ui.di.login.LoginComponent
+import pl.polsl.workflow.manager.client.ui.di.manager.account.AccountManagerComponent
+import pl.polsl.workflow.manager.client.ui.di.manager.account.DaggerAccountManagerComponent
 import pl.polsl.workflow.manager.client.ui.di.manager.task.DaggerTaskManagerComponent
 import pl.polsl.workflow.manager.client.ui.di.manager.task.TaskManagerComponent
 import pl.polsl.workflow.manager.client.ui.di.manager.task.post.DaggerTaskManagerPostComponent
@@ -22,6 +24,12 @@ class App: MultiDexApplication() {
 
     private val appModule: AppModule by lazy {
         AppModule(this)
+    }
+
+    val accountManagerComponent: AccountManagerComponent by lazy {
+        DaggerAccountManagerComponent.builder()
+            .appModule(appModule)
+            .build()
     }
 
     val mapSelectComponent: MapSelectComponent by lazy {

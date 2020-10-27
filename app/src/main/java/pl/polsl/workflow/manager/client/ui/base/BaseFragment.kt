@@ -1,5 +1,6 @@
 package pl.polsl.workflow.manager.client.ui.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
@@ -13,7 +14,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.showToast
+import pl.polsl.workflow.manager.client.ui.login.LoginActivity
 import javax.inject.Inject
 
 abstract class BaseFragment<T: BaseViewModel>: Fragment() {
@@ -98,5 +101,17 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
     protected fun showToast(text: String?) {
         text?.let { context?.showToast(it) }
     }
+
+    protected fun logout() {
+        (viewModel as? AccountViewModel)?.logout()
+        activity?.apply {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
+    protected val loggedUser: User?
+        get() = activity?.intent?.getParcelableExtra("user") as? User
+
 
 }

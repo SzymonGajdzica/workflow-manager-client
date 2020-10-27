@@ -9,9 +9,8 @@ import pl.polsl.workflow.manager.client.model.remote.api.TaskApi
 import pl.polsl.workflow.manager.client.model.remote.data.TaskApiModel
 import pl.polsl.workflow.manager.client.model.remote.mapper.map
 import pl.polsl.workflow.manager.client.model.remote.safeCall
-import javax.inject.Inject
 
-class TaskRepositoryImpl @Inject constructor(
+class TaskRepositoryImpl(
     private val taskApi: TaskApi,
     private val localizationApi: LocalizationApi
 ) : TaskRepository {

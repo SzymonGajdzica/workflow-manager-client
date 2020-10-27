@@ -1,6 +1,5 @@
 package pl.polsl.workflow.manager.client.ui.worker.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +7,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_account_worker.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountWorkerBinding
-import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.toHoursMinutesSeconds
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.login.LoginActivity
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapterSingle
 
 class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
@@ -40,15 +37,7 @@ class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        val user: User? = activity?.intent?.getParcelableExtra("user") as? User
-        view.workerAccountUsername.text = user?.username
-        view.workerAccountLogoutButton.setOnClickListener {
-            viewModel.logout()
-            activity?.apply {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-        }
+        view.workerAccountUsername.text = loggedUser?.username
     }
 
     override fun setupObservables(viewModel: AccountWorkerViewModel) {
@@ -58,12 +47,18 @@ class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
                 view?.workerAccountGroupMembersList?.setupSimpleAdapterSingle(
                         list = group.workers.map { it.username }
                 )
-            } else {
+            } else
                 view?.workerAccountGroupMembersList?.adapter = null
-            }
         }
         viewModel.remainingTime.observe {
             view?.workerAccountRemainingSessionTime?.text = it?.toHoursMinutesSeconds()
+        }
+    }
+
+    override fun setupOnLayoutInteractions(view: View) {
+        super.setupOnLayoutInteractions(view)
+        view.workerAccountLogoutButton.setOnClickListener {
+            logout()
         }
     }
 

@@ -5,9 +5,8 @@ import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.api.AuthenticationApi
 import pl.polsl.workflow.manager.client.model.remote.mapper.map
 import pl.polsl.workflow.manager.client.model.remote.safeCall
-import javax.inject.Inject
 
-class AuthenticationRepositoryImpl @Inject constructor(
+class AuthenticationRepositoryImpl(
     private val authenticationApi: AuthenticationApi
 ): AuthenticationRepository {
 
