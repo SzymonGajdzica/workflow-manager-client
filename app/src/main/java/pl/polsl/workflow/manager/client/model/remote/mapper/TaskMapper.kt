@@ -18,7 +18,7 @@ fun TaskApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, L
         sharedTaskId = sharedTaskId,
         startDate = startDate,
         taskManagerReport = taskManagerReportModel?.map(tasks, localizations),
-        taskWorkerReportApi = taskWorkerReportApiModel?.map(),
+        taskWorkerReport = taskWorkerReportApiModel?.map(),
         workerId = workerId,
         groupId = groupId,
     )

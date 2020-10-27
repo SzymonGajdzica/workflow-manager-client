@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="pl.polsl.workflow.manager.client.ui.manager.task.post.TaskManagerPostViewModel" />
+        <variable
+            name="sharedViewModel"
+            type="pl.polsl.workflow.manager.client.ui.shared.SharedViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.manager.task.post.TaskManagerPostFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/managerTaskPostNameContainer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/name"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_title_24"
+            app:startIconContentDescription="@string/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/managerTaskPostName"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/managerTaskPostDescriptionContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/managerTaskPostNameContainer"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskPostNameContainer"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostLocalization"
+            app:errorEnabled="true"
+            android:hint="@string/description"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/managerTaskPostDescription"
+                android:scrollbars="vertical"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/managerTaskPostLocalization"
+            android:text='@{@string/localization+": "+(sharedViewModel.localization != null ? sharedViewModel.localization.name : "-")}'
+            tools:text="Localization: Swimming pool"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            app:icon="@drawable/ic_baseline_map_24"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostDeadline"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/managerTaskPostDeadline"
+            tools:text="Deadline: 21.42.534 2019"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            app:icon="@drawable/ic_baseline_date_range_24"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostExecutionTime"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/managerTaskPostExecutionTime"
+            tools:text="Execution time: 23.43.534"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            app:icon="@drawable/ic_baseline_access_time_24"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostAutoAssign"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/managerTaskPostAutoAssign"
+            android:text="@string/autoAssign"
+            android:enabled="@{viewModel.selectedWorkerIndex == null}"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostWorkerDropdown"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:id="@+id/managerTaskPostWorkerDropdown"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostCreate"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskPostNameContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/managerTaskPostCreate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:text="@string/create"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/managerTaskPostLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/managerTaskPostFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

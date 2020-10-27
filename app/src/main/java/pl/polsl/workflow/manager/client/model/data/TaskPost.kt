@@ -7,7 +7,7 @@ import java.time.Instant
 @Parcelize
 data class TaskPost(
     val autoAssign: Boolean,
-    val deadline: Instant?,
+    val deadline: Instant,
     val description: String,
     val estimatedExecutionTime: Instant,
     val group: Group,

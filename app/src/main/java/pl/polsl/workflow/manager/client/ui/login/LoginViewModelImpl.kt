@@ -50,7 +50,7 @@ class LoginViewModelImpl @Inject constructor(
         return passwordInputError.value == null && usernameInputError.value == null
     }
 
-    override fun tryAutoLogin() {
+    private fun tryAutoLogin() {
         val authenticationView = tokenHolder.token
         if(authenticationView != null)
             updateLoggedUserDetails()
@@ -65,5 +65,9 @@ class LoginViewModelImpl @Inject constructor(
         }
     }
 
+    override fun reloadData() {
+        super.reloadData()
+        tryAutoLogin()
+    }
 
 }

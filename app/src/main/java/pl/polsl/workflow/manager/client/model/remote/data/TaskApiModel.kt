@@ -15,7 +15,7 @@ data class TaskApiModel(
         @SerializedName("assignDate")
         val assignDate: Instant?,
         @SerializedName("deadline")
-        val deadline: Instant?,
+        val deadline: Instant,
         @SerializedName("startDate")
         val startDate: Instant?,
         @SerializedName("description")

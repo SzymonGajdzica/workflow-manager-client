@@ -12,7 +12,7 @@ data class Task(
         val autoAssign: Boolean,
         val createDate: Instant,
         val assignDate: Instant?,
-        val deadline: Instant?,
+        val deadline: Instant,
         val startDate: Instant?,
         val description: String,
         val estimatedExecutionTime: Instant,
@@ -21,6 +21,6 @@ data class Task(
         val name: String,
         val sharedTaskId: UUID,
         val workerId: Long?,
-        val taskWorkerReportApi: TaskWorkerReport?,
+        val taskWorkerReport: TaskWorkerReport?,
         val taskManagerReport: TaskManagerReport?,
 ): Parcelable, Identifiable

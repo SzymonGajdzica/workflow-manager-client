@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="taskStatuses">
+        <item>@string/created</item>
+        <item>@string/started</item>
+        <item>@string/finished</item>
+        <item>@string/accepted</item>
+    </string-array>
+
+</resources>

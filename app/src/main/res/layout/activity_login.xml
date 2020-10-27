@@ -24,7 +24,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <fragment
-        android:id="@+id/mainActivityFragment"
+        android:id="@+id/loginActivityFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:layout_constraintTop_toBottomOf="@id/loginActivityAppBar"
         app:layout_constraintBottom_toBottomOf="parent"

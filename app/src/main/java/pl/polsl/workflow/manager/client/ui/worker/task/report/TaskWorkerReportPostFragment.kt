@@ -38,24 +38,24 @@ class TaskWorkerReportPostFragment: BaseFragment<TaskWorkerReportPostViewModel>(
 
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
-        view.taskWorkerReportPostFragmentSuccess.setOnClickListener {
+        view.workerTaskReportPostSuccess.setOnClickListener {
             sendReport(true)
         }
-        view.taskWorkerReportPostFragmentFailure.setOnClickListener {
+        view.workerTaskReportPostFailure.setOnClickListener {
             sendReport(false)
         }
     }
 
     override fun setupObservables(viewModel: TaskWorkerReportPostViewModel) {
         super.setupObservables(viewModel)
-        viewModel.descriptionInputError.observe(viewLifecycleOwner) {
-            view?.taskWorkerReportPostFragmentTaskDescription?.error = it
+        viewModel.descriptionInputError.observe {
+            view?.workerTaskReportPostDescription?.error = it
         }
     }
 
     private fun sendReport(success: Boolean) {
         val task: Task? = arguments?.getParcelable("task")
-        val description = view?.taskWorkerReportPostFragmentTaskDescription?.text?.toString()
+        val description = view?.workerTaskReportPostDescription?.text?.toString()
         if(task == null || description == null)
             return showToast(context?.getString(R.string.unknownError))
         val taskWorkerReportPost = TaskWorkerReportPost(

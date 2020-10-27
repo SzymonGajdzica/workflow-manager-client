@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="pl.polsl.workflow.manager.client.ui.worker.task.TaskWorkerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.worker.task.TaskWorkerFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerTaskTitle"
+            android:text='@{viewModel.task != null ? viewModel.task.name : "-"}'
+            tools:text="Name of task"
+            android:textAppearance="?attr/textAppearanceHeadline4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerTaskDescription"
+            android:text="@{viewModel.task.description}"
+            tools:text="Very long description of task"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskTitle"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:background="@color/listBackgroundColor"
+            android:scrollbars="vertical"
+            android:layout_width="0dp"
+            android:layout_height="150dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerTaskRemainingTime"
+            tools:text="Remaining time: 00:34:23"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskDescription"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taskWorkerFragmentLocalization"
+            android:text='@{@string/localization+": "+(viewModel.task != null ? viewModel.task.localization.name : "-")}'
+            android:enabled='@{viewModel.task != null}'
+            tools:text="Localization: Swimming pool"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskRemainingTime"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:icon="@drawable/ic_baseline_map_24"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/workerTaskSuccess"
+            android:text="@string/start"
+            android:enabled='@{viewModel.task != null ? viewModel.task.startDate == null : false}'
+            app:layout_constraintTop_toBottomOf="@id/taskWorkerFragmentLocalization"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toStartOf="@id/workerTaskFailure"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/workerTaskFailure"
+            android:text="@string/finish"
+            android:enabled="@{viewModel.task.startDate != null}"
+            app:layout_constraintTop_toTopOf="@id/workerTaskSuccess"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            app:layout_constraintStart_toEndOf="@id/workerTaskSuccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/workerTaskLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/workerTaskFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

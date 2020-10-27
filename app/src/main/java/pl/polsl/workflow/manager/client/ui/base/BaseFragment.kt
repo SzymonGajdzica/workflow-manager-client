@@ -2,7 +2,10 @@ package pl.polsl.workflow.manager.client.ui.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
@@ -26,11 +29,16 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         setupViews(view)
         setupOnLayoutInteractions(view)
         setupObservables(viewModel)
-        startLoadingData(viewModel)
+        if(viewModel.error.value == null)
+            viewModel.reloadData()
     }
 
-    inline fun<reified T> createViewModel(): T {
+    protected inline fun<reified T: ViewModel> createViewModel(): T {
         return ViewModelProvider(this, viewModelFactory).get()
+    }
+
+    protected inline fun<reified T: ViewModel> createSharedViewModel(): T {
+        return ViewModelProvider(requireActivity()).get(T::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +48,21 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    protected fun <T>LiveData<T>.observe(observer: (T?) -> Unit) {
+        observe(viewLifecycleOwner, observer)
+    }
+
+    protected fun <T>LiveData<T>.safeObserve(observer: (T) -> Unit) {
+        observe(viewLifecycleOwner, observer)
+    }
+
     open fun inject(app: App) {
 
     }
 
     open fun setupViews(view: View) {
         view.findViewById<MaterialButton>(R.id.reloadButton)?.setOnClickListener {
+            viewModel.clearErrorString()
             viewModel.reloadData()
         }
     }
@@ -55,10 +72,10 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
     }
 
     open fun setupObservables(viewModel: T) {
-        viewModel.errorMessage.observe(viewLifecycleOwner) {
+        viewModel.errorMessage.observe {
             showToast(it)
         }
-        viewModel.error.observe(viewLifecycleOwner) {
+        viewModel.error.observe {
             view?.findViewById<MaterialTextView>(R.id.reloadText)?.text = buildString {
                 append(context?.getString(R.string.failedToLoad))
                 append("\n")
@@ -68,14 +85,14 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
                 append("'")
             }
         }
-        viewModel.shouldFinish.observe(viewLifecycleOwner) {
+        viewModel.shouldFinish.safeObserve {
             if(it)
                 findNavController().navigateUp()
         }
     }
 
-    open fun startLoadingData(viewModel: T) {
-
+    protected fun showToast(@StringRes resId: Int) {
+        context?.showToast(resId)
     }
 
     protected fun showToast(text: String?) {

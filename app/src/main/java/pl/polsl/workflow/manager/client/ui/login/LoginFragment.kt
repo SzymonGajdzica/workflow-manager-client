@@ -9,10 +9,10 @@ import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
-import pl.polsl.workflow.manager.client.disableErrorOnWrite
 import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.model.data.destinationActivityClass
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.worker.WorkerActivity
+import pl.polsl.workflow.manager.client.ui.view.disableErrorOnWrite
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
 
@@ -46,38 +46,33 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
-        view.loginFragmentLoginContainer.disableErrorOnWrite()
-        view.loginFragmentPasswordContainer.disableErrorOnWrite()
-        view.loginFragmentLoginButton.setOnClickListener {
+        view.loginUsernameContainer.disableErrorOnWrite()
+        view.loginPasswordContainer.disableErrorOnWrite()
+        view.loginLoginButton.setOnClickListener {
             viewModel.login(
-                username = this.view?.loginFragmentLogin?.text.toString(),
-                password = this.view?.loginFragmentPassword?.text.toString()
+                username = this.view?.loginUsername?.text.toString(),
+                password = this.view?.loginPassword?.text.toString()
             )
         }
     }
 
     override fun setupObservables(viewModel: LoginViewModel) {
         super.setupObservables(viewModel)
-        viewModel.usernameInputError.observe(viewLifecycleOwner) {
-            this.view?.loginFragmentLoginContainer?.error = it
+        viewModel.usernameInputError.observe {
+            this.view?.loginUsernameContainer?.error = it
         }
-        viewModel.passwordInputError.observe(viewLifecycleOwner) {
-            this.view?.loginFragmentPasswordContainer?.error = it
+        viewModel.passwordInputError.observe {
+            this.view?.loginPasswordContainer?.error = it
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.user.safeObserve {
             activity?.run {
-                val intent = Intent(this, WorkerActivity::class.java).apply {
+                val intent = Intent(this, it.destinationActivityClass).apply {
                     putExtra("user", it)
                 }
                 startActivity(intent)
                 finish()
             }
         }
-    }
-
-    override fun startLoadingData(viewModel: LoginViewModel) {
-        super.startLoadingData(viewModel)
-        viewModel.tryAutoLogin()
     }
 
 }

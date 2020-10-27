@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">workflow-manager-client</string>
-    <string name="title_account">Account</string>
-    <string name="title_stats">Statistics</string>
-    <string name="title_tasks">Tasks</string>
+    <string name="tasks">Tasks</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="loginToSystem">Login to system</string>
@@ -19,7 +16,6 @@
     <string name="logout">Logout</string>
     <string name="remainingSessionTime">Remaining session time</string>
     <string name="groupMembers">Group members</string>
-    <string name="location">Location</string>
     <string name="start">Start</string>
     <string name="finish">Finish</string>
     <string name="timeToCompleteTask">Time to complete task</string>
@@ -32,5 +28,21 @@
     <string name="couldNotLoadCurrentLocation">Could not load current location</string>
     <string name="tooFarFromTaskDestination">Too far from task destination</string>
     <string name="locationPermissionRequired">Location permission required</string>
+    <string name="appName">Workflow manager client</string>
+    <string name="created">Created</string>
+    <string name="started">Started</string>
+    <string name="finished">Finished</string>
+    <string name="accepted">Accepted</string>
+    <string name="addTask">Add task</string>
+    <string name="taskCreated">Task created</string>
+    <string name="createTask">Create task</string>
+    <string name="name">Name</string>
+    <string name="autoAssign">Auto assign</string>
+    <string name="create">Create</string>
+    <string name="deadline">Deadline</string>
+    <string name="executionTime">Execution time</string>
+    <string name="notAssigned">Not assigned</string>
+    <string name="selectLocalization">Select localization</string>
+    <string name="localization">Localization</string>
 
 </resources>

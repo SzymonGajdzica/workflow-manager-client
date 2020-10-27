@@ -8,7 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_worker.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.hasLocationPermission
 import pl.polsl.workflow.manager.client.utils.LocationReader
@@ -20,18 +20,18 @@ class WorkerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(mainActivityToolbar)
-        val navView: BottomNavigationView = findViewById(R.id.mainActivityNavigationView)
-        val navController = findNavController(R.id.mainActivityFragment)
+        setContentView(R.layout.activity_worker)
+        setSupportActionBar(workerActivityToolbar)
+        val navView: BottomNavigationView = findViewById(R.id.workerActivityNavigationView)
+        val navController = findNavController(R.id.workerActivityFragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_task, R.id.navigation_account, R.id.navigation_notifications
+            R.id.navigation_task_worker, R.id.navigation_account_worker
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.mainActivityFragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean = findNavController(R.id.workerActivityFragment).navigateUp()
 
     @SuppressLint("MissingPermission")
     override fun onResume() {

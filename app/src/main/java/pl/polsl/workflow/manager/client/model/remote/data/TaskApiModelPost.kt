@@ -7,7 +7,7 @@ data class TaskApiModelPost(
         @SerializedName("autoAssign")
         val autoAssign: Boolean,
         @SerializedName("deadline")
-        val deadline: Instant?,
+        val deadline: Instant,
         @SerializedName("description")
         val description: String,
         @SerializedName("estimatedExecutionTimeInMillis")

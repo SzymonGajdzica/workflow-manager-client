@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="pl.polsl.workflow.manager.client.ui.worker.account.AccountWorkerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.worker.account.AccountWorkerFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountUsername"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="Bolek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountUsernameSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountUsername"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/workerAccountSeparatorUsername"
+            android:layout_marginTop="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountUsernameSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountGroupName"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountSeparatorUsername"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="Grupa2"
+            android:text="@{viewModel.group.name}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountGroupNameSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountGroupName"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/workerAccountSeparatorGroupName"
+            android:layout_marginTop="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountGroupNameSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountGroupManagerName"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountSeparatorGroupName"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="Wladyslaw"
+            android:text="@{viewModel.group.manager.username}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountGroupManagerNameSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountGroupManagerName"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/groupManager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/accountFragmentSeparatorGroupMembers"
+            android:layout_marginTop="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/workerAccountGroupManagerNameSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workerAccountGroupMembersList"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/accountFragmentSeparatorGroupMembers"
+            app:layout_constraintBottom_toTopOf="@id/workerAccountGroupMembersSubTitle"
+            android:background="@color/listBackgroundColor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountGroupMembersSubTitle"
+            app:layout_constraintBottom_toTopOf="@id/workerAccountSeparatorRemainingSessionTime"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/groupMembers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/workerAccountSeparatorRemainingSessionTime"
+            android:layout_marginBottom="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/workerAccountGroupManagerName"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintBottom_toTopOf="@id/workerAccountRemainingSessionTime"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountRemainingSessionTime"
+            app:layout_constraintBottom_toTopOf="@id/workerAccountRemainingSessionTimeSubTitle"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="10:20:30"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/workerAccountRemainingSessionTimeSubTitle"
+            app:layout_constraintBottom_toTopOf="@id/workerAccountLogoutButton"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/remainingSessionTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/workerAccountLogoutButton"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/workerAccountLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/workerAccountFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

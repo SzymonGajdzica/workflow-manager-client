@@ -28,19 +28,23 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
         mErrorMessage.value = null
     }
 
-    open fun reloadData() {
+    fun clearErrorString() {
         mErrorString.value = null
+    }
+
+    open fun reloadData() {
+
     }
 
     protected fun getString(@StringRes stringRes: Int): String {
         return app.getString(stringRes)
     }
 
-    protected fun startLoading() {
+    private fun startLoading() {
         mLoading.value = true
     }
 
-    protected fun stopLoading() {
+    private fun stopLoading() {
         mLoading.value = false
     }
 

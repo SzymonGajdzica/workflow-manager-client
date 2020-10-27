@@ -12,6 +12,5 @@ abstract class LoginViewModel(application: Application): BaseViewModel(applicati
     abstract val passwordInputError: LiveData<String>
 
     abstract fun login(username: String, password: String)
-    abstract fun tryAutoLogin()
 
 }

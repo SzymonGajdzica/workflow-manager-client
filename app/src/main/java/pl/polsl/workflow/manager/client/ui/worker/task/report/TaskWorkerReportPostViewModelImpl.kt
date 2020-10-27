@@ -45,4 +45,9 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
         }
     }
 
+    override fun clearErrorMessages() {
+        super.clearErrorMessages()
+        descriptionInputError.value = null
+    }
+
 }

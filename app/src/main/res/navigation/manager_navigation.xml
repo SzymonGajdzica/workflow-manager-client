@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_task_manager">
+
+    <fragment
+        android:id="@+id/navigation_task_manager"
+        android:name="pl.polsl.workflow.manager.client.ui.manager.task.TaskManagerFragment"
+        android:label="@string/tasks"
+        tools:layout="@layout/fragment_task_manager" >
+        <action
+            android:id="@+id/action_navigation_task_manager_to_navigation_task_manager_post"
+            app:destination="@id/navigation_task_manager_post" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_task_manager_post"
+        android:name="pl.polsl.workflow.manager.client.ui.manager.task.post.TaskManagerPostFragment"
+        android:label="@string/createTask"
+        tools:layout="@layout/fragment_task_manager_post" >
+        <action
+            android:id="@+id/action_navigation_task_manager_post_to_mapSelectFragment"
+            app:destination="@id/mapSelectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_account_manager"
+        android:name="pl.polsl.workflow.manager.client.ui.manager.account.AccountManagerFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account_manager" />
+    <fragment
+        android:id="@+id/mapSelectFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.map.MapSelectFragment"
+        android:label="@string/selectLocalization"
+        tools:layout="@layout/fragment_map_select" />
+
+</navigation>
