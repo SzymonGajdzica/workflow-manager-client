@@ -12,7 +12,6 @@ import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
 import pl.polsl.workflow.manager.client.hasLocationPermission
 import pl.polsl.workflow.manager.client.model.data.destinationActivityClass
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.disableErrorOnWrite
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
 
@@ -46,8 +45,6 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
-        view.loginUsernameContainer.disableErrorOnWrite()
-        view.loginPasswordContainer.disableErrorOnWrite()
         view.loginLoginButton.setOnClickListener {
             viewModel.login(
                 username = this.view?.loginUsername?.text.toString(),

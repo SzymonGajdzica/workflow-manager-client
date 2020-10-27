@@ -34,19 +34,15 @@ class LoginViewModelImpl @Inject constructor(
         }
     }
 
-    override fun clearErrorMessages() {
-        super.clearErrorMessages()
-        usernameInputError.value = null
-        passwordInputError.value = null
-    }
-
     private fun validate(username: String, password: String): Boolean {
-        if(username.isBlank())
-            usernameInputError.value = getString(R.string.cannotBeBlank)
-        if(password.length < 3)
-            passwordInputError.value = getString(R.string.passwordToShort)
-        else if(password.isBlank())
-            passwordInputError.value = getString(R.string.cannotBeBlank)
+        usernameInputError.value = if(username.isBlank())
+            getString(R.string.cannotBeBlank)
+        else null
+        passwordInputError.value = when {
+            password.length < 3 -> getString(R.string.passwordToShort)
+            password.isBlank() -> getString(R.string.cannotBeBlank)
+            else -> null
+        }
         return passwordInputError.value == null && usernameInputError.value == null
     }
 

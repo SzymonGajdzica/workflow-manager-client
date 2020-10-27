@@ -25,6 +25,7 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
         if(taskWorkerReportPost.description.isBlank())
             descriptionInputError.value = getString(R.string.cannotBeBlank)
         else {
+            descriptionInputError.value = null
             launchWithLoader {
                 val currentLatLng = if(app.hasLocationPermission())
                     locationReader.getLastLatLng()
@@ -43,11 +44,6 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
                 }
             }
         }
-    }
-
-    override fun clearErrorMessages() {
-        super.clearErrorMessages()
-        descriptionInputError.value = null
     }
 
 }

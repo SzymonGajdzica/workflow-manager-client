@@ -13,7 +13,6 @@ import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
-import pl.polsl.workflow.manager.client.ui.view.disableErrorOnWrite
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.showDateTimePicker
 import pl.polsl.workflow.manager.client.ui.view.showTimePicker
@@ -51,8 +50,6 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.managerTaskPostDescriptionContainer.disableErrorOnWrite()
-        view.managerTaskPostNameContainer.disableErrorOnWrite()
         val entries = arrayListOf(view.context.getString(R.string.notAssigned))
         entries.addAll(group.workers.map { it.username })
         view.managerTaskPostWorkerDropdown.adapter = ArrayAdapter(

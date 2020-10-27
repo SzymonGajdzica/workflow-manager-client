@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.remote.repositoryMessage
+import pl.polsl.workflow.manager.client.utils.DelayedValueChanger
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 
@@ -24,7 +25,9 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
     val error: LiveData<String> = mErrorString
     val errorMessage: LiveData<String> = mErrorMessage
 
-    open fun clearErrorMessages() {
+    private val delayedValueChanger = DelayedValueChanger(viewModelScope, 200L, mLoading)
+
+    fun clearErrorMessages() {
         mErrorMessage.value = null
     }
 
@@ -40,19 +43,11 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
         return app.getString(stringRes)
     }
 
-    private fun startLoading() {
-        mLoading.value = true
-    }
-
-    private fun stopLoading() {
-        mLoading.value = false
-    }
-
     protected fun launchWithLoader(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
-            startLoading()
+            delayedValueChanger.change(true)
             block()
-            stopLoading()
+            delayedValueChanger.change(false)
         }
     }
 

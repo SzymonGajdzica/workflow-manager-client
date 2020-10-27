@@ -4,13 +4,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.annotation.LayoutRes
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import pl.polsl.workflow.manager.client.R
@@ -35,13 +33,6 @@ fun RecyclerView.setupSimpleAdapter(
     layoutManager = LinearLayoutManager(context)
     addItemDecoration(dividerItemDecoration)
     adapter = SimpleAdapter(viewId, list, onClick)
-}
-
-fun TextInputLayout.disableErrorOnWrite() {
-    editText?.doOnTextChanged { _, _, _, _ ->
-        if(error != null)
-            error = null
-    }
 }
 
 fun Spinner.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
@@ -81,7 +72,7 @@ fun Fragment.showDatePicker(tag: String, startDate: Instant?, onDateSelected: (I
 fun Fragment.showDateTimePicker(tag: String, startDateTime: Instant?, onDateTimeSelected: (Instant) -> Unit) {
     showDatePicker("${tag}_date", startDateTime) { date ->
         showTimePicker("${tag}_time", startDateTime) { time ->
-            val result = date.atZone(ZoneOffset.UTC)
+            val result = date.atZone(ZoneOffset.systemDefault())
                     .withHour(time.atZone(ZoneOffset.UTC).hour)
                     .withMinute(time.atZone(ZoneOffset.UTC).minute)
                     .withSecond(0)

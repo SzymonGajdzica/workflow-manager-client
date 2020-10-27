@@ -46,17 +46,13 @@ class TaskManagerPostViewModelImpl @Inject constructor(
     }
 
     private fun validate(taskPost: TaskPost): Boolean {
-        if(taskPost.name.isBlank())
-            nameInputError.value = getString(R.string.cannotBeBlank)
-        if(taskPost.description.isBlank())
-            descriptionInputError.value = getString(R.string.cannotBeBlank)
+        nameInputError.value = if(taskPost.name.isBlank())
+            getString(R.string.cannotBeBlank)
+        else null
+        descriptionInputError.value = if(taskPost.description.isBlank())
+            getString(R.string.cannotBeBlank)
+        else null
         return descriptionInputError.value == null && nameInputError.value == null
-    }
-
-    override fun clearErrorMessages() {
-        super.clearErrorMessages()
-        descriptionInputError.value = null
-        nameInputError.value = null
     }
 
 }
