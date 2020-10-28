@@ -21,20 +21,16 @@ class TaskWorkerViewModelImpl @Inject constructor(
         TimerHelper.register(this, ::updateRemainingTime)
     }
 
-    private fun loadTask() {
-        launchWithLoader {
-            task.value = null
-            when(val result = taskRepository.getCurrentTask()) {
-                is RepositoryResult.Success -> task.value = result.data
-                is RepositoryResult.Error -> getNextTask(false)
-            }
+    private fun loadTask() = launchWithLoader {
+        task.value = null
+        when (val result = taskRepository.getCurrentTask()) {
+            is RepositoryResult.Success -> task.value = result.data
+            is RepositoryResult.Error -> getNextTask(false)
         }
     }
 
-    override fun startTask() {
-        launchWithLoader {
-            getNextTask(true)
-        }
+    override fun startTask() = launchWithLoader {
+        getNextTask(true)
     }
 
     private suspend fun getNextTask(autoStart: Boolean) {

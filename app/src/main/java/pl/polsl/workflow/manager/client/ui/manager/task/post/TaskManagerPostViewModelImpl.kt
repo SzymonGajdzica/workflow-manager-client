@@ -32,16 +32,15 @@ class TaskManagerPostViewModelImpl @Inject constructor(
         this.deadline.value = deadline
     }
 
-    override fun createTask(taskPost: TaskPost) {
-        launchWithLoader {
-            if(validate(taskPost))
-                when(val result = taskRepository.addTask(taskPost)) {
-                    is RepositoryResult.Success -> {
-                        showToast(getString(R.string.taskCreated))
-                        finishFragment()
-                    }
-                    is RepositoryResult.Error -> showToast(result.error)
-                }
+    override fun createTask(taskPost: TaskPost) = launchWithLoader {
+        if (!validate(taskPost))
+            return@launchWithLoader
+        when (val result = taskRepository.addTask(taskPost)) {
+            is RepositoryResult.Success -> {
+                showToast(getString(R.string.taskCreated))
+                finishFragment()
+            }
+            is RepositoryResult.Error -> showToast(result.error)
         }
     }
 

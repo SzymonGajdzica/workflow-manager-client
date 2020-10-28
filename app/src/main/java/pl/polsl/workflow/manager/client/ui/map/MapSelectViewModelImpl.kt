@@ -14,14 +14,13 @@ class MapSelectViewModelImpl @Inject constructor(
 
     override val localizations: MutableLiveData<List<Localization>> = MutableLiveData(null)
 
-    private fun loadLocalizations() {
-        launchWithLoader {
-            when(val result = locationRepository.getAllLocalizations()) {
-                is RepositoryResult.Success -> localizations.value = result.data
-                is RepositoryResult.Error -> showError(result.error)
-            }
+    private fun loadLocalizations() = launchWithLoader {
+        when (val result = locationRepository.getAllLocalizations()) {
+            is RepositoryResult.Success -> localizations.value = result.data
+            is RepositoryResult.Error -> showError(result.error)
         }
     }
+
 
     override fun reloadData() {
         super.reloadData()

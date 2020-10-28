@@ -15,7 +15,8 @@ class DelayedValueChanger<T: Any>(
     private var job: Job? = null
 
     fun change(value: T) {
-        job?.cancel()
+        if(job?.isActive == true)
+            job?.cancel()
         job = null
         if(liveData.value == value)
             return

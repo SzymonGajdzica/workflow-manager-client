@@ -16,12 +16,10 @@ class AccountWorkerViewModelImpl @Inject constructor(
 
     override val group: MutableLiveData<Group> = MutableLiveData()
 
-    private fun loadAccountDetails() {
-        launchWithLoader {
-            when(val result = groupRepository.getWorkerGroup()) {
-                is RepositoryResult.Success -> group.value = result.data
-                is RepositoryResult.Error -> showError(result.error)
-            }
+    private fun loadAccountDetails() = launchWithLoader {
+        when (val result = groupRepository.getWorkerGroup()) {
+            is RepositoryResult.Success -> group.value = result.data
+            is RepositoryResult.Error -> showError(result.error)
         }
     }
 

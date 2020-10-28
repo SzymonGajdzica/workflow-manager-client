@@ -21,27 +21,25 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
     override val descriptionInputError: MutableLiveData<String> = MutableLiveData(null)
 
     @SuppressLint("MissingPermission")
-    override fun sendReport(taskWorkerReportPost: TaskWorkerReportPost) {
-        if(taskWorkerReportPost.description.isBlank())
+    override fun sendReport(taskWorkerReportPost: TaskWorkerReportPost) = launchWithLoader {
+        if (taskWorkerReportPost.description.isBlank())
             descriptionInputError.value = getString(R.string.cannotBeBlank)
         else {
             descriptionInputError.value = null
-            launchWithLoader {
-                val currentLatLng = if(app.hasLocationPermission())
-                    locationReader.getLastLatLng()
-                else
-                    null
-                if(currentLatLng == null)
-                    showToast(getString(R.string.couldNotLoadCurrentLocation))
-                else if(!taskWorkerReportPost.task.localization.checkDistance(currentLatLng)) {
-                    showToast(getString(R.string.tooFarFromTaskDestination))
-                } else when(val result = taskRepository.sendTaskReport(taskWorkerReportPost)) {
-                    is RepositoryResult.Success -> {
-                        showToast(getString(R.string.taskFinished))
-                        finishFragment()
-                    }
-                    is RepositoryResult.Error -> showToast(result.error)
+            val currentLatLng = if (app.hasLocationPermission())
+                locationReader.getLastLatLng()
+            else
+                null
+            if (currentLatLng == null)
+                showToast(getString(R.string.couldNotLoadCurrentLocation))
+            else if (!taskWorkerReportPost.task.localization.checkDistance(currentLatLng)) {
+                showToast(getString(R.string.tooFarFromTaskDestination))
+            } else when (val result = taskRepository.sendTaskReport(taskWorkerReportPost)) {
+                is RepositoryResult.Success -> {
+                    showToast(getString(R.string.taskFinished))
+                    finishFragment()
                 }
+                is RepositoryResult.Error -> showToast(result.error)
             }
         }
     }

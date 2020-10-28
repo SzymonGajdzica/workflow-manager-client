@@ -26,37 +26,34 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     override val selectedGroup: MutableLiveData<Group> = MutableLiveData()
 
-    private fun loadGroups() {
-        launchWithLoader {
-            groups.value = null
-            when(val result = groupRepository.getAllGroups()) {
-                is RepositoryResult.Success -> {
-                    groups.value = result.data
-                    selectedGroup.value = result.data.firstOrNull()
-                    loadTasks()
-                }
-                is RepositoryResult.Error -> showError(result.error)
+    private fun loadGroups() = launchWithLoader {
+        groups.value = null
+        when (val result = groupRepository.getAllGroups()) {
+            is RepositoryResult.Success -> {
+                groups.value = result.data
+                selectedGroup.value = result.data.firstOrNull()
+                loadTasks()
             }
+            is RepositoryResult.Error -> showError(result.error)
         }
     }
+
 
     override fun groupSelected(group: Group) {
         selectedGroup.value = group
         loadTasks()
     }
 
-    private fun loadTasks() {
+    private fun loadTasks() = launchWithLoader {
         allTasks = null
         tasks.value = null
-        val selectedGroup = selectedGroup.value ?: return
-        launchWithLoader {
-            when(val result = taskRepository.getTasks(selectedGroup)) {
-                is RepositoryResult.Success -> {
-                    allTasks = result.data
-                    setFilteredTasks()
-                }
-                is RepositoryResult.Error -> showError(result.error)
+        val selectedGroup = selectedGroup.value ?: return@launchWithLoader
+        when (val result = taskRepository.getTasks(selectedGroup)) {
+            is RepositoryResult.Success -> {
+                allTasks = result.data
+                setFilteredTasks()
             }
+            is RepositoryResult.Error -> showError(result.error)
         }
     }
 
