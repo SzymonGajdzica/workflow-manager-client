@@ -93,16 +93,6 @@
             tools:text="Execution time: 23.43.534"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             app:icon="@drawable/ic_baseline_access_time_24"
-            app:layout_constraintBottom_toTopOf="@id/managerTaskPostAutoAssign"
-            app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
-            android:layout_marginBottom="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/managerTaskPostAutoAssign"
-            android:text="@string/autoAssign"
-            android:enabled="@{viewModel.selectedWorkerIndex == null}"
             app:layout_constraintBottom_toTopOf="@id/managerTaskPostWorkerDropdown"
             app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
             android:layout_marginBottom="8dp"

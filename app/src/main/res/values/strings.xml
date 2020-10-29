@@ -44,5 +44,14 @@
     <string name="notAssigned">Not assigned</string>
     <string name="selectLocalization">Select localization</string>
     <string name="localization">Localization</string>
+    <string name="managerReport">Manager report</string>
+    <string name="superTask">Super task</string>
+    <string name="remainingTime">Remaining time</string>
+    <string name="assignedWorker">Assigned worker</string>
+    <string name="estimatedExecutionTime">Estimated execution time</string>
+    <string name="fixTask">Fix task</string>
+    <string name="taskAccepted">Task accepted</string>
+    <string name="accept">Accept</string>
+    <string name="acceptWithFix">Accept with fix</string>
 
 </resources>

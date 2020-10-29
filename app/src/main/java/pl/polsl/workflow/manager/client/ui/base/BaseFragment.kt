@@ -14,7 +14,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.showToast
 import pl.polsl.workflow.manager.client.ui.login.LoginActivity
 import javax.inject.Inject
@@ -28,6 +27,8 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.intent?.let { viewModel.updateSharedArguments(it) }
+        arguments?.let { viewModel.updateArguments(it) }
         viewModel.clearErrorMessages()
         setupViews(view)
         setupOnLayoutInteractions(view)
@@ -45,10 +46,10 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         (context?.applicationContext as? App)?.let {
             inject(it)
         }
-        super.onCreate(savedInstanceState)
     }
 
     protected fun <T>LiveData<T>.observe(observer: (T?) -> Unit) {
@@ -109,9 +110,5 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
             finish()
         }
     }
-
-    protected val loggedUser: User?
-        get() = activity?.intent?.getParcelableExtra("user") as? User
-
 
 }

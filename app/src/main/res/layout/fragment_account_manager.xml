@@ -16,6 +16,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/managerAccountUsername"
+            android:text='@{viewModel.user.username}'
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -130,6 +131,18 @@
             android:text="@string/logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/managerAccountLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/managerAccountFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

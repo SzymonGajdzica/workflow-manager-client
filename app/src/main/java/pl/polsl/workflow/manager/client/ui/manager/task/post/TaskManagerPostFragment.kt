@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_manager_post.view.*
 import pl.polsl.workflow.manager.client.*
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBinding
-import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
@@ -20,7 +19,6 @@ import pl.polsl.workflow.manager.client.ui.view.showTimePicker
 class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
     private lateinit var viewDataBinding: FragmentTaskManagerPostBinding
-    private lateinit var group: Group
 
     override val viewModel: TaskManagerPostViewModel
         get() = viewDataBinding.viewModel ?: throw IllegalStateException()
@@ -38,20 +36,15 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
         return viewDataBinding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        group = arguments?.getParcelable("group") ?: throw IllegalArgumentException()
-    }
-
     override fun inject(app: App) {
         super.inject(app)
-        app.taskManagerPostComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        val entries = arrayListOf(view.context.getString(R.string.notAssigned))
-        entries.addAll(group.workers.map { it.username })
+        val entries = arrayListOf(view.context.getString(R.string.autoAssign))
+        entries.addAll(viewModel.group.safeValue.workers.map { it.username })
         view.managerTaskPostWorkerDropdown.adapter = ArrayAdapter(
                 view.context,
                 android.R.layout.simple_spinner_item,
@@ -101,15 +94,14 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
             val localization = viewDataBinding.sharedViewModel?.localization?.value
                     ?: return@setOnClickListener showToast(R.string.selectLocalization)
             val taskPost = TaskPost(
-                    group = group,
+                    group = viewModel.group.safeValue,
                     name = view.managerTaskPostName.text.toString(),
                     description = view.managerTaskPostDescription.text.toString(),
                     deadline = viewModel.deadline.safeValue,
-                    subTask = arguments?.getParcelable("subTask"),
-                    autoAssign = if(viewModel.selectedWorkerIndex.value == null) view.managerTaskPostAutoAssign.isChecked else false,
+                    subTask = viewModel.subTask.value,
                     localization = localization,
                     estimatedExecutionTime = viewModel.executionTime.safeValue,
-                    worker = viewModel.selectedWorkerIndex.value?.let { group.workers[it] }
+                    worker = viewModel.selectedWorkerIndex.value?.let { viewModel.group.safeValue.workers[it] }
             )
             viewModel.createTask(taskPost)
         }

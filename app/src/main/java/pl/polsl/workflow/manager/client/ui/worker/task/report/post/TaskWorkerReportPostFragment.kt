@@ -1,4 +1,4 @@
-package pl.polsl.workflow.manager.client.ui.worker.task.report
+package pl.polsl.workflow.manager.client.ui.worker.task.report.post
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_task_worker_report_post.view.*
 import pl.polsl.workflow.manager.client.App
-import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerReportPostBinding
-import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
+import pl.polsl.workflow.manager.client.safeValue
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 
 class TaskWorkerReportPostFragment: BaseFragment<TaskWorkerReportPostViewModel>() {
@@ -33,7 +32,7 @@ class TaskWorkerReportPostFragment: BaseFragment<TaskWorkerReportPostViewModel>(
 
     override fun inject(app: App) {
         super.inject(app)
-        app.taskWorkerReportPostComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun setupOnLayoutInteractions(view: View) {
@@ -54,13 +53,10 @@ class TaskWorkerReportPostFragment: BaseFragment<TaskWorkerReportPostViewModel>(
     }
 
     private fun sendReport(success: Boolean) {
-        val task: Task? = arguments?.getParcelable("task")
-        val description = view?.workerTaskReportPostDescription?.text?.toString()
-        if(task == null || description == null)
-            return showToast(context?.getString(R.string.unknownError))
+        val description = view?.workerTaskReportPostDescription?.text?.toString().toString()
         val taskWorkerReportPost = TaskWorkerReportPost(
                 description = description,
-                task = task,
+                task = viewModel.task.safeValue,
                 success = success
         )
         viewModel.sendReport(taskWorkerReportPost)

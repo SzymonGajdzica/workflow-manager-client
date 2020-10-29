@@ -34,7 +34,7 @@ class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
 
     override fun inject(app: App) {
         super.inject(app)
-        app.accountManagerComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun setupObservables(viewModel: AccountManagerViewModel) {
@@ -58,11 +58,6 @@ class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
         viewModel.remainingTime.observe {
             view?.managerAccountRemainingSessionTime?.text = it?.toHoursMinutesSeconds()
         }
-    }
-
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.managerAccountUsername.text = loggedUser?.username
     }
 
     override fun setupOnLayoutInteractions(view: View) {

@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/taskWorkerFragmentLocalization"
+            android:id="@+id/workerTaskLocalization"
             android:text='@{@string/localization+": "+(viewModel.task != null ? viewModel.task.localization.name : "-")}'
             android:enabled='@{viewModel.task != null}'
             tools:text="Localization: Swimming pool"
@@ -72,7 +72,7 @@
             android:id="@+id/workerTaskSuccess"
             android:text="@string/start"
             android:enabled='@{viewModel.task != null ? viewModel.task.startDate == null : false}'
-            app:layout_constraintTop_toBottomOf="@id/taskWorkerFragmentLocalization"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskLocalization"
             app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
             app:layout_constraintEnd_toStartOf="@id/workerTaskFailure"
             android:layout_marginTop="8dp"

@@ -18,6 +18,8 @@ class AccountManagerViewModelImpl @Inject constructor(
     override val groups: MutableLiveData<List<Group>> = MutableLiveData(null)
 
     private fun loadGroups() = launchWithLoader {
+        selectedGroup.value = null
+        groups.value = null
         when (val result = groupRepository.getAllGroups()) {
             is RepositoryResult.Success -> {
                 groups.value = result.data

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_worker.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerBinding
+import pl.polsl.workflow.manager.client.toBundle
 import pl.polsl.workflow.manager.client.toHoursMinutesSeconds
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 
@@ -34,7 +34,7 @@ class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
 
     override fun inject(app: App) {
         super.inject(app)
-        app.taskWorkerComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun setupObservables(viewModel: TaskWorkerViewModel) {
@@ -50,16 +50,16 @@ class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
         view.workerTaskFailure.setOnClickListener {
             findNavController().navigate(
                 R.id.action_navigation_task_to_navigation_task_worker_report_post,
-                bundleOf(Pair("task", viewModel.task.value))
+                    viewModel.task.value?.toBundle()
             )
         }
         view.workerTaskSuccess.setOnClickListener {
             viewModel.startTask()
         }
-        view.taskWorkerFragmentLocalization.setOnClickListener {
+        view.workerTaskLocalization.setOnClickListener {
             findNavController().navigate(
-                R.id.action_navigation_home_to_mapsFragment,
-                bundleOf(Pair("localization", viewModel.task.value?.localization))
+                    R.id.action_navigation_home_to_mapsFragment,
+                    viewModel.task.value?.localization?.toBundle()
             )
         }
     }

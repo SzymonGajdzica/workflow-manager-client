@@ -1,10 +1,13 @@
-package pl.polsl.workflow.manager.client.ui.worker.task.report
+package pl.polsl.workflow.manager.client.ui.worker.task.report.post
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.getParcelable
 import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
 import pl.polsl.workflow.manager.client.model.data.checkDistance
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
@@ -18,6 +21,7 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
         private val locationReader: LocationReader
 ): TaskWorkerReportPostViewModel(app) {
 
+    override val task: MutableLiveData<Task> = MutableLiveData()
     override val descriptionInputError: MutableLiveData<String> = MutableLiveData(null)
 
     @SuppressLint("MissingPermission")
@@ -42,6 +46,11 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
                 is RepositoryResult.Error -> showToast(result.error)
             }
         }
+    }
+
+    override fun updateArguments(bundle: Bundle) {
+        super.updateArguments(bundle)
+        task.value = bundle.getParcelable()
     }
 
 }

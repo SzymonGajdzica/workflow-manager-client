@@ -7,7 +7,7 @@ class SharedViewModelImpl: SharedViewModel() {
 
     override val localization: MutableLiveData<Localization> = MutableLiveData(null)
 
-    override fun selectLocalization(localization: Localization?) {
+    override fun selectLocalization(localization: Localization) {
         this.localization.value = localization
     }
 

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.getParcelable
 import pl.polsl.workflow.manager.client.hasPermission
 import pl.polsl.workflow.manager.client.model.data.Localization
 
@@ -33,7 +34,7 @@ class DestinationMapFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
-        val destinationLocalization: Localization? = arguments?.getParcelable("localization")
+        val destinationLocalization: Localization? = arguments?.getParcelable()
         val context = context
         if(context == null || destinationLocalization == null)
             return

@@ -38,7 +38,6 @@ class TaskManagerViewModelImpl @Inject constructor(
         }
     }
 
-
     override fun groupSelected(group: Group) {
         selectedGroup.value = group
         loadTasks()
@@ -71,7 +70,7 @@ class TaskManagerViewModelImpl @Inject constructor(
         super.reloadData()
         if(groups.value == null)
             loadGroups()
-        else
+        else if(tasks.value == null)
             loadTasks()
     }
 

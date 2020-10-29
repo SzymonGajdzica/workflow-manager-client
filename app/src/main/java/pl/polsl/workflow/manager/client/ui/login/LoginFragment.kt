@@ -33,7 +33,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     override fun inject(app: App) {
         super.inject(app)
-        app.loginComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun onResume() {

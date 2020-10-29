@@ -1,9 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.api
 
-import pl.polsl.workflow.manager.client.model.remote.data.TaskApiModel
-import pl.polsl.workflow.manager.client.model.remote.data.TaskApiModelPost
-import pl.polsl.workflow.manager.client.model.remote.data.TaskWorkerReportApiModel
-import pl.polsl.workflow.manager.client.model.remote.data.TaskWorkerReportApiModelPost
+import pl.polsl.workflow.manager.client.model.remote.data.*
 import retrofit2.http.*
 
 interface TaskApi {
@@ -16,6 +13,9 @@ interface TaskApi {
 
     @POST("taskWorkerReport/")
     suspend fun finishTask(@Body taskWorkerReportApiModelPost: TaskWorkerReportApiModelPost): TaskWorkerReportApiModel
+
+    @POST("taskManagerReport/")
+    suspend fun acceptTask(@Body taskManagerReportApiModelPost: TaskManagerReportApiModelPost): TaskManagerReportApiModel
 
     @POST("task/")
     suspend fun addTask(@Body taskApiModelPost: TaskApiModelPost): TaskApiModel

@@ -14,13 +14,14 @@ class SimpleAdapterViewHolder(private val view: View): RecyclerView.ViewHolder(v
             .toList()
             .toTypedArray()
 
-    fun update(list: List<String>, position: Int, onClick: (Int) -> Unit) {
+    fun update(list: List<String>, position: Int, onClick: ((Int) -> Unit)?) {
         list.forEachIndexed { index, text ->
             textViews[index].text = text
         }
-        view.setOnClickListener {
-            onClick(position)
-        }
+        if(onClick != null)
+            view.setOnClickListener {
+                onClick(position)
+            }
     }
 
 }

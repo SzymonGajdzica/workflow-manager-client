@@ -1,6 +1,8 @@
 package pl.polsl.workflow.manager.client.ui.base
 
 import android.app.Application
+import android.content.Intent
+import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -33,6 +35,14 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
 
     fun clearErrorString() {
         mErrorString.value = null
+    }
+
+    open fun updateSharedArguments(intent: Intent) {
+
+    }
+
+    open fun updateArguments(bundle: Bundle) {
+
     }
 
     open fun reloadData() {

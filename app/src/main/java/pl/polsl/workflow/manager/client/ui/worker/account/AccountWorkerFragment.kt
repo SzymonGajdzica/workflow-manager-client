@@ -32,12 +32,7 @@ class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
 
     override fun inject(app: App) {
         super.inject(app)
-        app.accountWorkerComponent.inject(this)
-    }
-
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.workerAccountUsername.text = loggedUser?.username
+        app.appComponent.inject(this)
     }
 
     override fun setupObservables(viewModel: AccountWorkerViewModel) {

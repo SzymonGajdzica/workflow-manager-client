@@ -2,10 +2,13 @@ package pl.polsl.workflow.manager.client
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Bundle
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 
 fun Context.showToast(@StringRes resId: Int): Toast {
@@ -32,4 +35,12 @@ fun Context.hasLocationPermission(): Boolean {
 
 val <T>LiveData<T>.safeValue: T
     get() = value ?: throw NullPointerException()
+
+fun Parcelable.toBundle(): Bundle {
+    return bundleOf(Pair(javaClass.simpleName, this))
+}
+
+inline fun <reified T: Parcelable>Bundle.getParcelable(): T? {
+    return getParcelable<T>(T::class.java.simpleName)
+}
 

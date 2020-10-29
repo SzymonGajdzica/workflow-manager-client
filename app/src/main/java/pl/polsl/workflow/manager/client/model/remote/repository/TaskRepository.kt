@@ -9,6 +9,8 @@ interface TaskRepository {
 
     suspend fun getNextTask(autoStart: Boolean): RepositoryResult<Task>
 
+    suspend fun sendManagerReport(taskManagerReportPost: TaskManagerReportPost): RepositoryResult<TaskManagerReport>
+
     suspend fun sendTaskReport(taskWorkerReportPost: TaskWorkerReportPost): RepositoryResult<TaskWorkerReport>
 
     suspend fun addTask(taskPost: TaskPost): RepositoryResult<Task>

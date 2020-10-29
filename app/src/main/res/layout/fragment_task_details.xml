@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.task.details.TaskDetailsFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsName"
+        tools:text="Name of task"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsDescription"
+        tools:text="Very long description of task"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsName"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintEnd_toEndOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsDeadline"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:background="@color/listBackgroundColor"
+        android:scrollbars="vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsDeadline"
+        tools:text="Deadline: 00:34:23 2019"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsDescription"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintEnd_toEndOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsRemainingTime"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsRemainingTime"
+        tools:text="Remaining time: 00:34:23"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsDeadline"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintEnd_toEndOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsDeadline"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsEstimatedExecutionTime"
+        tools:text="Estimated execution time: 00:34:23"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsRemainingTime"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintEnd_toEndOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsAssignedWorker"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/taskDetailsAssignedWorker"
+        tools:text="Assigned worker: username"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsEstimatedExecutionTime"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintEnd_toEndOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsLocalization"
+        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/taskDetailsLocalization"
+        tools:text="Localization: Swimming pool"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsAssignedWorker"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsSuperTask"
+        app:icon="@drawable/ic_baseline_map_24"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/taskDetailsSuperTask"
+        android:text="@string/superTask"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsLocalization"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsWorkerReport"
+        app:icon="@drawable/ic_baseline_list_24"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/taskDetailsWorkerReport"
+        android:text="@string/workerReport"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsSuperTask"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toTopOf="@id/taskDetailsManagerReport"
+        app:icon="@drawable/ic_baseline_assignment_24"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/taskDetailsManagerReport"
+        android:text="@string/managerReport"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        app:layout_constraintTop_toBottomOf="@id/taskDetailsWorkerReport"
+        app:layout_constraintStart_toStartOf="@id/taskDetailsName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:icon="@drawable/ic_baseline_assignment_24"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/navigation_task_worker_report_post"
-        android:name="pl.polsl.workflow.manager.client.ui.worker.task.report.TaskWorkerReportPostFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.worker.task.report.post.TaskWorkerReportPostFragment"
         android:label="@string/workerReport"
         tools:layout="@layout/fragment_task_worker_report_post" />
 

@@ -46,7 +46,7 @@ class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback 
 
     override fun inject(app: App) {
         super.inject(app)
-        app.mapSelectComponent.inject(this)
+        app.appComponent.inject(this)
     }
 
     override fun setupViews(view: View) {
@@ -87,7 +87,7 @@ class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback 
         if(context?.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true)
             googleMap.isMyLocationEnabled = true
         googleMap.setOnInfoWindowClickListener {
-            viewDataBinding.sharedViewModel?.selectLocalization(markerLocalizationMap[it])
+            viewDataBinding.sharedViewModel?.selectLocalization(markerLocalizationMap.getValue(it))
             findNavController().navigateUp()
         }
         tryToFillMap(viewModel.localizations.value)

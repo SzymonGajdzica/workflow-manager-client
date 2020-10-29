@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 class SimpleAdapter(
         @LayoutRes private val viewId: Int,
         private val list: List<List<String>>,
-        private val onClick: (Int) -> Unit
+        private val onClick: ((Int) -> Unit)?
 ): RecyclerView.Adapter<SimpleAdapterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleAdapterViewHolder {

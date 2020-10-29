@@ -8,6 +8,6 @@ abstract class SharedViewModel: ViewModel() {
 
     abstract val localization: LiveData<Localization>
 
-    abstract fun selectLocalization(localization: Localization?)
+    abstract fun selectLocalization(localization: Localization)
 
 }

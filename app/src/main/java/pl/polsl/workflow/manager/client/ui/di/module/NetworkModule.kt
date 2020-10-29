@@ -18,16 +18,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
 @Module(includes = [AppModule::class])
 class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTokenHolder(sharedPreferences: SharedPreferences, gson: Gson): TokenHolder = TokenHolderImpl(
-        sharedPreferences,
-        gson
-    )
+    fun provideTokenHolder(sharedPreferences: SharedPreferences, gson: Gson): TokenHolder = TokenHolderImpl(sharedPreferences, gson)
 
     @Provides
     @Singleton

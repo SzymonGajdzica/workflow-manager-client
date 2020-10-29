@@ -8,8 +8,6 @@ import java.util.*
 data class TaskApiModel(
         @SerializedName("id")
         override val id: Long,
-        @SerializedName("autoAssign")
-        val autoAssign: Boolean,
         @SerializedName("createDate")
         val createDate: Instant,
         @SerializedName("assignDate")

@@ -18,7 +18,7 @@ import java.time.ZoneOffset
 fun RecyclerView.setupSimpleAdapterSingle(
         @LayoutRes viewId: Int = R.layout.base_list_item,
         list: List<String>,
-        onClick: (Int) -> Unit = {}
+        onClick: ((Int) -> Unit)? = null
 ) {
     setupSimpleAdapter(viewId, list.map { listOf(it) }, onClick)
 }
@@ -26,7 +26,7 @@ fun RecyclerView.setupSimpleAdapterSingle(
 fun RecyclerView.setupSimpleAdapter(
         @LayoutRes viewId: Int = R.layout.base_list_item,
         list: List<List<String>>,
-        onClick: (Int) -> Unit = {}
+        onClick: ((Int) -> Unit)? = null
 ) {
     val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
     setHasFixedSize(true)

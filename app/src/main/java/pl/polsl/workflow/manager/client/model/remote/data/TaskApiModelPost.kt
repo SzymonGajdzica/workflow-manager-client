@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName
 import java.time.Instant
 
 data class TaskApiModelPost(
-        @SerializedName("autoAssign")
-        val autoAssign: Boolean,
         @SerializedName("deadline")
         val deadline: Instant,
         @SerializedName("description")

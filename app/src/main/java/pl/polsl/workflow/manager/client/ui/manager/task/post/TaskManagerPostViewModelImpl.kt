@@ -1,8 +1,12 @@
 package pl.polsl.workflow.manager.client.ui.manager.task.post
 
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.getParcelable
+import pl.polsl.workflow.manager.client.model.data.Group
+import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
@@ -14,6 +18,8 @@ class TaskManagerPostViewModelImpl @Inject constructor(
     private val taskRepository: TaskRepository
 ): TaskManagerPostViewModel(app) {
 
+    override val subTask: MutableLiveData<Task> = MutableLiveData()
+    override val group: MutableLiveData<Group> = MutableLiveData()
     override val selectedWorkerIndex: MutableLiveData<Int> = MutableLiveData(null)
     override val descriptionInputError: MutableLiveData<String> = MutableLiveData()
     override val nameInputError: MutableLiveData<String> = MutableLiveData()
@@ -52,6 +58,12 @@ class TaskManagerPostViewModelImpl @Inject constructor(
             getString(R.string.cannotBeBlank)
         else null
         return descriptionInputError.value == null && nameInputError.value == null
+    }
+
+    override fun updateArguments(bundle: Bundle) {
+        super.updateArguments(bundle)
+        group.value = bundle.getParcelable()
+        subTask.value = bundle.getParcelable()
     }
 
 }

@@ -5,18 +5,19 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="pl.polsl.workflow.manager.client.ui.worker.task.report.post.TaskWorkerReportPostViewModel" />
+            type="pl.polsl.workflow.manager.client.ui.manager.task.report.post.TaskManagerReportPostViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.worker.task.TaskWorkerFragment">
+        tools:context=".ui.manager.task.report.post.TaskManagerReportPostFragment">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/workerTaskReportPostDescriptionContainer"
+            android:id="@+id/managerTaskReportPostDescriptionContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/workerTaskReportPostDescription"
+                android:id="@+id/managerTaskReportPostDescription"
                 android:scrollbars="vertical"
                 android:lines="8"
                 android:minLines="6"
@@ -43,32 +44,32 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/workerTaskReportPostFailure"
-            android:text="@string/failure"
-            app:layout_constraintTop_toTopOf="@id/workerTaskReportPostSuccess"
-            app:layout_constraintStart_toStartOf="@id/workerTaskReportPostDescriptionContainer"
-            app:layout_constraintEnd_toStartOf="@id/workerTaskReportPostSuccess"
+            android:id="@+id/managerTaskReportPostFailure"
+            android:text="@string/acceptWithFix"
+            app:layout_constraintTop_toTopOf="@id/managerTaskReportPostSuccess"
+            app:layout_constraintStart_toStartOf="@id/managerTaskReportPostDescriptionContainer"
+            app:layout_constraintEnd_toStartOf="@id/managerTaskReportPostSuccess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/workerTaskReportPostSuccess"
-            android:text="@string/success"
-            app:layout_constraintTop_toBottomOf="@id/workerTaskReportPostDescriptionContainer"
-            app:layout_constraintEnd_toEndOf="@id/workerTaskReportPostDescriptionContainer"
-            app:layout_constraintStart_toEndOf="@id/workerTaskReportPostFailure"
+            android:id="@+id/managerTaskReportPostSuccess"
+            android:text="@string/accept"
+            app:layout_constraintTop_toBottomOf="@id/managerTaskReportPostDescriptionContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskReportPostDescriptionContainer"
+            app:layout_constraintStart_toEndOf="@id/managerTaskReportPostFailure"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <include
-            android:id="@+id/workerTaskReportPostLoadingView"
+            android:id="@+id/managerTaskReportPostLoadingView"
             layout="@layout/loading_view"
             tools:visibility="gone"
             android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
 
         <include
-            android:id="@+id/workerTaskReportPostFailedToLoadView"
+            android:id="@+id/managerTaskReportPostFailedToLoadView"
             layout="@layout/failed_to_load_view"
             tools:visibility="gone"
             android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
