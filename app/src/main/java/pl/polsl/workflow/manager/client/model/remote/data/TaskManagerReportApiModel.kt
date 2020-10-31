@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.data
 
 import com.google.gson.annotations.SerializedName
-import pl.polsl.workflow.manager.client.model.Identifiable
 import java.time.Instant
 
 data class TaskManagerReportApiModel(
@@ -13,4 +12,4 @@ data class TaskManagerReportApiModel(
         val description: String,
         @SerializedName("fixTaskId")
         val fixTaskId: Long?,
-): Identifiable
+): IdentifiableApiModel

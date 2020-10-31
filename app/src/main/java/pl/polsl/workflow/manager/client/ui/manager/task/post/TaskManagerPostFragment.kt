@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_manager_post.view.*
 import pl.polsl.workflow.manager.client.*
@@ -12,9 +11,7 @@ import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBindi
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
-import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
-import pl.polsl.workflow.manager.client.ui.view.showDateTimePicker
-import pl.polsl.workflow.manager.client.ui.view.showTimePicker
+import pl.polsl.workflow.manager.client.ui.view.*
 
 class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
@@ -43,15 +40,10 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
+        view.managerTaskPostWorkerDropdown.setupSimpleArrayAdapter(view.context)
         val entries = arrayListOf(view.context.getString(R.string.autoAssign))
         entries.addAll(viewModel.group.safeValue.workers.map { it.username })
-        view.managerTaskPostWorkerDropdown.adapter = ArrayAdapter(
-                view.context,
-                android.R.layout.simple_spinner_item,
-                entries
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
+        view.managerTaskPostWorkerDropdown.arrayAdapter?.update(entries)
     }
 
     override fun setupObservables(viewModel: TaskManagerPostViewModel) {
@@ -90,9 +82,9 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
         view.managerTaskPostLocalization.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_task_manager_post_to_mapSelectFragment)
         }
-        view.managerTaskPostCreate.setOnClickListener {
+        view.managerTaskPostCreate.setOnClickListener { _ ->
             val localization = viewDataBinding.sharedViewModel?.localization?.value
-                    ?: return@setOnClickListener showToast(R.string.selectLocalization)
+                    ?: return@setOnClickListener showErrorMessage(view.context.getString(R.string.selectLocalization))
             val taskPost = TaskPost(
                     group = viewModel.group.safeValue,
                     name = view.managerTaskPostName.text.toString(),

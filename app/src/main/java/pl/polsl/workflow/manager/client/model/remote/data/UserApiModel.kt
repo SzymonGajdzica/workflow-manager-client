@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.data
 
 import com.google.gson.annotations.SerializedName
-import pl.polsl.workflow.manager.client.model.Identifiable
 
 data class UserApiModel(
         @SerializedName("id")
@@ -12,4 +11,4 @@ data class UserApiModel(
         val role: String,
         @SerializedName("enabled")
         val enabled: Boolean,
-): Identifiable
+): IdentifiableApiModel

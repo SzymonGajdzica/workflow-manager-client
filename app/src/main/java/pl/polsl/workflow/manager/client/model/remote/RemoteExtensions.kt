@@ -23,7 +23,6 @@ suspend fun <T: Any>safeCall(block: suspend () -> T): RepositoryResult<T> {
 val Throwable.repositoryMessage: String?
     get() = runCatching {
         (this as HttpException).response()?.errorBody()?.charStream()?.readText()?.let {
-            App.log(it)
             JSONObject(it).getString("message")
         }
     }.getOrNull()

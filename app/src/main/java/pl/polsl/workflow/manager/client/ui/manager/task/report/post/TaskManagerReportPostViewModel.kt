@@ -8,7 +8,7 @@ import pl.polsl.workflow.manager.client.ui.base.BaseViewModel
 
 abstract class TaskManagerReportPostViewModel(application: Application): BaseViewModel(application) {
 
-    abstract val descriptionError: LiveData<String>
+    abstract val descriptionInputError: LiveData<String>
     abstract val task: LiveData<Task>
     abstract val creatingFixTask: LiveData<Boolean>
 

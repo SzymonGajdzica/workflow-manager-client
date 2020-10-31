@@ -26,5 +26,8 @@ interface TaskApi {
     @GET("task/manager/{groupId}/")
     suspend fun getTasks(@Path("groupId") groupId: Long): List<TaskApiModel>
 
+    @GET("task/worker/")
+    suspend fun getWorkerTasks(): List<TaskApiModel>
+
 
 }

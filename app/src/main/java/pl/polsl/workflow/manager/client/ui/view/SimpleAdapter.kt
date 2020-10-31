@@ -7,9 +7,20 @@ import androidx.recyclerview.widget.RecyclerView
 
 class SimpleAdapter(
         @LayoutRes private val viewId: Int,
-        private val list: List<List<String>>,
         private val onClick: ((Int) -> Unit)?
 ): RecyclerView.Adapter<SimpleAdapterViewHolder>() {
+
+    private val list: ArrayList<ArrayList<String>> = arrayListOf()
+
+    fun updateSingleList(newList: List<String>) {
+        updateList(newList.map { listOf(it) })
+    }
+
+    private fun updateList(newList: List<List<String>>) {
+        list.clear()
+        list.addAll(newList.map { ArrayList(it) })
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleAdapterViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewId, parent, false)

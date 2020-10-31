@@ -1,7 +1,7 @@
 package pl.polsl.workflow.manager.client.model.data
 
 import android.location.Location
-import pl.polsl.workflow.manager.client.model.Identifiable
+import pl.polsl.workflow.manager.client.model.remote.data.IdentifiableApiModel
 import pl.polsl.workflow.manager.client.ui.manager.ManagerActivity
 import pl.polsl.workflow.manager.client.ui.worker.WorkerActivity
 import java.time.Instant
@@ -20,7 +20,7 @@ fun Localization.checkDistance(latLng: LatLng): Boolean {
     return this.latLng.getDistance(latLng) <= radius
 }
 
-fun <T : Identifiable>Collection<T>.toMap(): Map<Long, T> {
+fun <T : IdentifiableApiModel>Collection<T>.toMap(): Map<Long, T> {
     return map { it.id to it }.toMap()
 }
 
@@ -32,10 +32,19 @@ val User.destinationActivityClass: Class<*>
         else -> throw IllegalArgumentException()
     }
 
-val Task.state: Int
+val Task.status: Int
     get() = when {
-        taskManagerReport != null -> TaskState.ACCEPTED
-        taskWorkerReport != null -> TaskState.FINISHED
-        startDate != null -> TaskState.STARTED
-        else -> TaskState.CREATED
+        taskManagerReport != null -> TaskStatus.ACCEPTED
+        taskWorkerReport != null -> TaskStatus.FINISHED
+        startDate != null -> TaskStatus.STARTED
+        else -> TaskStatus.CREATED
     }
+
+fun Task.getSuperTask(tasks: List<Task>): AllowableValue<Task>? {
+    val superTask = tasks.find { it.taskManagerReport?.fixTask?.id == id }
+    return when {
+        superTask == null && isSubTask -> AllowableValue.NotAllowed(null)
+        superTask != null -> AllowableValue.Allowed(superTask)
+        else -> null
+    }
+}

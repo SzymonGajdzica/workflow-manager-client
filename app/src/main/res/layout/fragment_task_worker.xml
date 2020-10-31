@@ -57,6 +57,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workerTaskLocalization"
+            android:stateListAnimator="@null"
             android:text='@{@string/localization+": "+(viewModel.task != null ? viewModel.task.localization.name : "-")}'
             android:enabled='@{viewModel.task != null}'
             tools:text="Localization: Swimming pool"
@@ -70,6 +71,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workerTaskSuccess"
+            android:stateListAnimator="@null"
             android:text="@string/start"
             android:enabled='@{viewModel.task != null ? viewModel.task.startDate == null : false}'
             app:layout_constraintTop_toBottomOf="@id/workerTaskLocalization"
@@ -81,6 +83,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workerTaskFailure"
+            android:stateListAnimator="@null"
             android:text="@string/finish"
             android:enabled="@{viewModel.task.startDate != null}"
             app:layout_constraintTop_toTopOf="@id/workerTaskSuccess"
@@ -89,17 +92,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <include
-            android:id="@+id/workerTaskLoadingView"
-            layout="@layout/loading_view"
-            tools:visibility="gone"
-            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+        <View
+            android:id="@+id/workerTaskSeparator"
+            android:layout_marginTop="8dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskFailure"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <Spinner
+            android:id="@+id/workerTaskTaskStatusDropdown"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskSeparator"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/workerTaskTaskList"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toBottomOf="@id/workerTaskTaskStatusDropdown"
+            app:layout_constraintStart_toStartOf="@id/workerTaskTitle"
+            app:layout_constraintEnd_toEndOf="@id/workerTaskTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/listBackgroundColor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
         <include
             android:id="@+id/workerTaskFailedToLoadView"
             layout="@layout/failed_to_load_view"
             tools:visibility="gone"
             android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/workerTaskLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

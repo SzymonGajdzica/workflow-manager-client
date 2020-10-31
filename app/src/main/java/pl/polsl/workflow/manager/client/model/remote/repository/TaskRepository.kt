@@ -19,4 +19,6 @@ interface TaskRepository {
 
     suspend fun getTasks(group: Group): RepositoryResult<List<Task>>
 
+    suspend fun getWorkerTasks(): RepositoryResult<List<Task>>
+
 }

@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details_manager_report.view.*
-import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.formatDate
-import pl.polsl.workflow.manager.client.getParcelable
+import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.model.data.AllowableValue
+import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReport
-import pl.polsl.workflow.manager.client.toBundle
+import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
 
 class TaskDetailsManagerReport: Fragment() {
 
@@ -30,16 +30,23 @@ class TaskDetailsManagerReport: Fragment() {
 
     private fun initView(view: View) {
         val taskManagerReport: TaskManagerReport = arguments?.getParcelable() ?: return
+        val sharedTasks: List<Task> = arguments?.getParcelableList() ?: listOf()
         view.apply {
             val fixTask = taskManagerReport.fixTask
             taskDetailsManagerReportDate.text = taskManagerReport.date.formatDate()
             taskDetailsManagerReportDescription.text = taskManagerReport.description
             if(fixTask != null) {
                 taskDetailsManagerReportFixTask.setOnClickListener {
-                    findNavController().navigate(
-                            R.id.action_taskDetailsManagerReport2_to_taskDetailsFragment,
-                            fixTask.toBundle()
-                    )
+                    when(fixTask) {
+                        is AllowableValue.NotAllowed -> SimpleDialog.create(
+                                view.context.getString(R.string.error),
+                                view.context.getString(R.string.notAllowedToBrowseThisResource)
+                        ).show(parentFragmentManager, "ErrorDialog")
+                        is AllowableValue.Allowed -> findNavController().navigate(
+                                R.id.action_taskDetailsManagerReport2_to_taskDetailsFragment,
+                                listOf(fixTask.value, sharedTasks).toBundle()
+                        )
+                    }
                 }
             } else
                 taskDetailsManagerReportFixTask.isEnabled = false

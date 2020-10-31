@@ -4,8 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_task_manager_report_post.view.*
 import pl.polsl.workflow.manager.client.App
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerReportPostBinding
+import pl.polsl.workflow.manager.client.model.data.TaskManagerReportPost
+import pl.polsl.workflow.manager.client.safeValue
+import pl.polsl.workflow.manager.client.toBundle
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 
 class TaskManagerReportPostFragment: BaseFragment<TaskManagerReportPostViewModel>() {
@@ -30,6 +36,39 @@ class TaskManagerReportPostFragment: BaseFragment<TaskManagerReportPostViewModel
     override fun inject(app: App) {
         super.inject(app)
         app.appComponent.inject(this)
+    }
+
+    override fun setupOnLayoutInteractions(view: View) {
+        super.setupOnLayoutInteractions(view)
+        view.managerTaskReportPostSuccess.setOnClickListener {
+            sendReport(false)
+        }
+        view.managerTaskReportPostFailure.setOnClickListener {
+            sendReport(true)
+        }
+    }
+
+    override fun setupObservables(viewModel: TaskManagerReportPostViewModel) {
+        super.setupObservables(viewModel)
+        viewModel.descriptionInputError.observe {
+            view?.managerTaskReportPostDescriptionContainer?.error = it
+        }
+        viewModel.creatingFixTask.observe { creatingFixTask ->
+            if(creatingFixTask == true) {
+                findNavController().navigate(
+                    R.id.action_taskManagerReportPostFragment_to_navigation_task_manager_post,
+                    listOf(viewModel.task.safeValue, viewModel.task.safeValue.group).toBundle()
+                )
+            }
+        }
+    }
+
+    private fun sendReport(withFixTask: Boolean) {
+        val report = TaskManagerReportPost(
+            task = viewModel.task.safeValue,
+            description = view?.managerTaskReportPostDescription?.text?.toString() ?: ""
+        )
+        viewModel.acceptTask(report, withFixTask)
     }
 
 }

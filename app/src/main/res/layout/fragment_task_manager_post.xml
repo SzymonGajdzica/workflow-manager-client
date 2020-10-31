@@ -67,6 +67,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskPostLocalization"
+            android:stateListAnimator="@null"
             android:text='@{@string/localization+": "+(sharedViewModel.localization != null ? sharedViewModel.localization.name : "-")}'
             tools:text="Localization: Swimming pool"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
@@ -79,6 +80,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskPostDeadline"
+            android:stateListAnimator="@null"
             tools:text="Deadline: 21.42.534 2019"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             app:icon="@drawable/ic_baseline_date_range_24"
@@ -90,6 +92,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskPostExecutionTime"
+            android:stateListAnimator="@null"
             tools:text="Execution time: 23.43.534"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             app:icon="@drawable/ic_baseline_access_time_24"
@@ -110,6 +113,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskPostCreate"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
             app:layout_constraintEnd_toEndOf="@id/managerTaskPostNameContainer"

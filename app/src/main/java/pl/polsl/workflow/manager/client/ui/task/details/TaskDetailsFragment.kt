@@ -9,7 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
 import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
+import pl.polsl.workflow.manager.client.model.data.getSuperTask
+import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
 import pl.polsl.workflow.manager.client.utils.TimerHelper
 import java.time.Instant
 
@@ -31,6 +34,7 @@ class TaskDetailsFragment: Fragment() {
             if(it.startDate != null && it.taskWorkerReport == null)
                 TimerHelper.register(lifecycleScope, ::updateRemainingTime)
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,13 +44,17 @@ class TaskDetailsFragment: Fragment() {
 
     private fun initView(view: View) {
         val task = task ?: return
+        val sharedTasks: List<Task>? = arguments?.getParcelableList()
         view.apply {
             val managerReport = task.taskManagerReport
             val workerReport = task.taskWorkerReport
-            val superTask = task.superTask
+            val superTask = sharedTasks?.let { task.getSuperTask(it) }
             if (managerReport != null) {
                 taskDetailsManagerReport.setOnClickListener {
-                    managerReport.date.toEpochMilli() // todo
+                    findNavController().navigate(
+                            R.id.action_taskDetailsFragment_to_taskDetailsManagerReport2,
+                            listOf(managerReport, sharedTasks).toBundle()
+                    )
                 }
             } else
                 taskDetailsManagerReport.isEnabled = false
@@ -61,10 +69,16 @@ class TaskDetailsFragment: Fragment() {
                 taskDetailsWorkerReport.isEnabled = false
             if(superTask != null) {
                 taskDetailsSuperTask.setOnClickListener {
-                    findNavController().navigate(
-                            R.id.action_taskDetailsFragment_self,
-                            task.superTask.toBundle()
-                    )
+                    when(superTask) {
+                        is AllowableValue.NotAllowed -> SimpleDialog.create(
+                                view.context.getString(R.string.error),
+                                view.context.getString(R.string.notAllowedToBrowseThisResource)
+                        ).show(parentFragmentManager, "ErrorDialog")
+                        is AllowableValue.Allowed -> findNavController().navigate(
+                                R.id.action_taskDetailsFragment_self,
+                                listOf(superTask.value, sharedTasks).toBundle()
+                        )
+                    }
                 }
             } else
                 taskDetailsSuperTask.isEnabled = false

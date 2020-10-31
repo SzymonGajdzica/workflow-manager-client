@@ -13,7 +13,7 @@ fun GroupApiModel.map(users: Map<Long, UserApiModel>): Group {
         id = id,
         name = name,
         manager = users.getValue(managerId).map(),
-        workers = workerIdList.mapNotNull { users[it]?.map() }
+        workers = workerIdList.map { users.getValue(it).map() }
     )
 }
 

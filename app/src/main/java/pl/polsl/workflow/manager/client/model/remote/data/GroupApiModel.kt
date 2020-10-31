@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.data
 
 import com.google.gson.annotations.SerializedName
-import pl.polsl.workflow.manager.client.model.Identifiable
 
 data class GroupApiModel(
     @SerializedName("id")
@@ -12,4 +11,4 @@ data class GroupApiModel(
     val managerId: Long,
     @SerializedName("workerIdList")
     val workerIdList: List<Long>,
-): Identifiable
+): IdentifiableApiModel

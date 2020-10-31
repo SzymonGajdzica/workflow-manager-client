@@ -16,7 +16,7 @@ class App: MultiDexApplication() {
 
     companion object {
         fun log(vararg values: Any?){
-            Log.d("halo", values.joinToString(separator = " "))
+            Log.d("halo", values.joinToString(separator = ", "))
         }
     }
 

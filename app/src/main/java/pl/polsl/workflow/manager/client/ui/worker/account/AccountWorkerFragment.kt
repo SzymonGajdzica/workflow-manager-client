@@ -9,7 +9,8 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountWorkerBinding
 import pl.polsl.workflow.manager.client.toHoursMinutesSeconds
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapterSingle
+import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
+import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
 
 class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
 
@@ -35,15 +36,16 @@ class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
         app.appComponent.inject(this)
     }
 
+    override fun setupViews(view: View) {
+        super.setupViews(view)
+        view.workerAccountGroupMembersList.setupSimpleAdapter()
+    }
+
     override fun setupObservables(viewModel: AccountWorkerViewModel) {
         super.setupObservables(viewModel)
         viewModel.group.observe { group ->
-            if(group != null) {
-                view?.workerAccountGroupMembersList?.setupSimpleAdapterSingle(
-                        list = group.workers.map { it.username }
-                )
-            } else
-                view?.workerAccountGroupMembersList?.adapter = null
+            val list = group?.workers?.map { it.username } ?: listOf()
+            (view?.workerAccountGroupMembersList?.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
         viewModel.remainingTime.observe {
             view?.workerAccountRemainingSessionTime?.text = it?.toHoursMinutesSeconds()

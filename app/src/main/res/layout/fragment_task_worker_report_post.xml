@@ -44,6 +44,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workerTaskReportPostFailure"
+            android:stateListAnimator="@null"
             android:text="@string/failure"
             app:layout_constraintTop_toTopOf="@id/workerTaskReportPostSuccess"
             app:layout_constraintStart_toStartOf="@id/workerTaskReportPostDescriptionContainer"
@@ -53,6 +54,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/workerTaskReportPostSuccess"
+            android:stateListAnimator="@null"
             android:text="@string/success"
             app:layout_constraintTop_toBottomOf="@id/workerTaskReportPostDescriptionContainer"
             app:layout_constraintEnd_toEndOf="@id/workerTaskReportPostDescriptionContainer"

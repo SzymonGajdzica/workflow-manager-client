@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_task_manager_to_task_details_navigation"
             app:destination="@id/task_details_navigation" />
+        <action
+            android:id="@+id/action_navigation_task_manager_to_taskManagerReportPostFragment"
+            app:destination="@id/taskManagerReportPostFragment" />
     </fragment>
 
     <fragment
@@ -39,5 +42,15 @@
         android:label="@string/selectLocalization"
         tools:layout="@layout/fragment_map_select" />
     <include app:graph="@navigation/task_details_navigation" />
+
+    <fragment
+        android:id="@+id/taskManagerReportPostFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.manager.task.report.post.TaskManagerReportPostFragment"
+        android:label="@string/createReport"
+        tools:layout="@layout/fragment_task_manager_report_post" >
+        <action
+            android:id="@+id/action_taskManagerReportPostFragment_to_navigation_task_manager_post"
+            app:destination="@id/navigation_task_manager_post" />
+    </fragment>
 
 </navigation>

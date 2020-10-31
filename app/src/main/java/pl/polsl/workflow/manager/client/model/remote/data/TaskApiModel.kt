@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.model.remote.data
 
 import com.google.gson.annotations.SerializedName
-import pl.polsl.workflow.manager.client.model.Identifiable
 import java.time.Instant
 import java.util.*
 
@@ -26,6 +25,8 @@ data class TaskApiModel(
         val localizationId: Long,
         @SerializedName("name")
         val name: String,
+        @SerializedName("isSubTask")
+        val isSubTask: Boolean,
         @SerializedName("sharedTaskId")
         val sharedTaskId: UUID,
         @SerializedName("workerId")
@@ -34,4 +35,4 @@ data class TaskApiModel(
         val taskWorkerReportApiModel: TaskWorkerReportApiModel?,
         @SerializedName("taskManagerReportView")
         val taskManagerReportModel: TaskManagerReportApiModel?,
-): Identifiable
+): IdentifiableApiModel

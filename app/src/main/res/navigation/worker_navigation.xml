@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_task_to_navigation_task_worker_report_post"
             app:destination="@id/navigation_task_worker_report_post" />
+        <action
+            android:id="@+id/action_navigation_task_worker_to_task_details_navigation"
+            app:destination="@id/task_details_navigation" />
     </fragment>
 
     <fragment
@@ -34,5 +37,6 @@
         android:name="pl.polsl.workflow.manager.client.ui.map.DestinationMapFragment"
         android:label="@string/map"
         tools:layout="@layout/fragment_destination_map" />
+    <include app:graph="@navigation/task_details_navigation" />
 
 </navigation>

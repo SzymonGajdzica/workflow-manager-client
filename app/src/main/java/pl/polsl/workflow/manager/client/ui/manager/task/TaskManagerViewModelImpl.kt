@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.Task
-import pl.polsl.workflow.manager.client.model.data.TaskState
-import pl.polsl.workflow.manager.client.model.data.state
+import pl.polsl.workflow.manager.client.model.data.TaskStatus
+import pl.polsl.workflow.manager.client.model.data.status
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.repository.GroupRepository
 import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
@@ -22,7 +22,7 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     private var allTasks: List<Task>? = null
 
-    private var selectedTaskState = TaskState.CREATED
+    private var selectedTaskStatus = TaskStatus.CREATED
 
     override val selectedGroup: MutableLiveData<Group> = MutableLiveData()
 
@@ -58,12 +58,26 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     private fun setFilteredTasks() {
         val allTasks = allTasks ?: return
-        tasks.value = allTasks.filter { it.state == selectedTaskState }.sortedBy { it.deadline }
+        tasks.value = allTasks.filter { it.status == selectedTaskStatus }.sortedBy { it.deadline }
     }
 
-    override fun taskStatusSelected(taskState: Int) {
-        this.selectedTaskState = taskState
+    override fun taskStatusSelected(taskStatus: Int) {
+        this.selectedTaskStatus = taskStatus
         setFilteredTasks()
+    }
+
+    override fun removeTask(task: Task) = launchWithLoader {
+        when(val result = taskRepository.removeTask(task)) {
+            is RepositoryResult.Success -> {
+                allTasks = allTasks?.filter { it != task }
+                setFilteredTasks()
+            }
+            is RepositoryResult.Error -> showErrorMessage(result.error)
+        }
+    }
+
+    override fun getSharedTasks(task: Task): List<Task> {
+        return allTasks?.filter { it.sharedTaskId == task.sharedTaskId } ?: listOf()
     }
 
     override fun reloadData() {

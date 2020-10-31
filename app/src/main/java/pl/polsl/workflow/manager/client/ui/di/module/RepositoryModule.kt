@@ -41,7 +41,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTaskRepository(taskApi: TaskApi, localizationApi: LocalizationApi, userApi: UserApi): TaskRepository = TaskRepositoryImpl(taskApi, localizationApi, userApi)
+    fun provideTaskRepository(taskApi: TaskApi, localizationApi: LocalizationApi, userApi: UserApi, groupApi: GroupApi): TaskRepository = TaskRepositoryImpl(taskApi, localizationApi, userApi, groupApi)
 
     @Provides
     @Singleton

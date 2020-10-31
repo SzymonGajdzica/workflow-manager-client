@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_manager.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerBinding
+import pl.polsl.workflow.manager.client.model.data.TaskStatus
+import pl.polsl.workflow.manager.client.model.data.status
+import pl.polsl.workflow.manager.client.safeValue
 import pl.polsl.workflow.manager.client.toBundle
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
-import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapterSingle
+import pl.polsl.workflow.manager.client.ui.view.*
 
 class TaskManagerFragment: BaseFragment<TaskManagerViewModel>() {
 
@@ -41,39 +42,46 @@ class TaskManagerFragment: BaseFragment<TaskManagerViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.managerTaskTaskStatusDropdown.adapter = ArrayAdapter.createFromResource(
-                view.context,
-                R.array.taskStatuses,
-                android.R.layout.simple_spinner_item
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        view.managerTaskTaskStatusDropdown.setupSimpleArrayAdapter(view.context)
+        view.managerTaskTaskStatusDropdown.arrayAdapter?.update(view.context.resources.getStringArray(R.array.taskStatuses).toList())
+        val adapter = TaskManagerListAdapter(
+                itemClickListener = ::taskSelected,
+                actionButtonClickListener = ::taskActionClicked
+        )
+        view.managerTaskTaskList.setupAdapter(adapter)
+        view.managerTaskGroupDropdown.setupSimpleArrayAdapter(view.context)
+    }
+
+    private fun taskSelected(index: Int) {
+        val task = viewModel.tasks.safeValue[index]
+        findNavController().navigate(
+                R.id.action_navigation_task_manager_to_task_details_navigation,
+                listOf(task, viewModel.getSharedTasks(task)).toBundle()
+        )
+    }
+
+    private fun taskActionClicked(index: Int) {
+        val task = viewModel.tasks.safeValue[index]
+        when(task.status) {
+            TaskStatus.CREATED -> viewModel.removeTask(task)
+            TaskStatus.FINISHED -> {
+                findNavController().navigate(
+                        R.id.action_navigation_task_manager_to_taskManagerReportPostFragment,
+                        listOf(task, viewModel.getSharedTasks(task)).toBundle()
+                )
+            }
         }
     }
 
     override fun setupObservables(viewModel: TaskManagerViewModel) {
         super.setupObservables(viewModel)
         viewModel.groups.observe { groups ->
-            val context = context
-            view?.managerTaskGroupDropdown?.adapter = if(context != null && groups != null) {
-                ArrayAdapter(context, android.R.layout.simple_spinner_item, groups.map { it.name }).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                }
-            } else null
+            val list = groups?.map { it.name } ?: listOf()
+            view?.managerTaskGroupDropdown?.arrayAdapter?.update(list)
         }
         viewModel.tasks.observe { tasks ->
-            if(tasks != null) {
-                view?.managerTaskTaskList?.setupSimpleAdapterSingle(
-                        list = tasks.map { it.name },
-                        onClick = {
-                            findNavController().navigate(
-                                    R.id.action_navigation_task_manager_to_task_details_navigation,
-                                    tasks[it].toBundle()
-                            )
-                        }
-                )
-            } else {
-                view?.managerTaskTaskList?.adapter = null
-            }
+            val list = tasks ?: listOf()
+            (view?.managerTaskTaskList?.adapter as? TaskManagerListAdapter)?.updateList(list)
         }
     }
 

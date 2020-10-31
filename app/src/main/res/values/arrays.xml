@@ -8,4 +8,9 @@
         <item>@string/accepted</item>
     </string-array>
 
+    <string-array name="workerTaskStatuses">
+        <item>@string/finished</item>
+        <item>@string/accepted</item>
+    </string-array>
+
 </resources>

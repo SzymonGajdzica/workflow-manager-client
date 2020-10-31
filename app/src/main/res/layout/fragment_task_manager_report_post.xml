@@ -45,6 +45,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskReportPostFailure"
+            android:stateListAnimator="@null"
             android:text="@string/acceptWithFix"
             app:layout_constraintTop_toTopOf="@id/managerTaskReportPostSuccess"
             app:layout_constraintStart_toStartOf="@id/managerTaskReportPostDescriptionContainer"
@@ -54,6 +55,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskReportPostSuccess"
+            android:stateListAnimator="@null"
             android:text="@string/accept"
             app:layout_constraintTop_toBottomOf="@id/managerTaskReportPostDescriptionContainer"
             app:layout_constraintEnd_toEndOf="@id/managerTaskReportPostDescriptionContainer"

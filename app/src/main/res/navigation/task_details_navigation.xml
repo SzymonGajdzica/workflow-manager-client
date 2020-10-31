@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="pl.polsl.workflow.manager.client.ui.task.details.TaskDetailsFragment"
-        android:label="TaskDetailsFragment"
+        android:label="@string/taskDetails"
         tools:layout="@layout/fragment_task_details">
         <action
             android:id="@+id/action_taskDetailsFragment_self"
@@ -27,17 +27,17 @@
     <fragment
         android:id="@+id/destinationMapFragment"
         android:name="pl.polsl.workflow.manager.client.ui.map.DestinationMapFragment"
-        android:label="fragment_destination_map"
+        android:label="@string/map"
         tools:layout="@layout/fragment_destination_map" />
     <fragment
         android:id="@+id/taskDetailsWorkerReport2"
         android:name="pl.polsl.workflow.manager.client.ui.task.details.TaskDetailsWorkerReport"
-        android:label="TaskDetailsWorkerReport"
+        android:label="@string/workerReport"
         tools:layout="@layout/fragment_task_details_worker_report"/>
     <fragment
         android:id="@+id/taskDetailsManagerReport2"
         android:name="pl.polsl.workflow.manager.client.ui.task.details.TaskDetailsManagerReport"
-        android:label="TaskDetailsManagerReport"
+        android:label="@string/managerReport"
         tools:layout="@layout/fragment_task_details_manager_report">
         <action
             android:id="@+id/action_taskDetailsManagerReport2_to_taskDetailsFragment"

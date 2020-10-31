@@ -13,6 +13,8 @@ abstract class TaskManagerViewModel(application: Application): BaseViewModel(app
     abstract val tasks: LiveData<List<Task>>
 
     abstract fun groupSelected(group: Group)
-    abstract fun taskStatusSelected(taskState: Int)
+    abstract fun taskStatusSelected(taskStatus: Int)
+    abstract fun removeTask(task: Task)
+    abstract fun getSharedTasks(task: Task): List<Task>
 
 }

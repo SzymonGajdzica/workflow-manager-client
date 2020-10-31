@@ -4,7 +4,7 @@ import pl.polsl.workflow.manager.client.model.data.*
 import pl.polsl.workflow.manager.client.model.remote.data.*
 import java.time.Instant
 
-fun TaskApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, LocalizationApiModel>, users: Map<Long, UserApiModel>): Task {
+fun TaskApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, LocalizationApiModel>, users: Map<Long, UserApiModel>, groups: Map<Long, GroupApiModel>): Task {
     return Task(
             id = id,
             assignDate = assignDate,
@@ -14,13 +14,13 @@ fun TaskApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, L
             estimatedExecutionTime = Instant.ofEpochMilli(estimatedExecutionTimeInMillis),
             localization = localizations.getValue(localizationId).map(),
             name = name,
-            superTask = tasks?.values?.find {
-                it.sharedTaskId == sharedTaskId && it.taskManagerReportModel?.fixTaskId == id
-            }?.map(tasks, localizations, users),
             startDate = startDate,
-            taskManagerReport = taskManagerReportModel?.map(tasks, localizations, users),
+            sharedTaskId = sharedTaskId,
+            isSubTask = isSubTask,
+            taskManagerReport = taskManagerReportModel?.map(tasks, localizations, users, groups),
             taskWorkerReport = taskWorkerReportApiModel?.map(),
             assignedWorker = workerId?.let { users.getValue(it) }?.map(),
+            group = groups.getValue(groupId).map(users)
     )
 }
 
@@ -33,12 +33,17 @@ fun TaskWorkerReportApiModel.map(): TaskWorkerReport {
     )
 }
 
-fun TaskManagerReportApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, LocalizationApiModel>, users: Map<Long, UserApiModel>): TaskManagerReport {
+fun TaskManagerReportApiModel.map(tasks: Map<Long, TaskApiModel>?, localizations: Map<Long, LocalizationApiModel>, users: Map<Long, UserApiModel>, groups: Map<Long, GroupApiModel>): TaskManagerReport {
     return TaskManagerReport(
             id = id,
             date = date,
             description = description,
-            fixTask = fixTaskId?.let { tasks?.getValue(it) }?.map(tasks, localizations, users)
+            fixTask = when {
+                fixTaskId == null -> null
+                tasks?.containsKey(fixTaskId) == true -> AllowableValue.Allowed(tasks.getValue(fixTaskId).map(tasks, localizations, users, groups))
+                tasks?.containsKey(fixTaskId) == false -> AllowableValue.NotAllowed(fixTaskId)
+                else -> null
+            }
     )
 }
 

@@ -1,7 +1,9 @@
 package pl.polsl.workflow.manager.client.ui.view
 
+import android.content.Context
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -15,24 +17,19 @@ import pl.polsl.workflow.manager.client.R
 import java.time.Instant
 import java.time.ZoneOffset
 
-fun RecyclerView.setupSimpleAdapterSingle(
-        @LayoutRes viewId: Int = R.layout.base_list_item,
-        list: List<String>,
-        onClick: ((Int) -> Unit)? = null
-) {
-    setupSimpleAdapter(viewId, list.map { listOf(it) }, onClick)
-}
-
 fun RecyclerView.setupSimpleAdapter(
         @LayoutRes viewId: Int = R.layout.base_list_item,
-        list: List<List<String>>,
         onClick: ((Int) -> Unit)? = null
 ) {
+    setupAdapter(SimpleAdapter(viewId, onClick))
+}
+
+fun RecyclerView.setupAdapter(mAdapter: RecyclerView.Adapter<*>) {
     val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
     setHasFixedSize(true)
     layoutManager = LinearLayoutManager(context)
     addItemDecoration(dividerItemDecoration)
-    adapter = SimpleAdapter(viewId, list, onClick)
+    adapter = mAdapter
 }
 
 fun Spinner.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
@@ -44,6 +41,24 @@ fun Spinner.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
 
         }
     }
+}
+
+fun Spinner.setupSimpleArrayAdapter(context: Context) {
+    adapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_spinner_item
+    ).apply {
+        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+val Spinner.arrayAdapter: ArrayAdapter<String>?
+    get() = adapter as? ArrayAdapter<String>
+
+fun ArrayAdapter<String>.update(collection: Collection<String>) {
+    clear()
+    addAll(collection)
 }
 
 fun Fragment.showTimePicker(tag: String, startTime: Instant?, onDateSelected: (Instant) -> Unit) {

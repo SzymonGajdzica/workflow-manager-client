@@ -16,26 +16,37 @@ class TaskManagerReportPostViewModelImpl @Inject constructor(
         private val taskRepository: TaskRepository
 ): TaskManagerReportPostViewModel(application) {
 
-    override val descriptionError: MutableLiveData<String> = MutableLiveData()
+    override val descriptionInputError: MutableLiveData<String> = MutableLiveData()
     override val task: MutableLiveData<Task> = MutableLiveData()
     override val creatingFixTask: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private var createdFixTask = false
 
     override fun acceptTask(taskManagerReportPost: TaskManagerReportPost, withFixTask: Boolean) = launchWithLoader {
         when(val result = taskRepository.sendManagerReport(taskManagerReportPost)) {
             is RepositoryResult.Success -> {
-                showToast(getString(R.string.taskAccepted))
                 if(withFixTask) {
                     creatingFixTask.value = true
-                } else
+                    createdFixTask = true
+                    creatingFixTask.value = false
+                } else {
+                    showSuccessMessage(getString(R.string.taskAccepted))
                     finishFragment()
+                }
             }
-            is RepositoryResult.Error -> showToast(result.error)
+            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
     }
 
     override fun updateArguments(bundle: Bundle) {
         super.updateArguments(bundle)
         task.value = bundle.getParcelable()
+    }
+
+    override fun reloadData() {
+        super.reloadData()
+        if(createdFixTask)
+            finishFragment()
     }
 
 

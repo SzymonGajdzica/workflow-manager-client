@@ -53,5 +53,12 @@
     <string name="taskAccepted">Task accepted</string>
     <string name="accept">Accept</string>
     <string name="acceptWithFix">Accept with fix</string>
+    <string name="createReport">Create report</string>
+    <string name="ok">OK</string>
+    <string name="error">Error</string>
+    <string name="message">Message</string>
+    <string name="delete">Delete</string>
+    <string name="taskDetails">Task details</string>
+    <string name="notAllowedToBrowseThisResource">Not allowed to see this value</string>
 
 </resources>

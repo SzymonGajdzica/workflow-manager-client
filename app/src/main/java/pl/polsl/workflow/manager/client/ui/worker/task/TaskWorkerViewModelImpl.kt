@@ -3,6 +3,8 @@ package pl.polsl.workflow.manager.client.ui.worker.task
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.model.data.Task
+import pl.polsl.workflow.manager.client.model.data.TaskStatus
+import pl.polsl.workflow.manager.client.model.data.status
 import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
 import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
 import pl.polsl.workflow.manager.client.utils.TimerHelper
@@ -14,8 +16,12 @@ class TaskWorkerViewModelImpl @Inject constructor(
     private val taskRepository: TaskRepository
 ): TaskWorkerViewModel(application) {
 
+    private var allTasks: List<Task>? = null
+    override val tasks: MutableLiveData<List<Task>> = MutableLiveData()
     override val task: MutableLiveData<Task> = MutableLiveData()
     override val remainingTime: MutableLiveData<Instant> = MutableLiveData()
+
+    private var selectedTaskStatus = TaskStatus.FINISHED
 
     init {
         TimerHelper.register(this, ::updateRemainingTime)
@@ -33,23 +39,51 @@ class TaskWorkerViewModelImpl @Inject constructor(
         getNextTask(true)
     }
 
+    override fun getSharedTasks(task: Task): List<Task> {
+        return allTasks?.filter { it.sharedTaskId == task.sharedTaskId } ?: listOf()
+    }
+
+    override fun taskStatusSelected(taskStatus: Int) = launchWithLoader {
+        selectedTaskStatus = taskStatus
+        setFilteredTasks()
+    }
+
     private suspend fun getNextTask(autoStart: Boolean) {
         when(val result = taskRepository.getNextTask(autoStart)) {
             is RepositoryResult.Success -> task.value = result.data
-            is RepositoryResult.Error -> showToast(result.error)
+            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
+    }
+
+    private fun loadTasks() = launchWithLoader {
+        allTasks = null
+        tasks.value = null
+        when(val result = taskRepository.getWorkerTasks()) {
+            is RepositoryResult.Success -> {
+                allTasks = result.data
+                setFilteredTasks()
+            }
+            is RepositoryResult.Error -> showError(result.error)
+        }
+    }
+
+    private fun setFilteredTasks() {
+        val allTasks = allTasks ?: return
+        tasks.value = allTasks.filter { it.status == selectedTaskStatus }.sortedBy { it.deadline }
     }
 
     override fun reloadData() {
         super.reloadData()
         loadTask()
+        if(allTasks == null)
+            loadTasks()
     }
 
     private fun updateRemainingTime() {
         remainingTime.value = task.value?.let { task ->
             val startDate = task.startDate
             if(startDate != null)
-                task.startDate.plusMillis(task.estimatedExecutionTime.toEpochMilli())?.minusMillis(Instant.now().toEpochMilli())
+                startDate.plusMillis(task.estimatedExecutionTime.toEpochMilli()).minusMillis(Instant.now().toEpochMilli())
             else
                 task.estimatedExecutionTime
         }

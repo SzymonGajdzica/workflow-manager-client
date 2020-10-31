@@ -8,9 +8,12 @@ import java.time.Instant
 
 abstract class TaskWorkerViewModel(application: Application): BaseViewModel(application) {
 
+    abstract val tasks: LiveData<List<Task>>
     abstract val task: LiveData<Task>
     abstract val remainingTime: LiveData<Instant>
 
     abstract fun startTask()
+    abstract fun taskStatusSelected(taskStatus: Int)
+    abstract fun getSharedTasks(task: Task): List<Task>
 
 }

@@ -43,10 +43,10 @@ class TaskManagerPostViewModelImpl @Inject constructor(
             return@launchWithLoader
         when (val result = taskRepository.addTask(taskPost)) {
             is RepositoryResult.Success -> {
-                showToast(getString(R.string.taskCreated))
+                showSuccessMessage(getString(R.string.taskCreated))
                 finishFragment()
             }
-            is RepositoryResult.Error -> showToast(result.error)
+            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
     }
 

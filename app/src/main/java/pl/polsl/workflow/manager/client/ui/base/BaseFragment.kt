@@ -3,7 +3,6 @@ package pl.polsl.workflow.manager.client.ui.base
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -14,8 +13,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.showToast
+import pl.polsl.workflow.manager.client.ui.account.AccountViewModel
 import pl.polsl.workflow.manager.client.ui.login.LoginActivity
+import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
 import javax.inject.Inject
 
 abstract class BaseFragment<T: BaseViewModel>: Fragment() {
@@ -27,9 +27,9 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.clearMessages()
         activity?.intent?.let { viewModel.updateSharedArguments(it) }
         arguments?.let { viewModel.updateArguments(it) }
-        viewModel.clearErrorMessages()
         setupViews(view)
         setupOnLayoutInteractions(view)
         setupObservables(viewModel)
@@ -77,7 +77,12 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
 
     open fun setupObservables(viewModel: T) {
         viewModel.errorMessage.observe {
-            showToast(it)
+            if(it != null)
+                showErrorMessage(it)
+        }
+        viewModel.successMessage.observe {
+            if(it != null)
+                showSuccessMessage(it)
         }
         viewModel.error.observe {
             view?.findViewById<MaterialTextView>(R.id.reloadText)?.text = buildString {
@@ -95,12 +100,14 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         }
     }
 
-    protected fun showToast(@StringRes resId: Int) {
-        context?.showToast(resId)
+    protected fun showSuccessMessage(description: String) {
+        val context = context ?: return
+        SimpleDialog.create(context.getString(R.string.success), description).show(parentFragmentManager, "SuccessMessageFragment")
     }
 
-    protected fun showToast(text: String?) {
-        text?.let { context?.showToast(it) }
+    protected fun showErrorMessage(description: String) {
+        val context = context ?: return
+        SimpleDialog.create(context.getString(R.string.failure), description).show(parentFragmentManager, "ErrorMessageFragment")
     }
 
     protected fun logout() {

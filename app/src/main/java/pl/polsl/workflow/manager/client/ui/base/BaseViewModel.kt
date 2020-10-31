@@ -10,31 +10,34 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.remote.repositoryMessage
 import pl.polsl.workflow.manager.client.utils.DelayedValueChanger
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 
+
     private val mShouldFinish: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mErrorString: MutableLiveData<String> = MutableLiveData<String>(null)
     private val mErrorMessage: MutableLiveData<String> = MutableLiveData<String>(null)
+    private val mSuccessMessage: MutableLiveData<String> = MutableLiveData<String>(null)
 
     val shouldFinish: LiveData<Boolean> = mShouldFinish
     val loading: LiveData<Boolean> = mLoading
     val error: LiveData<String> = mErrorString
     val errorMessage: LiveData<String> = mErrorMessage
+    val successMessage: LiveData<String> = mSuccessMessage
 
     private val delayedValueChanger = DelayedValueChanger(viewModelScope, 200L, mLoading)
 
-    fun clearErrorMessages() {
-        mErrorMessage.value = null
-    }
-
     fun clearErrorString() {
         mErrorString.value = null
+    }
+
+    fun clearMessages() {
+        mErrorMessage.value = null
+        mSuccessMessage.value = null
     }
 
     open fun updateSharedArguments(intent: Intent) {
@@ -65,16 +68,19 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
         mShouldFinish.value = true
     }
 
-    protected fun showToast(text: String) {
+    protected fun showSuccessMessage(text: String) {
+        mSuccessMessage.value = text
+    }
+
+    protected fun showErrorMessage(text: String) {
         mErrorMessage.value = text
     }
 
-    protected fun showToast(e: Throwable) {
-        showToast(e.repositoryMessage ?: getString(R.string.unknownError))
+    protected fun showErrorMessage(e: Throwable) {
+        showErrorMessage(e.repositoryMessage ?: getString(R.string.unknownError))
     }
 
     protected fun showError(errorText: String) {
-        App.log("Error", errorText)
         mErrorString.value = errorText
     }
 
@@ -82,5 +88,7 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
         e.printStackTrace()
         showError(e.repositoryMessage ?: getString(R.string.unknownError))
     }
+
+
 
 }
