@@ -2,13 +2,13 @@ package pl.polsl.workflow.manager.client.ui.manager.task
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
 import pl.polsl.workflow.manager.client.model.data.status
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.GroupRepository
-import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
+import pl.polsl.workflow.manager.client.model.repository.GroupRepository
+import pl.polsl.workflow.manager.client.model.repository.TaskRepository
 import javax.inject.Inject
 
 class TaskManagerViewModelImpl @Inject constructor(
@@ -82,10 +82,7 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     override fun reloadData() {
         super.reloadData()
-        if(groups.value == null)
-            loadGroups()
-        else if(tasks.value == null)
-            loadTasks()
+        loadGroups()
     }
 
 

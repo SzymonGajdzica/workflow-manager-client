@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.login_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 import pl.polsl.workflow.manager.client.App
-import pl.polsl.workflow.manager.client.databinding.LoginFragmentBinding
-import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.databinding.FragmentLoginBinding
 import pl.polsl.workflow.manager.client.model.data.destinationActivityClass
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
 
-    private lateinit var viewDataBinding: LoginFragmentBinding
+    private lateinit var viewDataBinding: FragmentLoginBinding
 
     override val viewModel: LoginViewModel
         get() = viewDataBinding.viewModel ?: throw IllegalStateException()
@@ -24,7 +24,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = LoginFragmentBinding.inflate(inflater, container, false).apply {
+        viewDataBinding = FragmentLoginBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
         }
@@ -63,6 +63,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         }
         viewModel.user.safeObserve {
             activity?.run {
+                (application as App).clearDependencies()
                 val intent = Intent(this, it.destinationActivityClass).apply {
                     putExtra("user", it)
                 }

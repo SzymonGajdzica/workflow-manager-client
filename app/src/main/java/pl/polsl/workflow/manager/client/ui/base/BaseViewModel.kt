@@ -11,8 +11,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.model.remote.repositoryMessage
-import pl.polsl.workflow.manager.client.utils.DelayedValueChanger
+import pl.polsl.workflow.manager.client.model.repositoryMessage
+import pl.polsl.workflow.manager.client.util.DelayedValueChanger
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 

@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.ui.base.BaseViewModel
-import pl.polsl.workflow.manager.client.utils.TimerHelper
-import pl.polsl.workflow.manager.client.utils.TokenHolder
+import pl.polsl.workflow.manager.client.util.TimerHelper
+import pl.polsl.workflow.manager.client.util.token.TokenHolder
 import java.time.Instant
 
 abstract class AccountViewModel(

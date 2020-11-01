@@ -12,9 +12,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.getParcelable
-import pl.polsl.workflow.manager.client.hasPermission
 import pl.polsl.workflow.manager.client.model.data.Localization
+import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.hasPermission
 
 class DestinationMapFragment : Fragment(), OnMapReadyCallback {
 

@@ -8,9 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_task_details_worker_report.view.*
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.formatDate
-import pl.polsl.workflow.manager.client.getParcelable
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
+import pl.polsl.workflow.manager.client.util.extension.formatDate
+import pl.polsl.workflow.manager.client.util.extension.getParcelable
 
 class TaskDetailsWorkerReport: Fragment() {
 

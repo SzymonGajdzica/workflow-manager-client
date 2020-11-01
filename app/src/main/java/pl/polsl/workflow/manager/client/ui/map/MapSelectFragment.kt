@@ -16,10 +16,10 @@ import com.google.android.gms.maps.model.Marker
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentMapSelectBinding
-import pl.polsl.workflow.manager.client.hasPermission
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
+import pl.polsl.workflow.manager.client.util.extension.hasPermission
 
 class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback {
 

@@ -2,9 +2,9 @@ package pl.polsl.workflow.manager.client.ui.map
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Localization
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.LocalizationRepository
+import pl.polsl.workflow.manager.client.model.repository.LocalizationRepository
 import javax.inject.Inject
 
 class MapSelectViewModelImpl @Inject constructor(
@@ -24,8 +24,7 @@ class MapSelectViewModelImpl @Inject constructor(
 
     override fun reloadData() {
         super.reloadData()
-        if(localizations.value == null)
-            loadLocalizations()
+        loadLocalizations()
     }
 
 }

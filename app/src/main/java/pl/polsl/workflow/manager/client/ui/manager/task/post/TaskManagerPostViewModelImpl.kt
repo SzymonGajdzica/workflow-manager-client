@@ -4,12 +4,12 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.getParcelable
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskPost
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
+import pl.polsl.workflow.manager.client.model.repository.TaskRepository
+import pl.polsl.workflow.manager.client.util.extension.getParcelable
 import java.time.Instant
 import javax.inject.Inject
 

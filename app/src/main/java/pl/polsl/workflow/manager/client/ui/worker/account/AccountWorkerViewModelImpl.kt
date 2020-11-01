@@ -2,10 +2,10 @@ package pl.polsl.workflow.manager.client.ui.worker.account
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Group
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.GroupRepository
-import pl.polsl.workflow.manager.client.utils.TokenHolder
+import pl.polsl.workflow.manager.client.model.repository.GroupRepository
+import pl.polsl.workflow.manager.client.util.token.TokenHolder
 import javax.inject.Inject
 
 class AccountWorkerViewModelImpl @Inject constructor(
@@ -25,8 +25,7 @@ class AccountWorkerViewModelImpl @Inject constructor(
 
     override fun reloadData() {
         super.reloadData()
-        if(group.value == null)
-            loadAccountDetails()
+        loadAccountDetails()
     }
 
 }

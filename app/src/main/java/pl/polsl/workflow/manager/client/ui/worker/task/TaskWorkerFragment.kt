@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_worker.view.*
-import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.App
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerBinding
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.safeValue
+import pl.polsl.workflow.manager.client.util.extension.toBundle
+import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
 class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
 

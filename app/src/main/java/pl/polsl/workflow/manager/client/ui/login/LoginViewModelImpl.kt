@@ -3,12 +3,12 @@ package pl.polsl.workflow.manager.client.ui.login
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.User
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.AuthenticationRepository
-import pl.polsl.workflow.manager.client.model.remote.repository.UserRepository
-import pl.polsl.workflow.manager.client.utils.TokenHolder
+import pl.polsl.workflow.manager.client.model.repository.AuthenticationRepository
+import pl.polsl.workflow.manager.client.model.repository.UserRepository
+import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
+import pl.polsl.workflow.manager.client.util.token.TokenHolder
 import javax.inject.Inject
 
 class LoginViewModelImpl @Inject constructor(
@@ -30,7 +30,7 @@ class LoginViewModelImpl @Inject constructor(
                 tokenHolder.token = result.data
                 updateLoggedUserDetails()
             }
-            is RepositoryResult.Error -> showError(result.error)
+            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
     }
 

@@ -5,14 +5,14 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.getParcelable
-import pl.polsl.workflow.manager.client.hasLocationPermission
+import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
 import pl.polsl.workflow.manager.client.model.data.checkDistance
-import pl.polsl.workflow.manager.client.model.remote.RepositoryResult
-import pl.polsl.workflow.manager.client.model.remote.repository.TaskRepository
-import pl.polsl.workflow.manager.client.utils.LocationReader
+import pl.polsl.workflow.manager.client.model.repository.TaskRepository
+import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
+import pl.polsl.workflow.manager.client.util.location.LocationReader
 import javax.inject.Inject
 
 class TaskWorkerReportPostViewModelImpl @Inject constructor(

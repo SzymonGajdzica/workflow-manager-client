@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
-import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.getSuperTask
 import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
-import pl.polsl.workflow.manager.client.utils.TimerHelper
+import pl.polsl.workflow.manager.client.util.TimerHelper
+import pl.polsl.workflow.manager.client.util.extension.*
 import java.time.Instant
 
 class TaskDetailsFragment: Fragment() {

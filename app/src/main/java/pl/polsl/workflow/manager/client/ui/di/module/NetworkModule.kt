@@ -11,8 +11,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.model.data.checkedToken
-import pl.polsl.workflow.manager.client.utils.TokenHolder
-import pl.polsl.workflow.manager.client.utils.TokenHolderImpl
+import pl.polsl.workflow.manager.client.util.token.TokenHolder
+import pl.polsl.workflow.manager.client.util.token.TokenHolderImpl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -39,6 +39,7 @@ class NetworkModule {
 
             val request = requestBuilder
                 .build()
+            //SystemClock.sleep(1000)
             App.log("url = ", request.url().url())
             chain.proceed(request)
         }

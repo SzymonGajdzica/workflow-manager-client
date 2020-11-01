@@ -10,9 +10,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_worker.*
 import pl.polsl.workflow.manager.client.R
-import pl.polsl.workflow.manager.client.hasLocationPermission
-import pl.polsl.workflow.manager.client.utils.LocationReader
-import pl.polsl.workflow.manager.client.utils.LocationReaderImpl
+import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
+import pl.polsl.workflow.manager.client.util.location.LocationReader
+import pl.polsl.workflow.manager.client.util.location.LocationReaderImpl
 
 class WorkerActivity : AppCompatActivity() {
 

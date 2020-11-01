@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details_manager_report.view.*
-import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReport
 import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
+import pl.polsl.workflow.manager.client.util.extension.formatDate
+import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.getParcelableList
+import pl.polsl.workflow.manager.client.util.extension.toBundle
 
 class TaskDetailsManagerReport: Fragment() {
 

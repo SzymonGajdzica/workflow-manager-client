@@ -8,10 +8,15 @@ import pl.polsl.workflow.manager.client.ui.di.module.AppModule
 
 class App: MultiDexApplication() {
 
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.builder()
+    private var mAppComponent: AppComponent? = null
+
+    val appComponent: AppComponent
+        get() = mAppComponent ?: DaggerAppComponent.builder()
                 .appModule(AppModule(this))
-                .build()
+                .build().also { mAppComponent = it }
+
+    fun clearDependencies() {
+        mAppComponent = null
     }
 
     companion object {

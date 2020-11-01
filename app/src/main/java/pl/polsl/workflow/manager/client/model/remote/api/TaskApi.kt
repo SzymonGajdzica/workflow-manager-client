@@ -1,6 +1,7 @@
 package pl.polsl.workflow.manager.client.model.remote.api
 
 import pl.polsl.workflow.manager.client.model.remote.data.*
+import retrofit2.Response
 import retrofit2.http.*
 
 interface TaskApi {
@@ -21,7 +22,7 @@ interface TaskApi {
     suspend fun addTask(@Body taskApiModelPost: TaskApiModelPost): TaskApiModel
 
     @DELETE("task/{taskId}/")
-    suspend fun removeTask(@Path("taskId") taskId: Long)
+    suspend fun removeTask(@Path("taskId") taskId: Long): Response<Unit>
 
     @GET("task/manager/{groupId}/")
     suspend fun getTasks(@Path("groupId") groupId: Long): List<TaskApiModel>

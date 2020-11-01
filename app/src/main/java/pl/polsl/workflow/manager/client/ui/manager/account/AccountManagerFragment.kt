@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_account_manager.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountManagerBinding
-import pl.polsl.workflow.manager.client.toHoursMinutesSeconds
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
 class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
 

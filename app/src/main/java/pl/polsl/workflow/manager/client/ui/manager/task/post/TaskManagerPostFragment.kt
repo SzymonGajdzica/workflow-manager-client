@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_task_manager_post.view.*
-import pl.polsl.workflow.manager.client.*
+import pl.polsl.workflow.manager.client.App
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.formatDate
+import pl.polsl.workflow.manager.client.util.extension.safeValue
+import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
 class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
