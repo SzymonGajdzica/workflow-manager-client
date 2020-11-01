@@ -13,37 +13,27 @@ class QuickList<T: IdentifiableApiModel>(
     private val map: HashMap<Long, T> = HashMap(mList.toMap())
 
     fun contains(id: Long): Boolean {
-        synchronized(this) {
-            return map.containsKey(id)
-        }
+        return map.containsKey(id)
     }
 
     fun getItem(id: Long): T {
-        synchronized(this) {
-            return map.getValue(id)
-        }
+        return map.getValue(id)
     }
 
     fun getAll(): List<T> {
-        synchronized(this) {
-            return mList
-        }
+        return mList
     }
 
     fun addItem(item: T) {
-        synchronized(this) {
-            if(map.containsKey(item.id))
-                mList.remove(item)
-            mList.add(item)
-            map[item.id] = item
-        }
+        if(map.containsKey(item.id))
+            mList.remove(item)
+        mList.add(item)
+        map[item.id] = item
     }
 
     fun removeItem(id: Long) {
-        synchronized(this) {
-            map.remove(id)?.let {
-                mList.remove(it)
-            }
+        map.remove(id)?.let {
+            mList.remove(it)
         }
     }
 

@@ -34,19 +34,13 @@ open class CachedLazyList<T: IdentifiableApiModel>(
     }
 
     protected open suspend fun loadData(): QuickList<T> {
-        loadTask?.let {
-            return it.await()
-        }
+        loadTask?.let { return it.await() }
         clear()
         val loadTask = GlobalScope.async {
-            QuickList(dateGetter()).also {
-                items = it
-            }
+            QuickList(dateGetter()).also { items = it }
         }
         this.loadTask = loadTask
-        return loadTask.await().also {
-            this.loadTask = null
-        }
+        return loadTask.await().also { this.loadTask = null }
     }
 
     override fun supplyItem(item: T) {
