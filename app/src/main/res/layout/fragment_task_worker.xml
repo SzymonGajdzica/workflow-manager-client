@@ -124,16 +124,16 @@
             android:layout_height="0dp"/>
 
         <include
-            android:id="@+id/workerTaskFailedToLoadView"
-            layout="@layout/failed_to_load_view"
-            tools:visibility="gone"
-            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
-
-        <include
             android:id="@+id/workerTaskLoadingView"
             layout="@layout/loading_view"
             tools:visibility="gone"
             android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/workerTaskFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

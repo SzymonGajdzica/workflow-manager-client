@@ -43,8 +43,8 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         return ViewModelProvider(this, viewModelFactory).get()
     }
 
-    protected inline fun<reified T: ViewModel> createSharedViewModel(): T {
-        return ViewModelProvider(requireActivity()).get(T::class.java)
+    protected inline fun<reified T: ViewModel> createSharedViewModel(): T? {
+        return activity?.let { ViewModelProvider(it).get(T::class.java) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

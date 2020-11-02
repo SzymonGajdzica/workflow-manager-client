@@ -82,7 +82,6 @@ class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback 
         googleMap.uiSettings.apply {
             isCompassEnabled = true
             isMyLocationButtonEnabled = true
-            isMapToolbarEnabled = true
         }
         if(context?.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true)
             googleMap.isMyLocationEnabled = true

@@ -7,15 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_groups_coordinator"
-        android:name="pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorFragment"
         android:label="@string/groups"
         tools:layout="@layout/fragment_groups_coordinator" />
 
     <fragment
         android:id="@+id/navigation_localizations_coordinator"
-        android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorFragment"
         android:label="@string/localizations"
-        tools:layout="@layout/fragment_localizations_coordinator" />
+        tools:layout="@layout/fragment_localizations_coordinator" >
+        <action
+            android:id="@+id/action_navigation_localizations_coordinator_to_localizationCoordinatorPostFragment"
+            app:destination="@id/localizationCoordinatorPostFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_account_coordinator"
@@ -31,4 +35,9 @@
         android:name="pl.polsl.workflow.manager.client.ui.coordinator.account.post.AccountCoordinatorPostFragment"
         android:label="@string/createUser"
         tools:layout="@layout/fragment_account_coordinator_post"/>
+    <fragment
+        android:id="@+id/localizationCoordinatorPostFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostFragment"
+        android:label="@string/createLocalization"
+        tools:layout="@layout/fragment_localizations_coordinator_post"/>
 </navigation>

@@ -74,5 +74,8 @@
     <string name="userEnabled">User enabled</string>
     <string name="userCreated">User created</string>
     <string name="createUser">Create user</string>
+    <string name="addLocalization">Add localization</string>
+    <string name="localizationCreated">Localization created</string>
+    <string name="createLocalization">Create localization</string>
 
 </resources>

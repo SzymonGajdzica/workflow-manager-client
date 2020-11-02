@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.coordinator.localization.post.LocalizationCoordinatorPostFragment">
+
+        <fragment
+            android:id="@+id/coordinatorLocalizationPostMapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            android:id="@+id/coordinatorLocalizationPostLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/coordinatorLocalizationPostFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

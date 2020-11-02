@@ -14,6 +14,10 @@ fun LatLng.toGoogleLatLng(): com.google.android.gms.maps.model.LatLng {
     return com.google.android.gms.maps.model.LatLng(latitude, longitude)
 }
 
+fun com.google.android.gms.maps.model.LatLng.toLatLng(): LatLng {
+    return LatLng(latitude, longitude)
+}
+
 fun GoogleMap.addLocalization(context: Context, localization: Localization): Marker {
     val marker = addMarker(
         MarkerOptions()
