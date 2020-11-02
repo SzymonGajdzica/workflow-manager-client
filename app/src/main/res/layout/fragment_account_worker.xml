@@ -168,16 +168,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/workerAccountLogoutButton"
-            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
-            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:text="@string/logout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
         <include
             android:id="@+id/workerAccountLoadingView"
             layout="@layout/loading_view"
@@ -189,6 +179,16 @@
             layout="@layout/failed_to_load_view"
             tools:visibility="gone"
             android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/workerAccountLogoutButton"
+            app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

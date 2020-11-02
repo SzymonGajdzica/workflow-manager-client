@@ -26,7 +26,7 @@ class QuickList<T: IdentifiableApiModel>(
 
     fun addItem(item: T) {
         if(map.containsKey(item.id))
-            mList.remove(item)
+            mList.removeAll { item.id == it.id }
         mList.add(item)
         map[item.id] = item
     }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_groups_coordinator"
+        android:icon="@drawable/ic_baseline_groups_24"
+        android:title="@string/groups" />
+
+    <item
+        android:id="@+id/navigation_localizations_coordinator"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/localizations" />
+
+    <item
+        android:id="@+id/navigation_account_coordinator"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/account" />
+
+</menu>

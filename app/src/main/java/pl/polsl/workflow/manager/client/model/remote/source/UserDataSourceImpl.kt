@@ -2,6 +2,7 @@ package pl.polsl.workflow.manager.client.model.remote.source
 
 import pl.polsl.workflow.manager.client.model.remote.api.UserApi
 import pl.polsl.workflow.manager.client.model.remote.data.UserApiModel
+import pl.polsl.workflow.manager.client.model.remote.data.UserApiModelPatch
 import pl.polsl.workflow.manager.client.model.remote.data.UserApiModelPost
 import pl.polsl.workflow.manager.client.util.lazy.list.ExpirableCachedLazyList
 import pl.polsl.workflow.manager.client.util.lazy.list.LazyList
@@ -28,4 +29,11 @@ class UserDataSourceImpl(
             lazyList.supplyItem(it)
         }
     }
+
+    override suspend fun updateUser(userId: Long, userApiModelPatch: UserApiModelPatch): UserApiModel {
+        return userApi.updateUser(userId, userApiModelPatch).also {
+            lazyList.supplyItem(it)
+        }
+    }
+
 }

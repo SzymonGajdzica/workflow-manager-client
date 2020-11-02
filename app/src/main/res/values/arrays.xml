@@ -13,4 +13,9 @@
         <item>@string/accepted</item>
     </string-array>
 
+    <string-array name="coordinatorAccountRoles">
+        <item>@string/worker</item>
+        <item>@string/manager</item>
+    </string-array>
+
 </resources>

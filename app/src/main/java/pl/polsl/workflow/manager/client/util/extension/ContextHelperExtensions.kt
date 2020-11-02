@@ -1,7 +1,9 @@
 package pl.polsl.workflow.manager.client.util.extension
 
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
@@ -17,4 +19,9 @@ fun Context.hasLocationPermission(): Boolean {
     return ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 }
 
-
+fun Activity.hideKeyboard() {
+    this.currentFocus?.also { view ->
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}

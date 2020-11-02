@@ -4,6 +4,14 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorViewModelImpl
+import pl.polsl.workflow.manager.client.ui.coordinator.account.post.AccountCoordinatorPostViewModelImpl
+import pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorViewModel
+import pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorViewModelImpl
+import pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorViewModelImpl_Factory
+import pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorViewModel
+import pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorViewModelImpl
+import pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorViewModelImpl_Factory
 import pl.polsl.workflow.manager.client.ui.di.base.ViewModelKey
 import pl.polsl.workflow.manager.client.ui.di.base.ViewModelModule
 import pl.polsl.workflow.manager.client.ui.login.LoginViewModelImpl
@@ -63,5 +71,27 @@ abstract class ViewModelModules {
     @IntoMap
     @ViewModelKey(TaskWorkerViewModelImpl::class)
     abstract fun bindsTaskWorkerViewModel(taskWorkerViewModelImpl: TaskWorkerViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AccountCoordinatorViewModelImpl::class)
+    abstract fun bindsAccountCoordinatorViewModel(AccountCoordinatorViewModelImpl: AccountCoordinatorViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LocalizationCoordinatorViewModelImpl::class)
+    abstract fun bindsLocalizationCoordinatorViewModel(localizationCoordinatorViewModelImpl: LocalizationCoordinatorViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GroupCoordinatorViewModelImpl::class)
+    abstract fun bindsGroupCoordinatorViewModel(groupCoordinatorViewModelImpl: GroupCoordinatorViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AccountCoordinatorPostViewModelImpl::class)
+    abstract fun bindsAccountCoordinatorPostViewModel(accountCoordinatorPostViewModelImpl: AccountCoordinatorPostViewModelImpl): ViewModel
+
+
 
 }

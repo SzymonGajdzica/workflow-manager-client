@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.coordinator.account.AccountCoordinatorFragment">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/coordinatorAccountUsername"
+            android:text='@{viewModel.user.username}'
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="Bolek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/coordinatorAccountUsernameSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUsername"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/coordinatorAccountSeparatorUsername"
+            android:layout_marginTop="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUsernameSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <Spinner
+            android:id="@+id/coordinatorAccountUserRoleDropdown"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountSeparatorUsername"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/coordinatorAccountUsers"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUserRoleDropdown"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorAccountUsersSubTitle"
+            android:background="@color/listBackgroundColor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/coordinatorAccountAddUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/addUser"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/coordinatorAccountUsers"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsers"
+            app:srcCompat="@drawable/ic_baseline_add_24"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/coordinatorAccountUsersSubTitle"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorAccountSeparatorRemainingSessionTime"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/users"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/coordinatorAccountSeparatorRemainingSessionTime"
+            android:layout_marginBottom="4dp"
+            android:background="@color/separatorColor"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorAccountRemainingSessionTime"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/coordinatorAccountRemainingSessionTime"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorAccountRemainingSessionTimeSubTitle"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            tools:text="10:20:30"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/coordinatorAccountRemainingSessionTimeSubTitle"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorAccountLogoutButton"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            android:textAppearance="?attr/textAppearanceSubtitle2"
+            android:text="@string/remainingSessionTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <include
+            android:id="@+id/coordinatorAccountLoadingView"
+            layout="@layout/loading_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"/>
+
+        <include
+            android:id="@+id/coordinatorAccountFailedToLoadView"
+            layout="@layout/failed_to_load_view"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.error != null ? View.VISIBLE : View.GONE}"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/coordinatorAccountLogoutButton"
+            app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

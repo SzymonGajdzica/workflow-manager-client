@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_groups_coordinator">
+
+    <fragment
+        android:id="@+id/navigation_groups_coordinator"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorFragment"
+        android:label="@string/groups"
+        tools:layout="@layout/fragment_groups_coordinator" />
+
+    <fragment
+        android:id="@+id/navigation_localizations_coordinator"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorFragment"
+        android:label="@string/localizations"
+        tools:layout="@layout/fragment_localizations_coordinator" />
+
+    <fragment
+        android:id="@+id/navigation_account_coordinator"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account_coordinator" >
+        <action
+            android:id="@+id/action_navigation_account_coordinator_to_accountCoordinatorPostFragment"
+            app:destination="@id/accountCoordinatorPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountCoordinatorPostFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.account.post.AccountCoordinatorPostFragment"
+        android:label="@string/createUser"
+        tools:layout="@layout/fragment_account_coordinator_post"/>
+</navigation>

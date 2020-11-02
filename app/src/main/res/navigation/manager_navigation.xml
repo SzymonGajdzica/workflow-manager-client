@@ -36,11 +36,6 @@
         android:name="pl.polsl.workflow.manager.client.ui.manager.account.AccountManagerFragment"
         android:label="@string/account"
         tools:layout="@layout/fragment_account_manager" />
-    <fragment
-        android:id="@+id/mapSelectFragment"
-        android:name="pl.polsl.workflow.manager.client.ui.map.MapSelectFragment"
-        android:label="@string/selectLocalization"
-        tools:layout="@layout/fragment_map_select" />
     <include app:graph="@navigation/task_details_navigation" />
 
     <fragment
@@ -52,5 +47,10 @@
             android:id="@+id/action_taskManagerReportPostFragment_to_navigation_task_manager_post"
             app:destination="@id/navigation_task_manager_post" />
     </fragment>
+    <fragment
+        android:id="@+id/mapSelectFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.map.MapSelectFragment"
+        android:label="@string/selectLocalization"
+        tools:layout="@layout/fragment_map_select"/>
 
 </navigation>

@@ -2,6 +2,7 @@ package pl.polsl.workflow.manager.client.model.repository
 
 import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.User
+import pl.polsl.workflow.manager.client.model.data.UserPatch
 import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.model.mapper.map
 import pl.polsl.workflow.manager.client.model.remote.source.UserDataSource
@@ -21,6 +22,10 @@ class UserRepositoryImpl(
 
     override suspend fun createUser(userPost: UserPost): RepositoryResult<User> = safeCall {
         userDataSource.createUser(userPost.map()).map()
+    }
+
+    override suspend fun updateUser(user: User, userPatch: UserPatch) = safeCall {
+        userDataSource.updateUser(user.id, userPatch.map()).map()
     }
 
 }

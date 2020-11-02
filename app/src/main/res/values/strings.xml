@@ -60,5 +60,19 @@
     <string name="delete">Delete</string>
     <string name="taskDetails">Task details</string>
     <string name="notAllowedToBrowseThisResource">Not allowed to see this value</string>
+    <string name="title_activity_coordinator">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="groups">Groups</string>
+    <string name="localizations">Localizations</string>
+    <string name="users">Users</string>
+    <string name="addUser">Add user</string>
+    <string name="worker">Worker</string>
+    <string name="manager">Manager</string>
+    <string name="userDisabled">User disabled</string>
+    <string name="userEnabled">User enabled</string>
+    <string name="userCreated">User created</string>
+    <string name="createUser">Create user</string>
 
 </resources>

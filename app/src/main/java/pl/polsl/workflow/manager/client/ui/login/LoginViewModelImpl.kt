@@ -9,13 +9,15 @@ import pl.polsl.workflow.manager.client.model.repository.AuthenticationRepositor
 import pl.polsl.workflow.manager.client.model.repository.UserRepository
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 import pl.polsl.workflow.manager.client.util.token.TokenHolder
+import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
 
 class LoginViewModelImpl @Inject constructor(
         private val app: Application,
         private val authenticationRepository: AuthenticationRepository,
         private val userRepository: UserRepository,
-        private val tokenHolder: TokenHolder
+        private val tokenHolder: TokenHolder,
+        private val inputValidator: InputValidator
 ): LoginViewModel(app) {
 
     override val user: MutableLiveData<User> = MutableLiveData()
@@ -35,14 +37,8 @@ class LoginViewModelImpl @Inject constructor(
     }
 
     private fun validate(username: String, password: String): Boolean {
-        usernameInputError.value = if(username.isBlank())
-            getString(R.string.cannotBeBlank)
-        else null
-        passwordInputError.value = when {
-            password.length < 3 -> getString(R.string.passwordToShort)
-            password.isBlank() -> getString(R.string.cannotBeBlank)
-            else -> null
-        }
+        usernameInputError.value = inputValidator.validateUsername(username)
+        passwordInputError.value = inputValidator.validatePassword(password)
         return passwordInputError.value == null && usernameInputError.value == null
     }
 

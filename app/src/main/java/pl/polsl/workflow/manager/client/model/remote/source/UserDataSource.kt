@@ -1,6 +1,7 @@
 package pl.polsl.workflow.manager.client.model.remote.source
 
 import pl.polsl.workflow.manager.client.model.remote.data.UserApiModel
+import pl.polsl.workflow.manager.client.model.remote.data.UserApiModelPatch
 import pl.polsl.workflow.manager.client.model.remote.data.UserApiModelPost
 import pl.polsl.workflow.manager.client.util.lazy.list.LazyList
 
@@ -11,5 +12,7 @@ interface UserDataSource {
     fun getAllUsers(): LazyList<UserApiModel>
 
     suspend fun createUser(userApiModelPost: UserApiModelPost): UserApiModel
+
+    suspend fun updateUser(userId: Long, userApiModelPatch: UserApiModelPatch): UserApiModel
 
 }

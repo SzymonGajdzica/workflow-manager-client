@@ -13,12 +13,14 @@ import pl.polsl.workflow.manager.client.model.repository.TaskRepository
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 import pl.polsl.workflow.manager.client.util.location.LocationReader
+import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
 
 class TaskWorkerReportPostViewModelImpl @Inject constructor(
         private val app: Application,
         private val taskRepository: TaskRepository,
-        private val locationReader: LocationReader
+        private val locationReader: LocationReader,
+        private val inputValidator: InputValidator
 ): TaskWorkerReportPostViewModel(app) {
 
     override val task: MutableLiveData<Task> = MutableLiveData()
@@ -26,9 +28,8 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
 
     @SuppressLint("MissingPermission")
     override fun sendReport(taskWorkerReportPost: TaskWorkerReportPost) = launchWithLoader {
-        if (taskWorkerReportPost.description.isBlank())
-            descriptionInputError.value = getString(R.string.cannotBeBlank)
-        else {
+        descriptionInputError.value = inputValidator.validateBlankText(taskWorkerReportPost.description)
+        if(descriptionInputError.value == null) {
             descriptionInputError.value = null
             val currentLatLng = if (app.hasLocationPermission())
                 locationReader.getLastLatLng()

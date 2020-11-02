@@ -15,5 +15,14 @@ object Role {
         }
     }
 
+    fun toString(roleInt: Int): String {
+        return when (roleInt) {
+            WORKER -> "WORKER"
+            MANAGER -> "MANAGER"
+            COORDINATOR -> "COORDINATOR"
+            else -> throw IllegalArgumentException()
+        }
+    }
+
 
 }

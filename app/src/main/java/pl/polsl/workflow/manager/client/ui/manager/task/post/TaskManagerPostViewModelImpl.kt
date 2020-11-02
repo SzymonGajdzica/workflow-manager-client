@@ -10,12 +10,14 @@ import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import java.time.Instant
 import javax.inject.Inject
 
 class TaskManagerPostViewModelImpl @Inject constructor(
     app: Application,
-    private val taskRepository: TaskRepository
+    private val taskRepository: TaskRepository,
+    private val inputValidator: InputValidator
 ): TaskManagerPostViewModel(app) {
 
     override val subTask: MutableLiveData<Task> = MutableLiveData()
@@ -51,12 +53,8 @@ class TaskManagerPostViewModelImpl @Inject constructor(
     }
 
     private fun validate(taskPost: TaskPost): Boolean {
-        nameInputError.value = if(taskPost.name.isBlank())
-            getString(R.string.cannotBeBlank)
-        else null
-        descriptionInputError.value = if(taskPost.description.isBlank())
-            getString(R.string.cannotBeBlank)
-        else null
+        nameInputError.value = inputValidator.validateBlankText(taskPost.name)
+        descriptionInputError.value = inputValidator.validateBlankText(taskPost.description)
         return descriptionInputError.value == null && nameInputError.value == null
     }
 
