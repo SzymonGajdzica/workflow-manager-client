@@ -73,7 +73,7 @@ class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback 
             markerLocalizationMap[googleMap.addLocalization(context, localization)] = localization
             builder.include(localization.latLng.toGoogleLatLng())
         }
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 20))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100))
     }
 
     @SuppressLint("MissingPermission")

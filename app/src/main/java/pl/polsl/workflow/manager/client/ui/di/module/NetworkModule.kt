@@ -22,11 +22,9 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
-    @Singleton
     fun provideTokenHolder(sharedPreferences: SharedPreferences, gson: Gson): TokenHolder = TokenHolderImpl(sharedPreferences, gson)
 
     @Provides
-    @Singleton
     fun provideOkHttpClient(tokenHolder: TokenHolder): OkHttpClient {
         val baseInterceptor = Interceptor { chain ->
             val original = chain.request()
@@ -55,7 +53,6 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
             .also { Converters.registerAll(it) }

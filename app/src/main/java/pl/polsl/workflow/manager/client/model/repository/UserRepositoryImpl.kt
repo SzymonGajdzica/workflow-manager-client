@@ -16,7 +16,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getAllUsers(): RepositoryResult<List<User>> = safeCall {
-        userDataSource.getAllUsers().getAll().map { it.map() }
+        userDataSource.getAllUsers().getAll().map { it.map() }.sortedBy { it.username }
     }
 
     override suspend fun createUser(userPost: UserPost): RepositoryResult<User> = safeCall {

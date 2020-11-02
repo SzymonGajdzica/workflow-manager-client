@@ -5,7 +5,13 @@ import pl.polsl.workflow.manager.client.model.remote.data.*
 import pl.polsl.workflow.manager.client.util.lazy.list.LazyList
 import java.time.Instant
 
-suspend fun TaskApiModel.map(tasks: LazyList<TaskApiModel>?, localizations: LazyList<LocalizationApiModel>, users: LazyList<UserApiModel>, groups: LazyList<GroupApiModel>): Task {
+suspend fun TaskApiModel.map(
+        safeTaskMap: Boolean,
+        tasks: LazyList<TaskApiModel>?,
+        localizations: LazyList<LocalizationApiModel>,
+        users: LazyList<UserApiModel>,
+        groups: LazyList<GroupApiModel>
+): Task {
     return Task(
             id = id,
             assignDate = assignDate,
@@ -18,7 +24,7 @@ suspend fun TaskApiModel.map(tasks: LazyList<TaskApiModel>?, localizations: Lazy
             startDate = startDate,
             sharedTaskId = sharedTaskId,
             isSubTask = isSubTask,
-            taskManagerReport = taskManagerReportModel?.map(tasks, localizations, users, groups),
+            taskManagerReport = taskManagerReportModel?.map(safeTaskMap, tasks, localizations, users, groups),
             taskWorkerReport = taskWorkerReportApiModel?.map(),
             assignedWorker = workerId?.let { users.getItem(it) }?.map(),
             group = groups.getItem(groupId).map(users)
@@ -34,16 +40,23 @@ fun TaskWorkerReportApiModel.map(): TaskWorkerReport {
     )
 }
 
-suspend fun TaskManagerReportApiModel.map(tasks: LazyList<TaskApiModel>?, localizations: LazyList<LocalizationApiModel>, users: LazyList<UserApiModel>, groups: LazyList<GroupApiModel>): TaskManagerReport {
+suspend fun TaskManagerReportApiModel.map(
+        safeTaskMap: Boolean,
+        tasks: LazyList<TaskApiModel>?,
+        localizations: LazyList<LocalizationApiModel>,
+        users: LazyList<UserApiModel>,
+        groups: LazyList<GroupApiModel>
+): TaskManagerReport {
     return TaskManagerReport(
             id = id,
             date = date,
             description = description,
-            fixTask = when {
-                fixTaskId == null -> null
-                tasks?.contains(fixTaskId) == true -> AllowableValue.Allowed(tasks.getItem(fixTaskId).map(tasks, localizations, users, groups))
-                tasks?.contains(fixTaskId) == false -> AllowableValue.NotAllowed(fixTaskId)
-                else -> null
+            fixTask = fixTaskId?.let {
+                val task = if(safeTaskMap) tasks?.safeGetItem(it) else tasks?.getItem(it)
+                if(task != null)
+                    AllowableValue.Allowed(task.map(safeTaskMap, tasks, localizations, users, groups))
+                else
+                    AllowableValue.NotAllowed(it)
             }
     )
 }

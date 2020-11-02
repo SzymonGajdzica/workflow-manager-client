@@ -57,7 +57,7 @@ class LoginViewModelImpl @Inject constructor(
             return@launchWithLoader showErrorMessage(getString(R.string.locationPermissionRequired))
         when (val result = userRepository.getSelf()) {
             is RepositoryResult.Success -> user.value = result.data
-            is RepositoryResult.Error -> showError(result.error)
+            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
     }
 

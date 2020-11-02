@@ -19,8 +19,9 @@ class TaskRepositoryImpl(
     private val groupDataSource: GroupDataSource
 ) : TaskRepository {
 
-    private suspend fun TaskApiModel.mMap(tasks: LazyList<TaskApiModel>?, groups: LazyList<GroupApiModel>): Task {
+    private suspend fun TaskApiModel.mMap(safeTaskMap: Boolean = false, tasks: LazyList<TaskApiModel>?, groups: LazyList<GroupApiModel>): Task {
         return map(
+                safeTaskMap = safeTaskMap,
                 tasks = tasks,
                 localizations = localizationDataSource.getAllLocalizations(),
                 users = userDataSource.getAllUsers(),
@@ -29,11 +30,11 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun getCurrentTask(): RepositoryResult<Task> = safeCall {
-        taskDataSource.getCurrentTask().mMap(null, groupDataSource.getWorkerGroup())
+        taskDataSource.getCurrentTask().mMap(tasks = null, groups = groupDataSource.getWorkerGroup())
     }
 
     override suspend fun getNextTask(autoStart: Boolean): RepositoryResult<Task> = safeCall {
-        taskDataSource.getNextTask(autoStart).mMap(null, groupDataSource.getWorkerGroup())
+        taskDataSource.getNextTask(autoStart).mMap(tasks = null, groups = groupDataSource.getWorkerGroup())
     }
 
     override suspend fun sendManagerReport(taskManagerReportPost: TaskManagerReportPost): RepositoryResult<TaskManagerReport> = safeCall {
@@ -45,7 +46,7 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun addTask(taskPost: TaskPost): RepositoryResult<Task> = safeCall {
-        taskDataSource.addTask(taskPost.map()).mMap(taskDataSource.getTasks(taskPost.group.id), groupDataSource.getAllGroups())
+        taskDataSource.addTask(taskPost.map()).mMap(tasks = taskDataSource.getTasks(taskPost.group.id), groups = groupDataSource.getAllGroups())
     }
 
     override suspend fun removeTask(task: Task): RepositoryResult<Unit> = safeCall {
@@ -54,14 +55,14 @@ class TaskRepositoryImpl(
 
     override suspend fun getTasks(group: Group): RepositoryResult<List<Task>> = safeCall {
         taskDataSource.getTasks(group.id).getAll().map {
-            it.mMap(taskDataSource.getTasks(group.id), groupDataSource.getAllGroups())
-        }
+            it.mMap(tasks = taskDataSource.getTasks(group.id), groups = groupDataSource.getAllGroups())
+        }.sortedByDescending { it.deadline }
     }
 
     override suspend fun getWorkerTasks(): RepositoryResult<List<Task>> = safeCall {
         taskDataSource.getWorkerTasks().getAll().map {
-            it.mMap(taskDataSource.getWorkerTasks(), groupDataSource.getWorkerGroup())
-        }
+            it.mMap(safeTaskMap = true, tasks = taskDataSource.getWorkerTasks(), groups = groupDataSource.getWorkerGroup())
+        }.sortedByDescending { it.deadline }
     }
 
 }

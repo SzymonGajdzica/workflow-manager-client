@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 data class Group(
     override val id: Long,
     val name: String,
-    val manager: User,
+    val manager: User?,
     val workers: List<User>
 ): Identifiable

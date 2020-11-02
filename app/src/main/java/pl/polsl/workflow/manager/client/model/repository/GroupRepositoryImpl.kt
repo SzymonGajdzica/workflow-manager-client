@@ -19,7 +19,7 @@ class GroupRepositoryImpl(
     }
 
     override suspend fun getAllGroups(): RepositoryResult<List<Group>> = safeCall {
-        groupDataSource.getAllGroups().getAll().map { it.map(userDataSource.getAllUsers()) }
+        groupDataSource.getAllGroups().getAll().map { it.map(userDataSource.getAllUsers()) }.sortedBy { it.name }
     }
 
     override suspend fun createGroup(groupPost: GroupPost): RepositoryResult<Group> = safeCall {

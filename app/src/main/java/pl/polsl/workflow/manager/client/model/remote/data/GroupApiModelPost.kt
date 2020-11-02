@@ -6,5 +6,5 @@ data class GroupApiModelPost(
     @SerializedName("name")
     val name: String,
     @SerializedName("managerId")
-    val managerId: Long,
+    val managerId: Long?,
 )

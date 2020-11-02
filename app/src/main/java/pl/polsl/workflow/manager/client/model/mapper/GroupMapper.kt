@@ -13,7 +13,7 @@ suspend fun GroupApiModel.map(users: LazyList<UserApiModel>): Group {
     return Group(
         id = id,
         name = name,
-        manager = users.getItem(managerId).map(),
+        manager = managerId?.let { users.getItem(it).map() },
         workers = workerIdList.map { users.getItem(it).map() }
     )
 }
@@ -21,7 +21,7 @@ suspend fun GroupApiModel.map(users: LazyList<UserApiModel>): Group {
 fun GroupPost.map(): GroupApiModelPost {
     return GroupApiModelPost(
             name = name,
-            managerId = manager.id
+            managerId = manager?.id
     )
 }
 

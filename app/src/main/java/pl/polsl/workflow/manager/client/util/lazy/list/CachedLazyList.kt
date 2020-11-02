@@ -14,19 +14,17 @@ open class CachedLazyList<T: IdentifiableApiModel>(
     private var loadTask: Deferred<QuickList<T>>? = null
 
     override suspend fun getItem(id: Long): T {
-        return getQuickList(id).getItem(id)
-    }
-
-    protected open suspend fun getQuickList(id: Long): QuickList<T> {
         val items = items
-        return when {
+        val quickList = when {
             items?.contains(id) == true -> items
             else -> loadData()
         }
+        return quickList.getItem(id)
     }
 
-    override suspend fun contains(id: Long): Boolean {
-        return getQuickList(id).contains(id)
+    override suspend fun safeGetItem(id: Long): T? {
+        val items = items ?: loadData()
+        return if(items.contains(id)) items.getItem(id) else null
     }
 
     override suspend fun getAll(): List<T> {

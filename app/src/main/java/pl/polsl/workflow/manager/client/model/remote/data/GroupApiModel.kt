@@ -8,7 +8,7 @@ data class GroupApiModel(
     @SerializedName("name")
     val name: String,
     @SerializedName("managerId")
-    val managerId: Long,
+    val managerId: Long?,
     @SerializedName("workerIdList")
     val workerIdList: List<Long>,
 ): IdentifiableApiModel

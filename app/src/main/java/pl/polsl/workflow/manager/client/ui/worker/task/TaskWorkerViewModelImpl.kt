@@ -43,7 +43,7 @@ class TaskWorkerViewModelImpl @Inject constructor(
         return allTasks?.filter { it.sharedTaskId == task.sharedTaskId } ?: listOf()
     }
 
-    override fun taskStatusSelected(taskStatus: Int) = launchWithLoader {
+    override fun taskStatusSelected(taskStatus: Int) {
         selectedTaskStatus = taskStatus
         setFilteredTasks()
     }
