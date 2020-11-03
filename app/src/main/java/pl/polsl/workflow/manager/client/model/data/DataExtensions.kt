@@ -21,6 +21,9 @@ fun Localization.checkDistance(latLng: LatLng): Boolean {
     return this.latLng.getDistance(latLng) <= radius
 }
 
+val Group.activeWorkers: List<User>
+    get() = workers.filter { it.enabled }
+
 fun <T : IdentifiableApiModel>Collection<T>.toMap(): Map<Long, T> {
     return map { it.id to it }.toMap()
 }

@@ -1,17 +1,13 @@
 package pl.polsl.workflow.manager.client.ui.map
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
@@ -19,7 +15,6 @@ import pl.polsl.workflow.manager.client.databinding.FragmentMapSelectBinding
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
-import pl.polsl.workflow.manager.client.util.extension.hasPermission
 
 class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback {
 
@@ -68,23 +63,16 @@ class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback 
         localizations ?: return
         googleMap.clear()
         markerLocalizationMap.clear()
-        val builder = LatLngBounds.Builder()
         localizations.forEach { localization ->
-            markerLocalizationMap[googleMap.addLocalization(context, localization)] = localization
-            builder.include(localization.latLng.toGoogleLatLng())
+            markerLocalizationMap[googleMap.addLocalization(context, localization).first] = localization
         }
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100))
+        googleMap.zoom(localizations.map { it.latLng }, true)
     }
 
-    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        googleMap.uiSettings.apply {
-            isCompassEnabled = true
-            isMyLocationButtonEnabled = true
-        }
-        if(context?.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true)
-            googleMap.isMyLocationEnabled = true
+        val context = context ?: return
+        googleMap.baseSetup(context)
         googleMap.setOnInfoWindowClickListener {
             viewDataBinding.sharedViewModel?.selectLocalization(markerLocalizationMap.getValue(it))
             findNavController().navigateUp()

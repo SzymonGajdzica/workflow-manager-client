@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_account_worker.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountWorkerBinding
+import pl.polsl.workflow.manager.client.model.data.activeWorkers
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
@@ -44,7 +45,7 @@ class AccountWorkerFragment : BaseFragment<AccountWorkerViewModel>() {
     override fun setupObservables(viewModel: AccountWorkerViewModel) {
         super.setupObservables(viewModel)
         viewModel.group.observe { group ->
-            val list = group?.workers?.map { it.username } ?: listOf()
+            val list = group?.activeWorkers?.map { it.username } ?: listOf()
             (view?.workerAccountGroupMembersList?.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
         viewModel.remainingTime.observe {

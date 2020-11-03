@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Localization(
         override val id: Long,
-        val latLng: LatLng,
         val name: String,
+        val latLng: LatLng,
         val radius: Double,
 ): Identifiable

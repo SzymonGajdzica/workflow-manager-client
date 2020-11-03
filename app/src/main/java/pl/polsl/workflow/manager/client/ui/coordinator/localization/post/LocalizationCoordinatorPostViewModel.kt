@@ -10,7 +10,9 @@ abstract class LocalizationCoordinatorPostViewModel(application: Application): B
 
     abstract val nameInputError: LiveData<String>
     abstract val selectedLatLng: LiveData<LatLng>
+    abstract val selectedRadius: LiveData<Double>
 
+    abstract fun onRadiusSelected(radius: Double)
     abstract fun onLatLngSelected(latLng: LatLng)
     abstract fun createLocalization(localizationPost: LocalizationPost)
 

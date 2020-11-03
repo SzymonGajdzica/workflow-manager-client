@@ -8,17 +8,70 @@
             type="pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.coordinator.localization.post.LocalizationCoordinatorPostFragment">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/name"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_title_24"
+            app:startIconContentDescription="@string/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/coordinatorLocalizationPostName"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/coordinatorLocalizationPostRadiusSlider"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintStart_toStartOf="@id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorLocalizationPostNameContainer"
+            android:layout_marginTop="8dp"
+            android:valueFrom="1.0"
+            android:valueTo="200.0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
         <fragment
             android:id="@+id/coordinatorLocalizationPostMapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            app:layout_constraintTop_toBottomOf="@id/coordinatorLocalizationPostRadiusSlider"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorLocalizationPostCreateButton"
+            app:layout_constraintStart_toStartOf="@id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorLocalizationPostNameContainer"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/coordinatorLocalizationPostCreateButton"
+            android:stateListAnimator="@null"
+            app:layout_constraintStart_toStartOf="@id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintEnd_toEndOf="@id/coordinatorLocalizationPostNameContainer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/create"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
 
         <include
             android:id="@+id/coordinatorLocalizationPostLoadingView"

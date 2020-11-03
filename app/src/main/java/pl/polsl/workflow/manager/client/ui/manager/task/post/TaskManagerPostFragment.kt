@@ -10,6 +10,7 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskPost
+import pl.polsl.workflow.manager.client.model.data.activeWorkers
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
 import pl.polsl.workflow.manager.client.ui.view.*
@@ -46,7 +47,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
         super.setupViews(view)
         view.managerTaskPostWorkerDropdown.setupSimpleArrayAdapter(view.context)
         val entries = arrayListOf(view.context.getString(R.string.autoAssign))
-        entries.addAll(viewModel.group.safeValue.workers.map { it.username })
+        entries.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
         view.managerTaskPostWorkerDropdown.arrayAdapter?.update(entries)
     }
 
@@ -97,7 +98,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
                     subTask = viewModel.subTask.value,
                     localization = localization,
                     estimatedExecutionTime = viewModel.executionTime.safeValue,
-                    worker = viewModel.selectedWorkerIndex.value?.let { viewModel.group.safeValue.workers[it] }
+                    worker = viewModel.selectedWorkerIndex.value?.let { viewModel.group.safeValue.activeWorkers[it] }
             )
             viewModel.createTask(taskPost)
         }

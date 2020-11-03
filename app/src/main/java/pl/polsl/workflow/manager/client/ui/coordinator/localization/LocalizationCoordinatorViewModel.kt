@@ -8,4 +8,5 @@ import pl.polsl.workflow.manager.client.ui.base.BaseViewModel
 abstract class LocalizationCoordinatorViewModel(application: Application): BaseViewModel(application) {
 
     abstract val localizations: LiveData<List<Localization>>
+
 }

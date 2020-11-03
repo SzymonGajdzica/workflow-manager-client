@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_account_manager.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountManagerBinding
+import pl.polsl.workflow.manager.client.model.data.activeWorkers
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
@@ -48,7 +49,7 @@ class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
             view?.managerAccountGroupDropdown?.arrayAdapter?.update(list)
         }
         viewModel.selectedGroup.observe { group ->
-            val list = group?.workers?.map { it.username } ?: listOf()
+            val list = group?.activeWorkers?.map { it.username } ?: listOf()
             (view?.managerAccountGroupMembersList?.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
         viewModel.remainingTime.observe {

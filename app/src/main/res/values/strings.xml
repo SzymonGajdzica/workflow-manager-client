@@ -77,5 +77,6 @@
     <string name="addLocalization">Add localization</string>
     <string name="localizationCreated">Localization created</string>
     <string name="createLocalization">Create localization</string>
+    <string name="newLocalization">New localization</string>
 
 </resources>

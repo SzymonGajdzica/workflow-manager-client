@@ -1,17 +1,13 @@
 package pl.polsl.workflow.manager.client.ui.coordinator.localization
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLngBounds
 import kotlinx.android.synthetic.main.fragment_localizations_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
@@ -19,8 +15,8 @@ import pl.polsl.workflow.manager.client.databinding.FragmentLocalizationsCoordin
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.map.addLocalization
-import pl.polsl.workflow.manager.client.ui.map.toGoogleLatLng
-import pl.polsl.workflow.manager.client.util.extension.hasPermission
+import pl.polsl.workflow.manager.client.ui.map.baseSetup
+import pl.polsl.workflow.manager.client.ui.map.zoom
 
 class LocalizationCoordinatorFragment: BaseFragment<LocalizationCoordinatorViewModel>(), OnMapReadyCallback {
 
@@ -71,15 +67,9 @@ class LocalizationCoordinatorFragment: BaseFragment<LocalizationCoordinatorViewM
         }
     }
 
-    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        googleMap.uiSettings.apply {
-            isCompassEnabled = true
-            isMyLocationButtonEnabled = true
-        }
-        if(context?.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) == true)
-            googleMap.isMyLocationEnabled = true
+        googleMap.baseSetup(context)
         tryToFillMap(viewModel.localizations.value)
     }
 
@@ -88,12 +78,10 @@ class LocalizationCoordinatorFragment: BaseFragment<LocalizationCoordinatorViewM
         val context = context ?: return
         localizations ?: return
         googleMap.clear()
-        val builder = LatLngBounds.Builder()
         localizations.forEach { localization ->
             googleMap.addLocalization(context, localization)
-            builder.include(localization.latLng.toGoogleLatLng())
         }
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100))
+        googleMap.zoom(localizations.map { it.latLng }, true)
     }
 
 }
