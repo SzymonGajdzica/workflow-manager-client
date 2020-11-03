@@ -16,7 +16,7 @@ fun Context.hasPermission(key: String): Boolean {
 }
 
 fun Context.hasLocationPermission(): Boolean {
-    return ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    return hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
 }
 
 fun Activity.hideKeyboard() {

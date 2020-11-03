@@ -6,7 +6,8 @@
     android:focusable="true"
     android:clickable="true"
     android:background="@color/overlayColor"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="Overdraw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginStart="16dp"

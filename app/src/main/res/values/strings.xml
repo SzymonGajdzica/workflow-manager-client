@@ -41,7 +41,6 @@
     <string name="create">Create</string>
     <string name="deadline">Deadline</string>
     <string name="executionTime">Execution time</string>
-    <string name="notAssigned">Not assigned</string>
     <string name="selectLocalization">Select localization</string>
     <string name="localization">Localization</string>
     <string name="managerReport">Manager report</string>
@@ -56,14 +55,9 @@
     <string name="createReport">Create report</string>
     <string name="ok">OK</string>
     <string name="error">Error</string>
-    <string name="message">Message</string>
     <string name="delete">Delete</string>
     <string name="taskDetails">Task details</string>
     <string name="notAllowedToBrowseThisResource">Not allowed to see this value</string>
-    <string name="title_activity_coordinator">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="groups">Groups</string>
     <string name="localizations">Localizations</string>
     <string name="users">Users</string>

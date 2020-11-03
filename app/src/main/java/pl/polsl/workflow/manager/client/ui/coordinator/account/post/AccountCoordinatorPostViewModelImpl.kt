@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.ui.coordinator.account.post
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.RepositoryResult

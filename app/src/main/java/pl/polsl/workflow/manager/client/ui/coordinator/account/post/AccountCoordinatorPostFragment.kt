@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_account_coordinator.view.*
 import kotlinx.android.synthetic.main.fragment_account_coordinator_post.view.*
-import kotlinx.android.synthetic.main.fragment_login.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorPostBinding

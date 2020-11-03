@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.model.data
 
 import android.location.Location
-import pl.polsl.workflow.manager.client.model.remote.data.IdentifiableApiModel
 import pl.polsl.workflow.manager.client.ui.coordinator.CoordinatorActivity
 import pl.polsl.workflow.manager.client.ui.manager.ManagerActivity
 import pl.polsl.workflow.manager.client.ui.worker.WorkerActivity
@@ -23,10 +22,6 @@ fun Localization.checkDistance(latLng: LatLng): Boolean {
 
 val Group.activeWorkers: List<User>
     get() = workers.filter { it.enabled }
-
-fun <T : IdentifiableApiModel>Collection<T>.toMap(): Map<Long, T> {
-    return map { it.id to it }.toMap()
-}
 
 val User.destinationActivityClass: Class<*>
     get() = when(role) {

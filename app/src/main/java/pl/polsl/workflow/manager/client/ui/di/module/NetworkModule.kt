@@ -56,7 +56,7 @@ class NetworkModule {
     fun provideGson(): Gson {
         return GsonBuilder()
             .also { Converters.registerAll(it) }
-            .create();
+            .create()
     }
 
     @Provides

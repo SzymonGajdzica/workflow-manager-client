@@ -51,6 +51,7 @@ class GroupCoordinatorPatchViewModelImpl @Inject constructor(
     private fun loadUsers() = launchWithLoader {
         managers.value = null
         remainingWorkers.value = null
+        allWorkers = null
         when (val result = userRepository.getAllUsers()) {
             is RepositoryResult.Success -> {
                 managers.value = result.data.filter { it.role == Role.MANAGER }
