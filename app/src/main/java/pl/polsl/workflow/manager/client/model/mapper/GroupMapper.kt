@@ -29,6 +29,6 @@ fun GroupPatch.map(): GroupApiModelPatch {
     return GroupApiModelPatch(
             name = name,
             managerId = manager?.id,
-            workerIds = workers?.map { it.id }
+            workerIds = workers.map { it.id }
     )
 }

@@ -7,6 +7,7 @@ import dagger.multibindings.IntoMap
 import pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorViewModelImpl
 import pl.polsl.workflow.manager.client.ui.coordinator.account.post.AccountCoordinatorPostViewModelImpl
 import pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorViewModelImpl
+import pl.polsl.workflow.manager.client.ui.coordinator.group.patch.GroupCoordinatorPatchViewModelImpl
 import pl.polsl.workflow.manager.client.ui.coordinator.group.post.GroupCoordinatorPostViewModelImpl
 import pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorViewModelImpl
 import pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostViewModelImpl
@@ -99,6 +100,13 @@ abstract class ViewModelModules {
     @IntoMap
     @ViewModelKey(GroupCoordinatorPostViewModelImpl::class)
     abstract fun bindsGroupCoordinatorPostViewModel(groupCoordinatorPostViewModelImpl: GroupCoordinatorPostViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GroupCoordinatorPatchViewModelImpl::class)
+    abstract fun bindsGroupCoordinatorPatchViewModel(groupCoordinatorPatchViewModelImpl: GroupCoordinatorPatchViewModelImpl): ViewModel
+
+
 
 
 

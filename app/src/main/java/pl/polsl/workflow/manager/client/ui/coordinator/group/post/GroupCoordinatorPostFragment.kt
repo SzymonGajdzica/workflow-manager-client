@@ -62,7 +62,7 @@ class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>(
             val managerIndex = view.coordinatorGroupPostManagerDropdown.selectedItemPosition - 1
             viewModel.createGroup(GroupPost(
                     name = view.coordinatorGroupPostName.text.toString(),
-                    manager = if(managerIndex > 0) viewModel.managers.value?.get(managerIndex) else null
+                    manager = viewModel.managers.value?.getOrNull(managerIndex)
             ))
         }
     }

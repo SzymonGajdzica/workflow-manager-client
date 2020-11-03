@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_groups_coordinator_to_groupCoordinatorPostFragment"
             app:destination="@id/groupCoordinatorPostFragment" />
+        <action
+            android:id="@+id/action_navigation_groups_coordinator_to_groupCoordinatorPatchFragment"
+            app:destination="@id/groupCoordinatorPatchFragment" />
     </fragment>
 
     <fragment
@@ -49,4 +52,9 @@
         android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.post.GroupCoordinatorPostFragment"
         android:label="@string/createGroup"
         tools:layout="@layout/fragment_groups_coordinator_post"/>
+    <fragment
+        android:id="@+id/groupCoordinatorPatchFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.patch.GroupCoordinatorPatchFragment"
+        android:label="@string/updateGroup"
+        tools:layout="@layout/fragment_groups_coordinator_patch"/>
 </navigation>

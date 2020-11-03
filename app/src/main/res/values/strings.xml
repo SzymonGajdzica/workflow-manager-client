@@ -82,5 +82,9 @@
     <string name="groupCreated">Group created</string>
     <string name="notSelected">Not selected</string>
     <string name="createGroup">Create group</string>
+    <string name="update">Update</string>
+    <string name="updateGroup">Update group</string>
+    <string name="groupUpdated">Group updated</string>
+    <string name="addWorker">Add worker</string>
 
 </resources>

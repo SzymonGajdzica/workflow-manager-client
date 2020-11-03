@@ -4,6 +4,7 @@ import dagger.Component
 import pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorFragment
 import pl.polsl.workflow.manager.client.ui.coordinator.account.post.AccountCoordinatorPostFragment
 import pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorFragment
+import pl.polsl.workflow.manager.client.ui.coordinator.group.patch.GroupCoordinatorPatchFragment
 import pl.polsl.workflow.manager.client.ui.coordinator.group.post.GroupCoordinatorPostFragment
 import pl.polsl.workflow.manager.client.ui.coordinator.localization.LocalizationCoordinatorFragment
 import pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostFragment
@@ -40,4 +41,5 @@ interface AppComponent {
     fun inject(fragment: AccountCoordinatorPostFragment)
     fun inject(fragment: LocalizationCoordinatorPostFragment)
     fun inject(fragment: GroupCoordinatorPostFragment)
+    fun inject(fragment: GroupCoordinatorPatchFragment)
 }

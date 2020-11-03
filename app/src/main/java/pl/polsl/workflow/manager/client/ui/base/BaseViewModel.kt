@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.repositoryMessage
 import pl.polsl.workflow.manager.client.util.DelayedBoolChanger
+import java.util.*
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 
@@ -77,7 +78,7 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
     }
 
     protected fun showErrorMessage(e: Throwable) {
-        showErrorMessage(e.repositoryMessage ?: e.message ?: getString(R.string.unknownError))
+        showErrorMessage((e.repositoryMessage ?: e.message ?: getString(R.string.unknownError)).capitalize(Locale.US))
     }
 
     protected fun showError(errorText: String) {
@@ -86,7 +87,7 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
 
     protected fun showError(e: Throwable) {
         e.printStackTrace()
-        showError(e.repositoryMessage ?: e.message ?: getString(R.string.unknownError))
+        showError((e.repositoryMessage ?: e.message ?: getString(R.string.unknownError)).capitalize(Locale.US))
     }
 
 

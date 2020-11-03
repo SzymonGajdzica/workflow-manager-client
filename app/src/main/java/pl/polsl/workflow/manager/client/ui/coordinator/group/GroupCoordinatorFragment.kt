@@ -13,6 +13,7 @@ import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
 import pl.polsl.workflow.manager.client.util.extension.safeValue
+import pl.polsl.workflow.manager.client.util.extension.toBundle
 
 class GroupCoordinatorFragment: BaseFragment<GroupCoordinatorViewModel>() {
 
@@ -42,8 +43,10 @@ class GroupCoordinatorFragment: BaseFragment<GroupCoordinatorViewModel>() {
     override fun setupViews(view: View) {
         super.setupViews(view)
         view.coordinatorGroupGroupList.setupSimpleAdapter {
-            val group = viewModel.groups.safeValue[it]
-            //todo
+            findNavController().navigate(
+                    R.id.action_navigation_groups_coordinator_to_groupCoordinatorPatchFragment,
+                    viewModel.groups.safeValue[it].toBundle()
+            )
         }
         view.coordinatorGroupAddGroup.setOnClickListener {
             findNavController().navigate(

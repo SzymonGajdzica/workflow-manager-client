@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GroupApiModelPatch(
     @SerializedName("name")
-    val name: String?,
+    val name: String,
     @SerializedName("managerId")
     val managerId: Long?,
     @SerializedName("workerIds")
-    val workerIds: List<Long>?,
+    val workerIds: List<Long>,
 )
