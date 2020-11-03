@@ -78,5 +78,9 @@
     <string name="localizationCreated">Localization created</string>
     <string name="createLocalization">Create localization</string>
     <string name="newLocalization">New localization</string>
+    <string name="addGroup">Add group</string>
+    <string name="groupCreated">Group created</string>
+    <string name="notSelected">Not selected</string>
+    <string name="createGroup">Create group</string>
 
 </resources>

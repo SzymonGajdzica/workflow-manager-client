@@ -43,8 +43,8 @@ class TaskDetailsManagerReport: Fragment() {
                 taskDetailsManagerReportFixTask.setOnClickListener {
                     when(fixTask) {
                         is AllowableValue.NotAllowed -> SimpleDialog.create(
-                                view.context.getString(R.string.error),
-                                view.context.getString(R.string.notAllowedToBrowseThisResource)
+                                getString(R.string.error),
+                                getString(R.string.notAllowedToBrowseThisResource)
                         ).show(parentFragmentManager, "ErrorDialog")
                         is AllowableValue.Allowed -> findNavController().navigate(
                                 R.id.action_taskDetailsManagerReport2_to_taskDetailsFragment,

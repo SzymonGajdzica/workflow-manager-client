@@ -72,8 +72,8 @@ class TaskDetailsFragment: Fragment() {
                 taskDetailsSuperTask.setOnClickListener {
                     when(superTask) {
                         is AllowableValue.NotAllowed -> SimpleDialog.create(
-                                view.context.getString(R.string.error),
-                                view.context.getString(R.string.notAllowedToBrowseThisResource)
+                                getString(R.string.error),
+                                getString(R.string.notAllowedToBrowseThisResource)
                         ).show(parentFragmentManager, "ErrorDialog")
                         is AllowableValue.Allowed -> findNavController().navigate(
                                 R.id.action_taskDetailsFragment_self,
@@ -89,19 +89,19 @@ class TaskDetailsFragment: Fragment() {
                         task.localization.toBundle()
                 )
             }
-            taskDetailsLocalization.text = ("${context.getString(R.string.localization)}: ${task.localization.name}")
+            taskDetailsLocalization.text = ("${getString(R.string.localization)}: ${task.localization.name}")
             taskDetailsDescription.text = task.description
             taskDetailsName.text = task.name
             if(task.startDate == null)
-                taskDetailsRemainingTime.text = ("${context.getString(R.string.remainingTime)}: -")
+                taskDetailsRemainingTime.text = ("${getString(R.string.remainingTime)}: -")
             else workerReport?.let {
-                taskDetailsRemainingTime.text = ("${context.getString(R.string.executionTime)}: ${it.date.minusMillis(task.startDate.toEpochMilli()).toHoursMinutesSeconds()}")
+                taskDetailsRemainingTime.text = ("${getString(R.string.executionTime)}: ${it.date.minusMillis(task.startDate.toEpochMilli()).toHoursMinutesSeconds()}")
             }
-            taskDetailsEstimatedExecutionTime.text = ("${context.getString(R.string.estimatedExecutionTime)}: ${task.estimatedExecutionTime.toHoursMinutesSeconds()}")
-            taskDetailsDeadline.text = ("${context.getString(R.string.deadline)}: ${task.deadline.formatDate()}")
+            taskDetailsEstimatedExecutionTime.text = ("${getString(R.string.estimatedExecutionTime)}: ${task.estimatedExecutionTime.toHoursMinutesSeconds()}")
+            taskDetailsDeadline.text = ("${getString(R.string.deadline)}: ${task.deadline.formatDate()}")
             taskDetailsAssignedWorker.text = task.assignedWorker.let {
                 val username = it?.username ?: getString(R.string.autoAssign)
-                "${context.getString(R.string.assignedWorker)}: $username"
+                "${getString(R.string.assignedWorker)}: $username"
             }
         }
     }

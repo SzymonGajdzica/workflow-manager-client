@@ -9,7 +9,11 @@
         android:id="@+id/navigation_groups_coordinator"
         android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.GroupCoordinatorFragment"
         android:label="@string/groups"
-        tools:layout="@layout/fragment_groups_coordinator" />
+        tools:layout="@layout/fragment_groups_coordinator" >
+        <action
+            android:id="@+id/action_navigation_groups_coordinator_to_groupCoordinatorPostFragment"
+            app:destination="@id/groupCoordinatorPostFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_localizations_coordinator"
@@ -40,4 +44,9 @@
         android:name="pl.polsl.workflow.manager.client.ui.coordinator.localization.post.LocalizationCoordinatorPostFragment"
         android:label="@string/createLocalization"
         tools:layout="@layout/fragment_localizations_coordinator_post"/>
+    <fragment
+        android:id="@+id/groupCoordinatorPostFragment"
+        android:name="pl.polsl.workflow.manager.client.ui.coordinator.group.post.GroupCoordinatorPostFragment"
+        android:label="@string/createGroup"
+        tools:layout="@layout/fragment_groups_coordinator_post"/>
 </navigation>

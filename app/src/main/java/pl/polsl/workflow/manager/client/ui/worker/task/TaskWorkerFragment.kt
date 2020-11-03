@@ -43,7 +43,7 @@ class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
     override fun setupViews(view: View) {
         super.setupViews(view)
         view.workerTaskTaskStatusDropdown.setupSimpleArrayAdapter(view.context)
-        view.workerTaskTaskStatusDropdown.arrayAdapter?.update(view.context.resources.getStringArray(R.array.workerTaskStatuses).toList())
+        view.workerTaskTaskStatusDropdown.arrayAdapter?.update(resources.getStringArray(R.array.workerTaskStatuses).toList())
         view.workerTaskTaskList.setupSimpleAdapter {
             val task = viewModel.tasks.safeValue[it]
             findNavController().navigate(

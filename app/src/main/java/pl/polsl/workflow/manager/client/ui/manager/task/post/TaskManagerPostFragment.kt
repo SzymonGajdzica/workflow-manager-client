@@ -46,7 +46,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
     override fun setupViews(view: View) {
         super.setupViews(view)
         view.managerTaskPostWorkerDropdown.setupSimpleArrayAdapter(view.context)
-        val entries = arrayListOf(view.context.getString(R.string.autoAssign))
+        val entries = arrayListOf(getString(R.string.autoAssign))
         entries.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
         view.managerTaskPostWorkerDropdown.arrayAdapter?.update(entries)
     }
@@ -61,11 +61,11 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
         }
         viewModel.deadline.safeObserve {
             view?.managerTaskPostDeadline?.text =
-                ("${context?.getString(R.string.deadline)}: ${it.formatDate()}")
+                ("${getString(R.string.deadline)}: ${it.formatDate()}")
         }
         viewModel.executionTime.safeObserve {
             view?.managerTaskPostExecutionTime?.text =
-                ("${context?.getString(R.string.executionTime)}: ${it.toHoursMinutesSeconds()}")
+                ("${getString(R.string.executionTime)}: ${it.toHoursMinutesSeconds()}")
         }
     }
 
@@ -89,7 +89,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
         }
         view.managerTaskPostCreate.setOnClickListener { _ ->
             val localization = viewDataBinding.sharedViewModel?.localization?.value
-                    ?: return@setOnClickListener showErrorMessage(view.context.getString(R.string.selectLocalization))
+                    ?: return@setOnClickListener showErrorMessage(getString(R.string.selectLocalization))
             val taskPost = TaskPost(
                     group = viewModel.group.safeValue,
                     name = view.managerTaskPostName.text.toString(),

@@ -88,9 +88,9 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         }
         viewModel.error.observe {
             view?.findViewById<MaterialTextView>(R.id.reloadText)?.text = buildString {
-                append(context?.getString(R.string.failedToLoad))
+                append(getString(R.string.failedToLoad))
                 append("\n")
-                append(context?.getString(R.string.cause))
+                append(getString(R.string.cause))
                 append(": '")
                 append(it)
                 append("'")
@@ -102,14 +102,12 @@ abstract class BaseFragment<T: BaseViewModel>: Fragment() {
         }
     }
 
-    protected fun showSuccessMessage(description: String) {
-        val context = context ?: return
-        SimpleDialog.create(context.getString(R.string.success), description).show(parentFragmentManager, "SuccessMessageFragment")
+    private fun showSuccessMessage(description: String) {
+        SimpleDialog.create(getString(R.string.success), description).show(parentFragmentManager, "SuccessMessageFragment")
     }
 
     protected fun showErrorMessage(description: String) {
-        val context = context ?: return
-        SimpleDialog.create(context.getString(R.string.failure), description).show(parentFragmentManager, "ErrorMessageFragment")
+        SimpleDialog.create(getString(R.string.failure), description).show(parentFragmentManager, "ErrorMessageFragment")
     }
 
     protected fun logout() {

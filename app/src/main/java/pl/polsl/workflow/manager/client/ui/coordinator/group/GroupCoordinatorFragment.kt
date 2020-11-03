@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_groups_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
-import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorBinding
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorBinding
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.coordinator.account.AccountCoordinatorViewModel
+import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
+import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
+import pl.polsl.workflow.manager.client.util.extension.safeValue
 
 class GroupCoordinatorFragment: BaseFragment<GroupCoordinatorViewModel>() {
 
@@ -37,6 +37,27 @@ class GroupCoordinatorFragment: BaseFragment<GroupCoordinatorViewModel>() {
     override fun inject(app: App) {
         super.inject(app)
         app.appComponent.inject(this)
+    }
+
+    override fun setupViews(view: View) {
+        super.setupViews(view)
+        view.coordinatorGroupGroupList.setupSimpleAdapter {
+            val group = viewModel.groups.safeValue[it]
+            //todo
+        }
+        view.coordinatorGroupAddGroup.setOnClickListener {
+            findNavController().navigate(
+                    R.id.action_navigation_groups_coordinator_to_groupCoordinatorPostFragment
+            )
+        }
+    }
+
+    override fun setupObservables(viewModel: GroupCoordinatorViewModel) {
+        super.setupObservables(viewModel)
+        viewModel.groups.observe { groups ->
+            val list = groups?.map { it.name } ?: listOf()
+            (view?.coordinatorGroupGroupList?.adapter as? SimpleAdapter)?.updateSingleList(list)
+        }
     }
 
 }

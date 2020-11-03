@@ -49,7 +49,7 @@ class AccountCoordinatorFragment: BaseFragment<AccountCoordinatorViewModel>() {
             viewModel.updateUser(user, UserPatch(!user.enabled))
         }
         view.coordinatorAccountUsers.setupAdapter(adapter)
-        view.coordinatorAccountUserRoleDropdown.arrayAdapter?.update(view.context.resources.getStringArray(R.array.coordinatorAccountRoles).toList())
+        view.coordinatorAccountUserRoleDropdown.arrayAdapter?.update(resources.getStringArray(R.array.coordinatorAccountRoles).toList())
     }
 
     override fun setupObservables(viewModel: AccountCoordinatorViewModel) {

@@ -61,7 +61,7 @@ class LocalizationCoordinatorPostFragment: BaseFragment<LocalizationCoordinatorP
         super.setupOnLayoutInteractions(view)
         view.coordinatorLocalizationPostCreateButton.setOnClickListener {
             val latLng = viewModel.selectedLatLng.value
-                    ?: return@setOnClickListener showErrorMessage(view.context.getString(R.string.selectLocalization))
+                    ?: return@setOnClickListener showErrorMessage(getString(R.string.selectLocalization))
             viewModel.createLocalization(LocalizationPost(
                     name = view.coordinatorLocalizationPostName.text.toString(),
                     latLng = latLng,
@@ -94,7 +94,7 @@ class LocalizationCoordinatorPostFragment: BaseFragment<LocalizationCoordinatorP
         val radius = viewModel.selectedRadius.safeValue
         val localization = Localization(
                 id = 0,
-                name = context.getString(R.string.newLocalization),
+                name = getString(R.string.newLocalization),
                 latLng = latLng,
                 radius = radius
         )

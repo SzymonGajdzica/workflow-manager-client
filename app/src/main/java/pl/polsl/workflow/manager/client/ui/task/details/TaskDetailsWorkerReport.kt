@@ -34,10 +34,10 @@ class TaskDetailsWorkerReport: Fragment() {
             taskDetailsWorkerReportDescription.text = taskWorkerReport.description
             if(taskWorkerReport.success) {
                 taskDetailsWorkerReportResult.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_light))
-                taskDetailsWorkerReportResult.text = context.getString(R.string.success)
+                taskDetailsWorkerReportResult.text = getString(R.string.success)
             } else {
                 taskDetailsWorkerReportResult.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-                taskDetailsWorkerReportResult.text = context.getString(R.string.failure)
+                taskDetailsWorkerReportResult.text = getString(R.string.failure)
             }
         }
     }
