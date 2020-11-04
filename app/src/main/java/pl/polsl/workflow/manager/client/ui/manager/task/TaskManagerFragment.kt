@@ -13,6 +13,7 @@ import pl.polsl.workflow.manager.client.model.data.TaskStatus
 import pl.polsl.workflow.manager.client.model.data.status
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 
@@ -76,8 +77,10 @@ class TaskManagerFragment: BaseFragment<TaskManagerViewModel>() {
     override fun setupObservables(viewModel: TaskManagerViewModel) {
         super.setupObservables(viewModel)
         viewModel.groups.observe { groups ->
+            val groupIndex = groups?.indexOfOrNull(viewModel.selectedGroup.value) ?: 0
             val list = groups?.map { it.name } ?: listOf()
             view?.managerTaskGroupDropdown?.arrayAdapter?.update(list)
+            view?.managerTaskGroupDropdown?.setSelection(groupIndex)
         }
         viewModel.tasks.observe { tasks ->
             val list = tasks ?: listOf()

@@ -8,9 +8,11 @@ import pl.polsl.workflow.manager.client.ui.base.BaseViewModel
 
 abstract class GroupCoordinatorPostViewModel(application: Application): BaseViewModel(application) {
 
+    abstract val selectedManager: LiveData<User>
     abstract val nameInputError: LiveData<String>
     abstract val managers: LiveData<List<User>>
 
+    abstract fun onManagerSelected(manager: User?)
     abstract fun createGroup(groupPost: GroupPost)
 
 }

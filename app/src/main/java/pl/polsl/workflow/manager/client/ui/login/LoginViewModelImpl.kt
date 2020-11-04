@@ -25,21 +25,17 @@ class LoginViewModelImpl @Inject constructor(
     override val passwordInputError: MutableLiveData<String> = MutableLiveData()
 
     override fun login(username: String, password: String) = launchWithLoader {
-        if (!validate(username, password))
-            return@launchWithLoader
-        when (val result = authenticationRepository.getAuthenticationToken(username, password)) {
-            is RepositoryResult.Success -> {
-                tokenHolder.token = result.data
-                updateLoggedUserDetails()
-            }
-            is RepositoryResult.Error -> showErrorMessage(result.error)
-        }
-    }
-
-    private fun validate(username: String, password: String): Boolean {
         usernameInputError.value = inputValidator.validateUsername(username)
         passwordInputError.value = inputValidator.validatePassword(password)
-        return passwordInputError.value == null && usernameInputError.value == null
+        if (passwordInputError.value == null && usernameInputError.value == null) {
+            when (val result = authenticationRepository.getAuthenticationToken(username, password)) {
+                is RepositoryResult.Success -> {
+                    tokenHolder.token = result.data
+                    updateLoggedUserDetails()
+                }
+                is RepositoryResult.Error -> showErrorMessage(result.error)
+            }
+        }
     }
 
     private fun tryAutoLogin() {

@@ -30,8 +30,9 @@ class TaskManagerViewModelImpl @Inject constructor(
         groups.value = null
         when (val result = groupRepository.getAllGroups()) {
             is RepositoryResult.Success -> {
+                if(selectedGroup.value == null)
+                    selectedGroup.value = result.data.firstOrNull()
                 groups.value = result.data
-                selectedGroup.value = result.data.firstOrNull()
                 loadTasks()
             }
             is RepositoryResult.Error -> showError(result.error)

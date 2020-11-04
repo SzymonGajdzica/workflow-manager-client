@@ -62,7 +62,7 @@
 
         <Spinner
             android:id="@+id/coordinatorGroupPatchWorkerDropdown"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/coordinatorGroupPatchUpdateButton"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPatchNameContainer"

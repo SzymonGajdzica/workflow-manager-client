@@ -19,6 +19,7 @@ class GroupCoordinatorPostViewModelImpl @Inject constructor(
         private val inputValidator: InputValidator
 ): GroupCoordinatorPostViewModel(application) {
 
+    override val selectedManager: MutableLiveData<User> = MutableLiveData()
     override val nameInputError: MutableLiveData<String> = MutableLiveData()
     override val managers: MutableLiveData<List<User>> = MutableLiveData()
 
@@ -41,6 +42,10 @@ class GroupCoordinatorPostViewModelImpl @Inject constructor(
                 is RepositoryResult.Error -> showErrorMessage(result.error)
             }
         }
+    }
+
+    override fun onManagerSelected(manager: User?) {
+        selectedManager.value = manager
     }
 
     override fun reloadData() {

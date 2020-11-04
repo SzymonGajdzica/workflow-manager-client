@@ -11,6 +11,6 @@ abstract class AccountManagerViewModel(application: Application, tokenHolder: To
     abstract val selectedGroup: LiveData<Group>
     abstract val groups: LiveData<List<Group>>
 
-    abstract fun groupSelected(index: Int)
+    abstract fun groupSelected(group: Group)
 
 }

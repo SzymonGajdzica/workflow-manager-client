@@ -108,6 +108,7 @@ class LocalizationCoordinatorPostFragment: BaseFragment<LocalizationCoordinatorP
         googleMap.setOnMapClickListener {
             viewModel.onLatLngSelected(it.toLatLng())
         }
+        updateMarkerPosition(viewModel.selectedLatLng.value)
     }
 
 

@@ -11,8 +11,10 @@ import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPos
 import pl.polsl.workflow.manager.client.model.data.GroupPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.arrayAdapter
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleArrayAdapter
 import pl.polsl.workflow.manager.client.ui.view.update
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 
 class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>() {
 
@@ -47,9 +49,11 @@ class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>(
     override fun setupObservables(viewModel: GroupCoordinatorPostViewModel) {
         super.setupObservables(viewModel)
         viewModel.managers.observe { managers ->
+            val managerIndex = managers?.indexOfOrNull(viewModel.selectedManager.value)?.plus(1) ?: 0
             val list = arrayListOf(getString(R.string.notSelected))
             list.addAll(managers?.map { it.username } ?: listOf())
             view?.coordinatorGroupPostManagerDropdown?.arrayAdapter?.update(list)
+            view?.coordinatorGroupPostManagerDropdown?.setSelection(managerIndex)
         }
         viewModel.nameInputError.observe { nameInputError ->
             view?.coordinatorGroupPostNameContainer?.error = nameInputError
@@ -59,11 +63,13 @@ class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>(
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
         view.coordinatorGroupPostCreateButton.setOnClickListener {
-            val managerIndex = view.coordinatorGroupPostManagerDropdown.selectedItemPosition - 1
             viewModel.createGroup(GroupPost(
                     name = view.coordinatorGroupPostName.text.toString(),
-                    manager = viewModel.managers.value?.getOrNull(managerIndex)
+                    manager = viewModel.selectedManager.value
             ))
+        }
+        view.coordinatorGroupPostManagerDropdown.mSetOnItemSelectedListener {
+            viewModel.onManagerSelected(viewModel.managers.value?.getOrNull(it - 1))
         }
     }
 

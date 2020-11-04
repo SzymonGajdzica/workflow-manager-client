@@ -9,11 +9,13 @@ import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReportPost
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
 
 class TaskManagerReportPostViewModelImpl @Inject constructor(
         application: Application,
-        private val taskRepository: TaskRepository
+        private val taskRepository: TaskRepository,
+        private val inputValidator: InputValidator
 ): TaskManagerReportPostViewModel(application) {
 
     override val descriptionInputError: MutableLiveData<String> = MutableLiveData()
@@ -23,18 +25,21 @@ class TaskManagerReportPostViewModelImpl @Inject constructor(
     private var createdFixTask = false
 
     override fun acceptTask(taskManagerReportPost: TaskManagerReportPost, withFixTask: Boolean) = launchWithLoader {
-        when(val result = taskRepository.sendManagerReport(taskManagerReportPost)) {
-            is RepositoryResult.Success -> {
-                if(withFixTask) {
-                    creatingFixTask.value = true
-                    createdFixTask = true
-                    creatingFixTask.value = false
-                } else {
-                    showSuccessMessage(getString(R.string.taskAccepted))
-                    finishFragment()
+        descriptionInputError.value = inputValidator.validateBlankText(taskManagerReportPost.description)
+        if (descriptionInputError.value != null) {
+            when (val result = taskRepository.sendManagerReport(taskManagerReportPost)) {
+                is RepositoryResult.Success -> {
+                    if (withFixTask) {
+                        creatingFixTask.value = true
+                        createdFixTask = true
+                        creatingFixTask.value = false
+                    } else {
+                        showSuccessMessage(getString(R.string.taskAccepted))
+                        finishFragment()
+                    }
                 }
+                is RepositoryResult.Error -> showErrorMessage(result.error)
             }
-            is RepositoryResult.Error -> showErrorMessage(result.error)
         }
     }
 

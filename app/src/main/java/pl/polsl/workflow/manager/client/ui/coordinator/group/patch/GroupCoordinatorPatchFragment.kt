@@ -11,6 +11,7 @@ import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPat
 import pl.polsl.workflow.manager.client.model.data.GroupPatch
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
 class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel>() {
@@ -60,9 +61,9 @@ class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel
             view?.coordinatorGroupPatchManagerDropdown?.arrayAdapter?.update(list)
             val managerIds = managers?.map { it.id }
             val index = viewModel.selectedManager.value?.let {
-                managerIds?.indexOf(it.id)
+                managerIds?.indexOfOrNull(it.id)
             }
-            if(index != null && index >= 0)
+            if(index != null)
                 view?.coordinatorGroupPatchManagerDropdown?.setSelection(index + 1)
         }
         viewModel.selectedWorkers.safeObserve {

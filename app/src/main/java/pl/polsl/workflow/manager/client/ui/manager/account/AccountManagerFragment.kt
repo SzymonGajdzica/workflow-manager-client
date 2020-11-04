@@ -10,6 +10,8 @@ import pl.polsl.workflow.manager.client.databinding.FragmentAccountManagerBindin
 import pl.polsl.workflow.manager.client.model.data.activeWorkers
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
+import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
 class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
@@ -45,8 +47,10 @@ class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
     override fun setupObservables(viewModel: AccountManagerViewModel) {
         super.setupObservables(viewModel)
         viewModel.groups.observe { groups ->
+            val groupIndex = groups?.indexOfOrNull(viewModel.selectedGroup.value) ?: 0
             val list = groups?.map { it.name } ?: listOf()
             view?.managerAccountGroupDropdown?.arrayAdapter?.update(list)
+            view?.managerAccountGroupDropdown?.setSelection(groupIndex)
         }
         viewModel.selectedGroup.observe { group ->
             val list = group?.activeWorkers?.map { it.username } ?: listOf()
@@ -63,7 +67,7 @@ class AccountManagerFragment: BaseFragment<AccountManagerViewModel>() {
             logout()
         }
         view.managerAccountGroupDropdown.mSetOnItemSelectedListener {
-            viewModel.groupSelected(it)
+            viewModel.groupSelected(viewModel.groups.safeValue[it])
         }
     }
 
