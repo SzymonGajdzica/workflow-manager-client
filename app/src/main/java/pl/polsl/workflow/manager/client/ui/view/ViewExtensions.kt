@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.R
 import java.time.Instant
 import java.time.ZoneOffset
@@ -40,6 +44,26 @@ fun Spinner.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
+    }
+}
+
+fun MaterialAutoCompleteTextView.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
+    onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        callback(position)
+    }
+    setOnDismissListener {
+        clearFocus()
+    }
+}
+
+fun MaterialAutoCompleteTextView.update(list: List<String>, startIndex: Int?) {
+    CoroutineScope(Dispatchers.Main).launch {
+        setAdapter(ArrayAdapter(
+            context,
+            R.layout.dropdown_menu_popup_item,
+            list
+        ))
+        setText(list.getOrNull(startIndex ?: 0)?.toString(), false)
     }
 }
 

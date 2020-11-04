@@ -9,6 +9,7 @@ import pl.polsl.workflow.manager.client.util.token.TokenHolder
 
 abstract class AccountCoordinatorViewModel(application: Application, tokenHolder: TokenHolder): AccountViewModel(application, tokenHolder) {
 
+    abstract val selectedRole: LiveData<Int>
     abstract val users: LiveData<List<User>>
 
     abstract fun roleSelected(role: Int)

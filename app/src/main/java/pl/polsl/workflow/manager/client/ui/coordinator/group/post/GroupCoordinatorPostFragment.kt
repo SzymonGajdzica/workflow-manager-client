@@ -10,9 +10,7 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPostBinding
 import pl.polsl.workflow.manager.client.model.data.GroupPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.arrayAdapter
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
-import pl.polsl.workflow.manager.client.ui.view.setupSimpleArrayAdapter
 import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 
@@ -41,19 +39,13 @@ class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>(
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.coordinatorGroupPostManagerDropdown.setupSimpleArrayAdapter(view.context)
-    }
-
     override fun setupObservables(viewModel: GroupCoordinatorPostViewModel) {
         super.setupObservables(viewModel)
         viewModel.managers.observe { managers ->
             val managerIndex = managers?.indexOfOrNull(viewModel.selectedManager.value)?.plus(1) ?: 0
             val list = arrayListOf(getString(R.string.notSelected))
             list.addAll(managers?.map { it.username } ?: listOf())
-            view?.coordinatorGroupPostManagerDropdown?.arrayAdapter?.update(list)
-            view?.coordinatorGroupPostManagerDropdown?.setSelection(managerIndex)
+            view?.coordinatorGroupPostManagerDropdown?.update(list, managerIndex)
         }
         viewModel.nameInputError.observe { nameInputError ->
             view?.coordinatorGroupPostNameContainer?.error = nameInputError

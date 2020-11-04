@@ -8,6 +8,7 @@ import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskPost
+import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
@@ -22,14 +23,14 @@ class TaskManagerPostViewModelImpl @Inject constructor(
 
     override val subTask: MutableLiveData<Task> = MutableLiveData()
     override val group: MutableLiveData<Group> = MutableLiveData()
-    override val selectedWorkerIndex: MutableLiveData<Int> = MutableLiveData(null)
+    override val selectedWorker: MutableLiveData<User> = MutableLiveData(null)
     override val descriptionInputError: MutableLiveData<String> = MutableLiveData()
     override val nameInputError: MutableLiveData<String> = MutableLiveData()
     override val executionTime: MutableLiveData<Instant> = MutableLiveData(Instant.ofEpochMilli(1000L * 60L * 30L))
     override val deadline: MutableLiveData<Instant> = MutableLiveData(Instant.now())
 
-    override fun updateSelectedWorkerIndex(index: Int?) {
-        selectedWorkerIndex.value = index
+    override fun updateSelectedWorker(worker: User?) {
+        selectedWorker.value = worker
     }
 
     override fun updateExecutionTime(executionTime: Instant) {

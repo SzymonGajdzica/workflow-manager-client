@@ -12,12 +12,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.manager.task.TaskManagerFragment">
 
-        <Spinner
-            android:id="@+id/managerTaskGroupDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/managerTaskGroupDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -25,26 +28,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/managerTaskTaskStatusDropdown"
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/managerTaskGroupDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/managerTaskTaskStatusDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/managerTaskGroupDropdown"
-            app:layout_constraintStart_toStartOf="@id/managerTaskGroupDropdown"
-            app:layout_constraintEnd_toEndOf="@id/managerTaskGroupDropdown"
+            app:layout_constraintTop_toBottomOf="@id/managerTaskGroupDropdownContainer"
+            app:layout_constraintStart_toStartOf="@id/managerTaskGroupDropdownContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskGroupDropdownContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/managerTaskTaskStatusDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/managerTaskTaskList"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/managerTaskTaskStatusDropdown"
-            app:layout_constraintStart_toStartOf="@id/managerTaskGroupDropdown"
-            app:layout_constraintEnd_toEndOf="@id/managerTaskGroupDropdown"
+            app:layout_constraintTop_toBottomOf="@id/managerTaskTaskStatusDropdownContainer"
+            app:layout_constraintStart_toStartOf="@id/managerTaskGroupDropdownContainer"
+            app:layout_constraintEnd_toEndOf="@id/managerTaskGroupDropdownContainer"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/listBackgroundColor"
+            android:background="@color/secondaryBackgroundColor"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
 

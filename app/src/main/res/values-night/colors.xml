@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="overlayColor">#E6000000</color>
-    <color name="separatorColor">#1fffffff</color>
-    <color name="listBackgroundColor">#323232</color>
+    <color name="overlayColor">@color/blue_gray_900_dark_90_percent</color>
+    <color name="secondaryBackgroundColor">@color/blue_gray_900</color>
 
 </resources>

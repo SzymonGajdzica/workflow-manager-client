@@ -3,6 +3,7 @@ package pl.polsl.workflow.manager.client.util.extension
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -25,3 +26,9 @@ fun Activity.hideKeyboard() {
         imm?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+
+val Context.isDarkMode: Boolean
+    get() = when (resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+        Configuration.UI_MODE_NIGHT_YES -> true
+        else -> false
+    }

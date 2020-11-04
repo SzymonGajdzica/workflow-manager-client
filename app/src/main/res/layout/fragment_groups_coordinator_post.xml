@@ -12,6 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.coordinator.group.post.GroupCoordinatorPostFragment">
@@ -39,21 +40,31 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/coordinatorGroupPostManagerDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coordinatorGroupPostManagerDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPostNameContainer"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPostNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPostNameContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/coordinatorGroupPostManagerDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/coordinatorGroupPostCreateButton"
             android:stateListAnimator="@null"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPostNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPostNameContainer"
-            app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPostManagerDropdown"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPostManagerDropdownContainer"
             android:layout_marginTop="8dp"
             android:text="@string/create"
             android:layout_width="0dp"

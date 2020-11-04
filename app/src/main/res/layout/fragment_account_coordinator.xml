@@ -12,6 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.coordinator.account.AccountCoordinatorFragment">
@@ -43,21 +44,31 @@
         <View
             android:id="@+id/coordinatorAccountSeparatorUsername"
             android:layout_marginTop="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
             app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUsernameSubTitle"
             android:layout_width="0dp"
             android:layout_height="0.5dp"/>
 
-        <Spinner
-            android:id="@+id/coordinatorAccountUserRoleDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coordinatorAccountUserRoleDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@id/coordinatorAccountSeparatorUsername"
             app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/coordinatorAccountUserRoleDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/coordinatorAccountUsers"
@@ -65,9 +76,9 @@
             android:layout_marginBottom="4dp"
             app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
-            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUserRoleDropdown"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorAccountUserRoleDropdownContainer"
             app:layout_constraintBottom_toTopOf="@id/coordinatorAccountUsersSubTitle"
-            android:background="@color/listBackgroundColor"
+            android:background="@color/secondaryBackgroundColor"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
 
@@ -95,7 +106,7 @@
         <View
             android:id="@+id/coordinatorAccountSeparatorRemainingSessionTime"
             android:layout_marginBottom="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/coordinatorAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/coordinatorAccountUsername"
             app:layout_constraintBottom_toTopOf="@id/coordinatorAccountRemainingSessionTime"

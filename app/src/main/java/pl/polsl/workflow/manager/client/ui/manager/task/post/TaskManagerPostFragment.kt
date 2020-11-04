@@ -13,8 +13,12 @@ import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.model.data.activeWorkers
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
-import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
+import pl.polsl.workflow.manager.client.ui.view.showDateTimePicker
+import pl.polsl.workflow.manager.client.ui.view.showTimePicker
+import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.formatDate
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
@@ -45,10 +49,13 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.managerTaskPostWorkerDropdown.setupSimpleArrayAdapter(view.context)
-        val entries = arrayListOf(getString(R.string.autoAssign))
-        entries.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
-        view.managerTaskPostWorkerDropdown.arrayAdapter?.update(entries)
+        val list = arrayListOf(getString(R.string.autoAssign))
+        list.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
+        val index = viewModel.group.safeValue.activeWorkers.indexOfOrNull(viewModel.selectedWorker.value)?.plus(1)
+        view.managerTaskPostWorkerDropdown.update(
+            list,
+            index
+        )
     }
 
     override fun setupObservables(viewModel: TaskManagerPostViewModel) {
@@ -82,7 +89,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
             }
         }
         view.managerTaskPostWorkerDropdown.mSetOnItemSelectedListener {
-            viewModel.updateSelectedWorkerIndex(if(it == 0) null else it - 1)
+            viewModel.updateSelectedWorker(viewModel.group.safeValue.activeWorkers.getOrNull(it - 1))
         }
         view.managerTaskPostLocalization.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_task_manager_post_to_mapSelectFragment)
@@ -98,7 +105,7 @@ class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
                     subTask = viewModel.subTask.value,
                     localization = localization,
                     estimatedExecutionTime = viewModel.executionTime.safeValue,
-                    worker = viewModel.selectedWorkerIndex.value?.let { viewModel.group.safeValue.activeWorkers[it] }
+                    worker = viewModel.selectedWorker.value
             )
             viewModel.createTask(taskPost)
         }

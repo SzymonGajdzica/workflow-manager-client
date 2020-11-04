@@ -12,6 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.coordinator.group.patch.GroupCoordinatorPatchFragment">
@@ -39,14 +40,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/coordinatorGroupPatchManagerDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coordinatorGroupPatchManagerDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPatchNameContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/coordinatorGroupPatchManagerDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/coordinatorGroupPatchWorkerList"
@@ -54,20 +65,30 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPatchNameContainer"
-            app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPatchManagerDropdown"
-            app:layout_constraintBottom_toTopOf="@id/coordinatorGroupPatchWorkerDropdown"
-            android:background="@color/listBackgroundColor"
+            app:layout_constraintTop_toBottomOf="@id/coordinatorGroupPatchManagerDropdownContainer"
+            app:layout_constraintBottom_toTopOf="@id/coordinatorGroupPatchWorkerDropdownContainer"
+            android:background="@color/secondaryBackgroundColor"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
 
-        <Spinner
-            android:id="@+id/coordinatorGroupPatchWorkerDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coordinatorGroupPatchWorkerDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/coordinatorGroupPatchUpdateButton"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPatchNameContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/coordinatorGroupPatchWorkerDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/coordinatorGroupPatchUpdateButton"

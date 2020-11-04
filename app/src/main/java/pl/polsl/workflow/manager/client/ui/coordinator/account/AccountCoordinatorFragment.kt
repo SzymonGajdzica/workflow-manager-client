@@ -12,7 +12,9 @@ import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorBi
 import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPatch
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
+import pl.polsl.workflow.manager.client.ui.view.setupAdapter
+import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
@@ -43,13 +45,15 @@ class AccountCoordinatorFragment: BaseFragment<AccountCoordinatorViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.coordinatorAccountUserRoleDropdown.setupSimpleArrayAdapter(view.context)
         val adapter = AccountCoordinatorListAdapter {
             val user = viewModel.users.safeValue[it]
             viewModel.updateUser(user, UserPatch(!user.enabled))
         }
         view.coordinatorAccountUsers.setupAdapter(adapter)
-        view.coordinatorAccountUserRoleDropdown.arrayAdapter?.update(resources.getStringArray(R.array.coordinatorAccountRoles).toList())
+        view.coordinatorAccountUserRoleDropdown.update(
+            resources.getStringArray(R.array.coordinatorAccountRoles).toList(),
+            roleToPosition(viewModel.selectedRole.safeValue)
+        )
     }
 
     override fun setupObservables(viewModel: AccountCoordinatorViewModel) {
@@ -69,16 +73,26 @@ class AccountCoordinatorFragment: BaseFragment<AccountCoordinatorViewModel>() {
             logout()
         }
         view.coordinatorAccountUserRoleDropdown.mSetOnItemSelectedListener {
-            val role = when(it) {
-                0 -> Role.WORKER
-                else -> Role.MANAGER
-            }
-            viewModel.roleSelected(role)
+            viewModel.roleSelected(positionToRole(it))
         }
         view.coordinatorAccountAddUser.setOnClickListener {
             findNavController().navigate(
                     R.id.action_navigation_account_coordinator_to_accountCoordinatorPostFragment
             )
+        }
+    }
+
+    private fun positionToRole(position: Int): Int {
+        return when(position) {
+            0 -> Role.WORKER
+            else -> Role.MANAGER
+        }
+    }
+
+    private fun roleToPosition(taskStatus: Int): Int {
+        return when(taskStatus) {
+            Role.WORKER -> 0
+            else -> 1
         }
     }
 

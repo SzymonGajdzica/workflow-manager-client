@@ -11,9 +11,9 @@ import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorPo
 import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.arrayAdapter
-import pl.polsl.workflow.manager.client.ui.view.setupSimpleArrayAdapter
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.update
+import pl.polsl.workflow.manager.client.util.extension.safeValue
 
 class AccountCoordinatorPostFragment: BaseFragment<AccountCoordinatorPostViewModel>() {
 
@@ -42,22 +42,23 @@ class AccountCoordinatorPostFragment: BaseFragment<AccountCoordinatorPostViewMod
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.coordinatorAccountPostRoleDropdown.setupSimpleArrayAdapter(view.context)
-        view.coordinatorAccountPostRoleDropdown.arrayAdapter?.update(view.context.resources.getStringArray(R.array.coordinatorAccountRoles).toList())
+        view.coordinatorAccountPostRoleDropdown.update(
+            view.context.resources.getStringArray(R.array.coordinatorAccountRoles).toList(),
+            roleToPosition(viewModel.selectedRole.safeValue)
+        )
     }
 
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
         view.coordinatorAccountPostRegisterButton.setOnClickListener {
-            val role = when(view.coordinatorAccountPostRoleDropdown.selectedItemPosition) {
-                0 -> Role.WORKER
-                else -> Role.MANAGER
-            }
             viewModel.createUser(UserPost(
                     username = view.coordinatorAccountPostUsername.text.toString(),
                     password = view.coordinatorAccountPostPassword.text.toString(),
-                    role = role
+                    role = viewModel.selectedRole.safeValue
             ))
+        }
+        view.coordinatorAccountPostRoleDropdown.mSetOnItemSelectedListener {
+            viewModel.onRoleSelected(positionToRole(it))
         }
     }
 
@@ -68,6 +69,20 @@ class AccountCoordinatorPostFragment: BaseFragment<AccountCoordinatorPostViewMod
         }
         viewModel.passwordInputError.observe {
             this.view?.coordinatorAccountPostPasswordContainer?.error = it
+        }
+    }
+
+    private fun positionToRole(position: Int): Int {
+        return when(position) {
+            0 -> Role.WORKER
+            else -> Role.MANAGER
+        }
+    }
+
+    private fun roleToPosition(taskStatus: Int): Int {
+        return when(taskStatus) {
+            Role.WORKER -> 0
+            else -> 1
         }
     }
 

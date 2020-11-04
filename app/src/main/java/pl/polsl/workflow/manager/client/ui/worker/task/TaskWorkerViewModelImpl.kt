@@ -20,8 +20,7 @@ class TaskWorkerViewModelImpl @Inject constructor(
     override val tasks: MutableLiveData<List<Task>> = MutableLiveData()
     override val task: MutableLiveData<Task> = MutableLiveData()
     override val remainingTime: MutableLiveData<Instant> = MutableLiveData()
-
-    private var selectedTaskStatus = TaskStatus.FINISHED
+    override val selectedTaskStatus: MutableLiveData<Int> = MutableLiveData(TaskStatus.FINISHED)
 
     init {
         TimerHelper.register(this, ::updateRemainingTime)
@@ -44,7 +43,7 @@ class TaskWorkerViewModelImpl @Inject constructor(
     }
 
     override fun taskStatusSelected(taskStatus: Int) {
-        selectedTaskStatus = taskStatus
+        selectedTaskStatus.value = taskStatus
         setFilteredTasks()
     }
 
@@ -69,7 +68,7 @@ class TaskWorkerViewModelImpl @Inject constructor(
 
     private fun setFilteredTasks() {
         val allTasks = allTasks ?: return
-        tasks.value = allTasks.filter { it.status == selectedTaskStatus }.sortedBy { it.deadline }
+        tasks.value = allTasks.filter { it.status == selectedTaskStatus.value }.sortedBy { it.deadline }
     }
 
     override fun reloadData() {

@@ -9,6 +9,7 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.LatLng
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
+import pl.polsl.workflow.manager.client.util.extension.isDarkMode
 import pl.polsl.workflow.manager.client.util.extension.mGetColor
 
 fun LatLng.toGoogleLatLng(): com.google.android.gms.maps.model.LatLng {
@@ -40,6 +41,8 @@ fun GoogleMap.baseSetup(context: Context?) {
         isMyLocationButtonEnabled = true
         isMapToolbarEnabled = true
     }
+    if(context?.isDarkMode == true)
+        setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_dark_mode_style))
     if(context?.hasLocationPermission() == true)
         isMyLocationEnabled = true
 }

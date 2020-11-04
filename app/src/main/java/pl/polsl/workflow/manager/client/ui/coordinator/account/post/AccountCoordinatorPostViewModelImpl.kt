@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.RepositoryResult
+import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.model.repository.UserRepository
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
@@ -15,11 +16,14 @@ class AccountCoordinatorPostViewModelImpl @Inject constructor(
         private val inputValidator: InputValidator
 ): AccountCoordinatorPostViewModel(application) {
 
+    override val selectedRole: MutableLiveData<Int> = MutableLiveData(Role.WORKER)
     override val usernameInputError: MutableLiveData<String> = MutableLiveData()
     override val passwordInputError: MutableLiveData<String> = MutableLiveData()
 
     override fun createUser(userPost: UserPost) = launchWithLoader {
-        if(validate(userPost)){
+        usernameInputError.value = inputValidator.validateUsername(userPost.username)
+        passwordInputError.value = inputValidator.validatePassword(userPost.password)
+        if(usernameInputError.value == null && passwordInputError.value == null){
             when(val result = userRepository.createUser(userPost)) {
                 is RepositoryResult.Success -> {
                     showSuccessMessage(getString(R.string.userCreated))
@@ -30,10 +34,8 @@ class AccountCoordinatorPostViewModelImpl @Inject constructor(
         }
     }
 
-    private fun validate(userPost: UserPost): Boolean {
-        usernameInputError.value = inputValidator.validateUsername(userPost.username)
-        passwordInputError.value = inputValidator.validatePassword(userPost.password)
-        return usernameInputError.value == null && passwordInputError.value == null
+    override fun onRoleSelected(role: Int) {
+        selectedRole.value = role
     }
 
 }

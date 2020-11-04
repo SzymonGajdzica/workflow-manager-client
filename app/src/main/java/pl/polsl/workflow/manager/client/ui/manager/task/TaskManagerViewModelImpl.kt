@@ -19,10 +19,9 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     override val groups: MutableLiveData<List<Group>> = MutableLiveData()
     override val tasks: MutableLiveData<List<Task>> = MutableLiveData(null)
+    override val selectedTaskStatus: MutableLiveData<Int> = MutableLiveData(TaskStatus.CREATED)
 
     private var allTasks: List<Task>? = null
-
-    private var selectedTaskStatus = TaskStatus.CREATED
 
     override val selectedGroup: MutableLiveData<Group> = MutableLiveData()
 
@@ -59,11 +58,11 @@ class TaskManagerViewModelImpl @Inject constructor(
 
     private fun setFilteredTasks() {
         val allTasks = allTasks ?: return
-        tasks.value = allTasks.filter { it.status == selectedTaskStatus }.sortedBy { it.deadline }
+        tasks.value = allTasks.filter { it.status == selectedTaskStatus.value }.sortedBy { it.deadline }
     }
 
     override fun taskStatusSelected(taskStatus: Int) {
-        this.selectedTaskStatus = taskStatus
+        selectedTaskStatus.value = taskStatus
         setFilteredTasks()
     }
 

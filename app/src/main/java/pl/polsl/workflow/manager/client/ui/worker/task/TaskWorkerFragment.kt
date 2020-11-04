@@ -11,7 +11,10 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerBinding
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
+import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
+import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
@@ -42,8 +45,10 @@ class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
-        view.workerTaskTaskStatusDropdown.setupSimpleArrayAdapter(view.context)
-        view.workerTaskTaskStatusDropdown.arrayAdapter?.update(resources.getStringArray(R.array.workerTaskStatuses).toList())
+        view.workerTaskTaskStatusDropdown.update(
+            resources.getStringArray(R.array.workerTaskStatuses).toList(),
+            taskStatusToPosition(viewModel.selectedTaskStatus.safeValue)
+        )
         view.workerTaskTaskList.setupSimpleAdapter {
             val task = viewModel.tasks.safeValue[it]
             findNavController().navigate(
@@ -82,12 +87,22 @@ class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
                     viewModel.task.value?.localization?.toBundle()
             )
         }
-        view.workerTaskTaskStatusDropdown.mSetOnItemSelectedListener {
-            val taskStatus = when(it) {
-                0 -> TaskStatus.FINISHED
-                else -> TaskStatus.ACCEPTED
-            }
-            viewModel.taskStatusSelected(taskStatus)
+        view.workerTaskTaskStatusDropdown.mSetOnItemSelectedListener { position ->
+            viewModel.taskStatusSelected(positionToTaskStatus(position))
+        }
+    }
+
+    private fun positionToTaskStatus(position: Int): Int {
+        return when(position) {
+            0 -> TaskStatus.FINISHED
+            else -> TaskStatus.ACCEPTED
+        }
+    }
+
+    private fun taskStatusToPosition(taskStatus: Int): Int {
+        return when(taskStatus) {
+            TaskStatus.FINISHED -> 0
+            else -> 1
         }
     }
 

@@ -15,6 +15,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.manager.task.post.TaskManagerPostFragment">
@@ -53,6 +54,7 @@
             app:errorEnabled="true"
             android:hint="@string/description"
             android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,20 +98,30 @@
             tools:text="Execution time: 23.43.534"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             app:icon="@drawable/ic_baseline_access_time_24"
-            app:layout_constraintBottom_toTopOf="@id/managerTaskPostWorkerDropdown"
+            app:layout_constraintBottom_toTopOf="@id/managerTaskPostWorkerDropdownContainer"
             app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
             android:layout_marginBottom="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <Spinner
-            android:id="@+id/managerTaskPostWorkerDropdown"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/managerTaskPostWorkerDropdownContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/text_input_box_stroke"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/managerTaskPostCreate"
             app:layout_constraintStart_toStartOf="@id/managerTaskPostNameContainer"
             app:layout_constraintEnd_toEndOf="@id/managerTaskPostNameContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/managerTaskPostWorkerDropdown"
+                android:inputType="none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/managerTaskPostCreate"

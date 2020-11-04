@@ -10,7 +10,9 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPatchBinding
 import pl.polsl.workflow.manager.client.model.data.GroupPatch
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.ui.view.*
+import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
+import pl.polsl.workflow.manager.client.ui.view.setupAdapter
+import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
@@ -42,8 +44,6 @@ class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel
     override fun setupViews(view: View) {
         super.setupViews(view)
         view.coordinatorGroupPatchName.setText(viewModel.initialGroup.safeValue.name)
-        view.coordinatorGroupPatchManagerDropdown.setupSimpleArrayAdapter(view.context)
-        view.coordinatorGroupPatchWorkerDropdown.setupSimpleArrayAdapter(view.context)
         val adapter = GroupCoordinatorPatchListAdapter {
             viewModel.onWorkerDeselected(viewModel.selectedWorkers.safeValue[it])
         }
@@ -58,13 +58,11 @@ class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel
         viewModel.managers.observe { managers ->
             val list = arrayListOf(getString(R.string.notSelected))
             list.addAll(managers?.map { it.username } ?: listOf())
-            view?.coordinatorGroupPatchManagerDropdown?.arrayAdapter?.update(list)
             val managerIds = managers?.map { it.id }
             val index = viewModel.selectedManager.value?.let {
-                managerIds?.indexOfOrNull(it.id)
+                managerIds?.indexOfOrNull(it.id)?.plus(1)
             }
-            if(index != null)
-                view?.coordinatorGroupPatchManagerDropdown?.setSelection(index + 1)
+            view?.coordinatorGroupPatchManagerDropdown?.update(list, index)
         }
         viewModel.selectedWorkers.safeObserve {
             (view?.coordinatorGroupPatchWorkerList?.adapter as? GroupCoordinatorPatchListAdapter)?.updateList(it)
@@ -72,8 +70,7 @@ class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel
         viewModel.remainingWorkers.observe { workers ->
             val list = arrayListOf(getString(R.string.addWorker))
             list.addAll(workers?.map { it.username } ?: listOf())
-            view?.coordinatorGroupPatchWorkerDropdown?.arrayAdapter?.update(list)
-            view?.coordinatorGroupPatchWorkerDropdown?.setSelection(0)
+            view?.coordinatorGroupPatchWorkerDropdown?.update(list, 0)
         }
     }
 

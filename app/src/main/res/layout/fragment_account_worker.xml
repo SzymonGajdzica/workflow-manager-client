@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.worker.account.AccountWorkerFragment">
@@ -42,7 +43,7 @@
         <View
             android:id="@+id/workerAccountSeparatorUsername"
             android:layout_marginTop="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
             app:layout_constraintTop_toBottomOf="@id/workerAccountUsernameSubTitle"
@@ -74,7 +75,7 @@
         <View
             android:id="@+id/workerAccountSeparatorGroupName"
             android:layout_marginTop="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
             app:layout_constraintTop_toBottomOf="@id/workerAccountGroupNameSubTitle"
@@ -106,7 +107,7 @@
         <View
             android:id="@+id/accountFragmentSeparatorGroupMembers"
             android:layout_marginTop="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/workerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
             app:layout_constraintTop_toBottomOf="@id/workerAccountGroupManagerNameSubTitle"
@@ -121,7 +122,7 @@
             app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
             app:layout_constraintTop_toBottomOf="@id/accountFragmentSeparatorGroupMembers"
             app:layout_constraintBottom_toTopOf="@id/workerAccountGroupMembersSubTitle"
-            android:background="@color/listBackgroundColor"
+            android:background="@color/secondaryBackgroundColor"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
 
@@ -139,7 +140,7 @@
         <View
             android:id="@+id/workerAccountSeparatorRemainingSessionTime"
             android:layout_marginBottom="4dp"
-            android:background="@color/separatorColor"
+            android:background="@color/secondaryBackgroundColor"
             app:layout_constraintStart_toStartOf="@id/workerAccountGroupManagerName"
             app:layout_constraintEnd_toEndOf="@id/workerAccountUsername"
             app:layout_constraintBottom_toTopOf="@id/workerAccountRemainingSessionTime"

@@ -19,7 +19,7 @@ class AccountCoordinatorViewModelImpl @Inject constructor(
 
     override val users: MutableLiveData<List<User>> = MutableLiveData()
     private var allUsers: List<User>? = null
-    private var selectedRole: Int = Role.WORKER
+    override val selectedRole: MutableLiveData<Int> = MutableLiveData(Role.WORKER)
 
     private fun loadUsers() = launchWithLoader {
         users.value = null
@@ -48,11 +48,11 @@ class AccountCoordinatorViewModelImpl @Inject constructor(
     }
 
     private fun showFilteredList() {
-        users.value = allUsers?.filter { it.role == selectedRole }
+        users.value = allUsers?.filter { it.role == selectedRole.value }
     }
 
     override fun roleSelected(role: Int) {
-        this.selectedRole = role
+        selectedRole.value = role
         showFilteredList()
     }
 
