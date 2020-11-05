@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.User
+import pl.polsl.workflow.manager.client.model.data.checkedToken
 import pl.polsl.workflow.manager.client.model.repository.AuthenticationRepository
 import pl.polsl.workflow.manager.client.model.repository.UserRepository
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
@@ -39,7 +40,7 @@ class LoginViewModelImpl @Inject constructor(
     }
 
     private fun tryAutoLogin() {
-        val authenticationView = tokenHolder.token
+        val authenticationView = tokenHolder.token?.checkedToken
         if(authenticationView != null)
             updateLoggedUserDetails()
     }

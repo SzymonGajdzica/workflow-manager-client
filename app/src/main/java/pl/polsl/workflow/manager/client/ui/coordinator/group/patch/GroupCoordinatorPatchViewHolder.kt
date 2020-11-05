@@ -5,6 +5,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.base_list_item_with_action_button.view.*
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.User
 
 class GroupCoordinatorPatchViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -13,6 +14,7 @@ class GroupCoordinatorPatchViewHolder(view: View): RecyclerView.ViewHolder(view)
     private val actionButton: ImageButton = view.listItemActionButton
 
     fun updateViews(worker: User, position: Int, actionButtonClickListener: (Int) -> Unit) {
+        actionButton.setImageResource(R.drawable.ic_baseline_delete_24)
         username.text = worker.username
         actionButton.setOnClickListener {
             actionButtonClickListener(position)
