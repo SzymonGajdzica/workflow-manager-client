@@ -1,10 +1,9 @@
 package pl.polsl.workflow.manager.client.ui.view
 
-import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,22 +28,10 @@ fun RecyclerView.setupSimpleAdapter(
 }
 
 fun RecyclerView.setupAdapter(mAdapter: RecyclerView.Adapter<*>) {
-    val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
     setHasFixedSize(true)
     layoutManager = LinearLayoutManager(context)
-    addItemDecoration(dividerItemDecoration)
+    addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     adapter = mAdapter
-}
-
-fun Spinner.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
-    onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            callback(position)
-        }
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
-    }
 }
 
 fun MaterialAutoCompleteTextView.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
@@ -67,22 +54,13 @@ fun MaterialAutoCompleteTextView.update(list: List<String>, startIndex: Int?) {
     }
 }
 
-fun Spinner.setupSimpleArrayAdapter(context: Context) {
-    adapter = ArrayAdapter<String>(
-            context,
-            android.R.layout.simple_spinner_item
-    ).apply {
-        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+fun View.setClickableBackground() {
+    TypedValue().also { outValue ->
+        context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+        setBackgroundResource(outValue.resourceId)
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-val Spinner.arrayAdapter: ArrayAdapter<String>?
-    get() = adapter as? ArrayAdapter<String>
-
-fun ArrayAdapter<String>.update(collection: Collection<String>) {
-    clear()
-    addAll(collection)
+    isClickable = true
+    isFocusable = true
 }
 
 fun Fragment.showTimePicker(tag: String, startTime: Instant?, onDateSelected: (Instant) -> Unit) {

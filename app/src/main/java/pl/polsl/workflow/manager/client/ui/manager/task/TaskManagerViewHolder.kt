@@ -4,16 +4,17 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.task_manager_task_list_item.view.*
+import kotlinx.android.synthetic.main.base_list_item_with_action_button.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
 import pl.polsl.workflow.manager.client.model.data.status
+import pl.polsl.workflow.manager.client.ui.view.setClickableBackground
 
 class TaskManagerViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
 
-    private val taskName: TextView = view.managerTaskListItemName
-    private val actionButton: ImageButton = view.managerTaskListItemActionButton
+    private val taskName: TextView = view.listItemTitle
+    private val actionButton: ImageButton = view.listItemActionButton
 
     fun updateViews(task: Task, position: Int, itemClickListener: (Int) -> Unit, actionButtonClickListener: (Int) -> Unit) {
         taskName.text = task.name
@@ -23,6 +24,7 @@ class TaskManagerViewHolder(private val view: View): RecyclerView.ViewHolder(vie
             TaskStatus.FINISHED -> actionButton.setImageResource(R.drawable.ic_baseline_assignment_24)
             else -> actionButton.visibility = View.GONE
         }
+        view.setClickableBackground()
         view.setOnClickListener {
             itemClickListener(position)
         }

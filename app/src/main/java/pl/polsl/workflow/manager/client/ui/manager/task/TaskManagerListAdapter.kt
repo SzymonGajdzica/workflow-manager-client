@@ -20,7 +20,7 @@ class TaskManagerListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskManagerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_manager_task_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.base_list_item_with_action_button, parent, false)
         return TaskManagerViewHolder(view)
     }
 

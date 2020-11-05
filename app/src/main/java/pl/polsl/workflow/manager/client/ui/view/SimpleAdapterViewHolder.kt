@@ -1,6 +1,5 @@
 package pl.polsl.workflow.manager.client.ui.view
 
-import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,12 +19,7 @@ class SimpleAdapterViewHolder(private val view: View): RecyclerView.ViewHolder(v
             textViews[index].text = text
         }
         if(onClick != null) {
-            TypedValue().also { outValue ->
-                view.context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
-                view.setBackgroundResource(outValue.resourceId)
-            }
-            view.isClickable = true
-            view.isFocusable = true
+            view.setClickableBackground()
             view.setOnClickListener {
                 onClick(position)
             }

@@ -9,12 +9,12 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPostBinding
 import pl.polsl.workflow.manager.client.model.data.GroupPost
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 
-class GroupCoordinatorPostFragment: BaseFragment<GroupCoordinatorPostViewModel>() {
+class GroupCoordinatorPostFragment: BaseFragmentViewModel<GroupCoordinatorPostViewModel>() {
 
     private lateinit var viewDataBinding: FragmentGroupsCoordinatorPostBinding
 

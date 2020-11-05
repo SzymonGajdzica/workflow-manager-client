@@ -11,7 +11,7 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.model.data.activeWorkers
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.showDateTimePicker
@@ -22,7 +22,7 @@ import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
-class TaskManagerPostFragment: BaseFragment<TaskManagerPostViewModel>() {
+class TaskManagerPostFragment: BaseFragmentViewModel<TaskManagerPostViewModel>() {
 
     private lateinit var viewDataBinding: FragmentTaskManagerPostBinding
 

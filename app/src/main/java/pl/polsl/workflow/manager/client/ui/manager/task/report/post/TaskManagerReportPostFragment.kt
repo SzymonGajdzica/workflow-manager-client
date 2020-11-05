@@ -10,11 +10,11 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerReportPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReportPost
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 
-class TaskManagerReportPostFragment: BaseFragment<TaskManagerReportPostViewModel>() {
+class TaskManagerReportPostFragment: BaseFragmentViewModel<TaskManagerReportPostViewModel>() {
 
     private lateinit var viewDataBinding: FragmentTaskManagerReportPostBinding
 

@@ -8,10 +8,10 @@ import kotlinx.android.synthetic.main.fragment_task_worker_report_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerReportPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
-class TaskWorkerReportPostFragment: BaseFragment<TaskWorkerReportPostViewModel>() {
+class TaskWorkerReportPostFragment: BaseFragmentViewModel<TaskWorkerReportPostViewModel>() {
 
     private lateinit var viewDataBinding: FragmentTaskWorkerReportPostBinding
 

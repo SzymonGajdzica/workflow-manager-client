@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
@@ -12,12 +11,12 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.getSuperTask
-import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
+import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.util.TimerHelper
 import pl.polsl.workflow.manager.client.util.extension.*
 import java.time.Instant
 
-class TaskDetailsFragment: Fragment() {
+class TaskDetailsFragment: BaseFragment() {
 
     private var task: Task? = null
 
@@ -71,10 +70,7 @@ class TaskDetailsFragment: Fragment() {
             if(superTask != null) {
                 taskDetailsSuperTask.setOnClickListener {
                     when(superTask) {
-                        is AllowableValue.NotAllowed -> SimpleDialog.create(
-                                getString(R.string.error),
-                                getString(R.string.notAllowedToBrowseThisResource)
-                        ).show(parentFragmentManager, "ErrorDialog")
+                        is AllowableValue.NotAllowed -> showErrorMessage(getString(R.string.notAllowedToBrowseThisResource))
                         is AllowableValue.Allowed -> findNavController().navigate(
                                 R.id.action_taskDetailsFragment_self,
                                 listOf(superTask.value, sharedTasks).toBundle()

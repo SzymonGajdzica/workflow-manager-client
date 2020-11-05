@@ -19,7 +19,7 @@ class AccountCoordinatorListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountCoordinatorViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.account_coordinator_user_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.base_list_item_with_action_button, parent, false)
         return AccountCoordinatorViewHolder(view)
     }
 

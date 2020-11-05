@@ -21,10 +21,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="mapCircleBackground">#807D7D7D</color>
 
     <color name="overlayColor">@color/blue_gray_50_light_90_percent</color>
     <color name="secondaryBackgroundColor">@color/blue_gray_50</color>
+    <color name="mapCircleBackground">#80C8C8C8</color>
 
 </resources>
 

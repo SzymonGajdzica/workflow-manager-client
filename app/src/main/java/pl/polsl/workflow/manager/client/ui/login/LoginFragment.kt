@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentLoginBinding
 import pl.polsl.workflow.manager.client.model.data.destinationActivityClass
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 
-class LoginFragment : BaseFragment<LoginViewModel>() {
+class LoginFragment : BaseFragmentViewModel<LoginViewModel>() {
 
     private lateinit var viewDataBinding: FragmentLoginBinding
 

@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_task_details_worker_report.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
+import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.util.extension.formatDate
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
 
-class TaskDetailsWorkerReport: Fragment() {
+class TaskDetailsWorkerReport: BaseFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,

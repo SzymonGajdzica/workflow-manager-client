@@ -16,14 +16,14 @@ import pl.polsl.workflow.manager.client.databinding.FragmentLocalizationsCoordin
 import pl.polsl.workflow.manager.client.model.data.LatLng
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.model.data.LocalizationPost
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.map.addLocalization
 import pl.polsl.workflow.manager.client.ui.map.baseSetup
 import pl.polsl.workflow.manager.client.ui.map.toGoogleLatLng
 import pl.polsl.workflow.manager.client.ui.map.toLatLng
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
-class LocalizationCoordinatorPostFragment: BaseFragment<LocalizationCoordinatorPostViewModel>(), OnMapReadyCallback {
+class LocalizationCoordinatorPostFragment: BaseFragmentViewModel<LocalizationCoordinatorPostViewModel>(), OnMapReadyCallback {
 
     private var googleMap: GoogleMap? = null
     private var circle: Circle? = null

@@ -17,7 +17,6 @@ import java.util.*
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 
-
     private val mShouldFinish: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private val mErrorString: MutableLiveData<String> = MutableLiveData<String>(null)
@@ -29,6 +28,8 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
     val error: LiveData<String> = mErrorString
     val errorMessage: LiveData<String> = mErrorMessage
     val successMessage: LiveData<String> = mSuccessMessage
+    val currentlyLoading: Boolean
+        get() = delayedValueChanger.currentValue
 
     private val delayedValueChanger = DelayedBoolChanger(viewModelScope, 200L, mLoading)
 

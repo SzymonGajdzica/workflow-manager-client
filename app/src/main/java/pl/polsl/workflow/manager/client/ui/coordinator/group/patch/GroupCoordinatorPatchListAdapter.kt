@@ -19,7 +19,7 @@ class GroupCoordinatorPatchListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupCoordinatorPatchViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.group_coordinator_post_worker_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.base_list_item_with_action_button, parent, false)
         return GroupCoordinatorPatchViewHolder(view)
     }
 

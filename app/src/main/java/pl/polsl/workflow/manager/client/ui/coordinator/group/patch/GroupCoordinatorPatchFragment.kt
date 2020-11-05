@@ -9,14 +9,14 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPatchBinding
 import pl.polsl.workflow.manager.client.model.data.GroupPatch
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.setupAdapter
 import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
-class GroupCoordinatorPatchFragment: BaseFragment<GroupCoordinatorPatchViewModel>() {
+class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatchViewModel>() {
 
     private lateinit var viewDataBinding: FragmentGroupsCoordinatorPatchBinding
 

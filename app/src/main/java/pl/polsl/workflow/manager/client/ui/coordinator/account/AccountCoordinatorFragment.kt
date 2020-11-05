@@ -11,14 +11,14 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorBinding
 import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPatch
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.setupAdapter
 import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
-class AccountCoordinatorFragment: BaseFragment<AccountCoordinatorViewModel>() {
+class AccountCoordinatorFragment: BaseFragmentViewModel<AccountCoordinatorViewModel>() {
 
     private lateinit var viewDataBinding: FragmentAccountCoordinatorBinding
 

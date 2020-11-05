@@ -9,13 +9,13 @@ import kotlinx.android.synthetic.main.fragment_groups_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorBinding
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 
-class GroupCoordinatorFragment: BaseFragment<GroupCoordinatorViewModel>() {
+class GroupCoordinatorFragment: BaseFragmentViewModel<GroupCoordinatorViewModel>() {
 
     private lateinit var viewDataBinding: FragmentGroupsCoordinatorBinding
 

@@ -3,5 +3,6 @@
 
     <color name="overlayColor">@color/blue_gray_900_dark_90_percent</color>
     <color name="secondaryBackgroundColor">@color/blue_gray_900</color>
+    <color name="mapCircleBackground">#80323232</color>
 
 </resources>

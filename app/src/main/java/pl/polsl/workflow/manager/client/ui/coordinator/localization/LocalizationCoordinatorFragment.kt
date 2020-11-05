@@ -13,12 +13,12 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentLocalizationsCoordinatorBinding
 import pl.polsl.workflow.manager.client.model.data.Localization
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.map.addLocalization
 import pl.polsl.workflow.manager.client.ui.map.baseSetup
 import pl.polsl.workflow.manager.client.ui.map.zoom
 
-class LocalizationCoordinatorFragment: BaseFragment<LocalizationCoordinatorViewModel>(), OnMapReadyCallback {
+class LocalizationCoordinatorFragment: BaseFragmentViewModel<LocalizationCoordinatorViewModel>(), OnMapReadyCallback {
 
     private lateinit var viewDataBinding: FragmentLocalizationsCoordinatorBinding
 

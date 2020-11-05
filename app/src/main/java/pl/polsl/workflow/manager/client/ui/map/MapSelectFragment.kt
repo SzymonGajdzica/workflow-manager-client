@@ -13,10 +13,10 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentMapSelectBinding
 import pl.polsl.workflow.manager.client.model.data.Localization
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.shared.SharedViewModelImpl
 
-class MapSelectFragment: BaseFragment<MapSelectViewModel>(), OnMapReadyCallback {
+class MapSelectFragment: BaseFragmentViewModel<MapSelectViewModel>(), OnMapReadyCallback {
 
     private lateinit var viewDataBinding: FragmentMapSelectBinding
 

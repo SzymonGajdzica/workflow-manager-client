@@ -12,7 +12,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.manager.account.AccountManagerFragment">
@@ -41,22 +40,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
-        <View
-            android:id="@+id/managerAccountSeparatorUsername"
-            android:layout_marginTop="4dp"
-            android:background="@color/secondaryBackgroundColor"
-            app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
-            app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            app:layout_constraintTop_toBottomOf="@id/managerAccountUsernameSubTitle"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"/>
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/managerAccountGroupDropdownContainer"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             app:boxStrokeColor="@color/text_input_box_stroke"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@id/managerAccountSeparatorUsername"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/managerAccountUsernameSubTitle"
             app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
             android:layout_width="0dp"
@@ -70,55 +59,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <View
-            android:id="@+id/managerAccountSeparatorGroupDropdown"
-            android:layout_marginTop="4dp"
-            android:background="@color/secondaryBackgroundColor"
-            app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
-            app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            app:layout_constraintTop_toBottomOf="@id/managerAccountGroupDropdownContainer"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/managerAccountGroupMembersList"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            app:layout_constraintTop_toBottomOf="@id/managerAccountSeparatorGroupDropdown"
-            app:layout_constraintBottom_toTopOf="@id/managerAccountGroupMembersSubTitle"
+            app:layout_constraintTop_toBottomOf="@id/managerAccountGroupDropdownContainer"
+            app:layout_constraintBottom_toTopOf="@id/managerAccountRemainingSessionTime"
             android:background="@color/secondaryBackgroundColor"
             android:layout_width="0dp"
             android:layout_height="0dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/managerAccountGroupMembersSubTitle"
-            app:layout_constraintBottom_toTopOf="@id/managerAccountSeparatorRemainingSessionTime"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
-            app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            android:textAppearance="?attr/textAppearanceSubtitle2"
-            android:text="@string/groupMembers"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:id="@+id/managerAccountSeparatorRemainingSessionTime"
-            android:layout_marginBottom="4dp"
-            android:background="@color/secondaryBackgroundColor"
-            app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
-            app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            app:layout_constraintBottom_toTopOf="@id/managerAccountRemainingSessionTime"
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/managerAccountRemainingSessionTime"
             app:layout_constraintBottom_toTopOf="@id/managerAccountRemainingSessionTimeSubTitle"
             app:layout_constraintStart_toStartOf="@id/managerAccountUsername"
             app:layout_constraintEnd_toEndOf="@id/managerAccountUsername"
-            android:layout_marginTop="4dp"
             android:textAppearance="?attr/textAppearanceHeadline5"
             tools:text="10:20:30"
             android:layout_width="0dp"

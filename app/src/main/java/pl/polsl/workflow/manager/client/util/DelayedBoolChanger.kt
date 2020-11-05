@@ -16,6 +16,9 @@ class DelayedBoolChanger(
 
     private var counter = 0
 
+    val currentValue: Boolean
+        get() = counter > 0
+
     fun change(value: Boolean) {
         val oldCounter = counter
         counter += if (value) 1 else -1

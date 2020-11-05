@@ -10,7 +10,7 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerBinding
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
-import pl.polsl.workflow.manager.client.ui.base.BaseFragment
+import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
 import pl.polsl.workflow.manager.client.ui.view.SimpleAdapter
 import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.setupSimpleAdapter
@@ -19,7 +19,7 @@ import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
-class TaskWorkerFragment : BaseFragment<TaskWorkerViewModel>() {
+class TaskWorkerFragment : BaseFragmentViewModel<TaskWorkerViewModel>() {
 
     private lateinit var viewDataBinding: FragmentTaskWorkerBinding
 

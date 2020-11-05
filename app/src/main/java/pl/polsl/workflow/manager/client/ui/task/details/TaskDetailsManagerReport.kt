@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_task_details_manager_report.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReport
-import pl.polsl.workflow.manager.client.ui.view.SimpleDialog
+import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.util.extension.formatDate
 import pl.polsl.workflow.manager.client.util.extension.getParcelable
 import pl.polsl.workflow.manager.client.util.extension.getParcelableList
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 
-class TaskDetailsManagerReport: Fragment() {
+class TaskDetailsManagerReport: BaseFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -42,10 +41,7 @@ class TaskDetailsManagerReport: Fragment() {
             if(fixTask != null) {
                 taskDetailsManagerReportFixTask.setOnClickListener {
                     when(fixTask) {
-                        is AllowableValue.NotAllowed -> SimpleDialog.create(
-                                getString(R.string.error),
-                                getString(R.string.notAllowedToBrowseThisResource)
-                        ).show(parentFragmentManager, "ErrorDialog")
+                        is AllowableValue.NotAllowed -> showErrorMessage(getString(R.string.notAllowedToBrowseThisResource))
                         is AllowableValue.Allowed -> findNavController().navigate(
                                 R.id.action_taskDetailsManagerReport2_to_taskDetailsFragment,
                                 listOf(fixTask.value, sharedTasks).toBundle()
