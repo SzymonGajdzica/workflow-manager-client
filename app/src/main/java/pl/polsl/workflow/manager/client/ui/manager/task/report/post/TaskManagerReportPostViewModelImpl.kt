@@ -26,7 +26,7 @@ class TaskManagerReportPostViewModelImpl @Inject constructor(
 
     override fun acceptTask(taskManagerReportPost: TaskManagerReportPost, withFixTask: Boolean) = launchWithLoader {
         descriptionInputError.value = inputValidator.validateBlankText(taskManagerReportPost.description)
-        if (descriptionInputError.value != null) {
+        if (descriptionInputError.value == null) {
             when (val result = taskRepository.sendManagerReport(taskManagerReportPost)) {
                 is RepositoryResult.Success -> {
                     if (withFixTask) {
