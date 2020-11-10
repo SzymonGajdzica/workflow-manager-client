@@ -2,6 +2,7 @@ package pl.polsl.workflow.manager.client.util.extension
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.view.inputmethod.InputMethodManager
@@ -18,6 +19,11 @@ fun Context.hasPermission(key: String): Boolean {
 
 fun Context.hasLocationPermission(): Boolean {
     return hasPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+}
+
+tailrec fun Context?.getActivity(): Activity? = when (this) {
+    is Activity -> this
+    else -> (this as? ContextWrapper)?.baseContext?.getActivity()
 }
 
 fun Activity.hideKeyboard() {

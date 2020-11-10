@@ -13,10 +13,10 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.util.extension.getActivity
+import pl.polsl.workflow.manager.client.util.extension.hideKeyboard
+import pl.polsl.workflow.manager.client.util.extension.indexOfOrNull
 import java.time.Instant
 import java.time.ZoneOffset
 
@@ -34,25 +34,38 @@ fun RecyclerView.setupAdapter(mAdapter: RecyclerView.Adapter<*>) {
     adapter = mAdapter
 }
 
-fun MaterialAutoCompleteTextView.mSetOnItemSelectedListener(callback: (Int) -> Unit) {
+fun MaterialAutoCompleteTextView.mSetOnItemSelectedListener(editable: Boolean = false, callback: (Int) -> Unit) {
     onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-        callback(position)
+        val realPosition = allElements.indexOfOrNull(adapter?.getItem(position)) ?: position
+        callback(realPosition)
+        if(editable) {
+            context?.getActivity()?.hideKeyboard()
+            clearFocus()
+        }
     }
-    setOnDismissListener {
-        clearFocus()
+    if(!editable) {
+        setOnDismissListener {
+            clearFocus()
+        }
     }
 }
 
 fun MaterialAutoCompleteTextView.update(list: List<String>, startIndex: Int?) {
-    CoroutineScope(Dispatchers.Main).launch {
-        setAdapter(ArrayAdapter(
+    setAdapter(ArrayAdapter(
             context,
             R.layout.dropdown_menu_popup_item,
             list
-        ))
-        setText(list.getOrNull(startIndex ?: 0)?.toString(), false)
-    }
+    ))
+    allElements = list
+    setText(list.getOrNull(startIndex ?: -1)?.toString(), false)
 }
+
+@Suppress("UNCHECKED_CAST")
+private var MaterialAutoCompleteTextView.allElements: List<Any>
+    get() = (tag as List<Any>)
+    set(value) {
+        tag = value
+    }
 
 fun View.setClickableBackground() {
     TypedValue().also { outValue ->

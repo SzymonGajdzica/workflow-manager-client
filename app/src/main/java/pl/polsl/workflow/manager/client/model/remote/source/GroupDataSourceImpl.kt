@@ -36,7 +36,7 @@ class GroupDataSourceImpl(
 
     override suspend fun updateGroup(groupId: Long, groupApiModelPatch: GroupApiModelPatch): GroupApiModel {
         return groupApi.updateGroup(groupId, groupApiModelPatch).also {
-            lazyList.supplyItem(it)
+            lazyList.clear()
         }
     }
 }

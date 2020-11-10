@@ -63,7 +63,8 @@ class GroupCoordinatorPatchViewModelImpl @Inject constructor(
     }
 
     private fun updateRemainingWorkers() {
-        remainingWorkers.value = allWorkers?.filter { !selectedWorkers.safeValue.contains(it) }
+        remainingWorkers.value = allWorkers
+                ?.filter { !selectedWorkers.safeValue.contains(it) }
     }
 
     override fun updateGroup(group: Group, groupPatch: GroupPatch) = launchWithLoader {

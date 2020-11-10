@@ -21,8 +21,7 @@
             android:value="AIzaSyDQLZt7V0XwNOBZGTPhVRWtPZQmVo8mrjc" />
 
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -30,17 +29,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.worker.WorkerActivity"
-            android:windowSoftInputMode="adjustPan" />
-
-        <activity
-            android:name=".ui.manager.ManagerActivity"
-            android:windowSoftInputMode="adjustPan" />
-
-        <activity
-            android:name=".ui.coordinator.CoordinatorActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.worker.WorkerActivity" />
+        <activity android:name=".ui.manager.ManagerActivity" />
+        <activity android:name=".ui.coordinator.CoordinatorActivity"/>
 
     </application>
 

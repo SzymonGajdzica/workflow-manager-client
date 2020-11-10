@@ -68,9 +68,8 @@ class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatch
             (view?.coordinatorGroupPatchWorkerList?.adapter as? GroupCoordinatorPatchListAdapter)?.updateList(it)
         }
         viewModel.remainingWorkers.observe { workers ->
-            val list = arrayListOf(getString(R.string.addWorker))
-            list.addAll(workers?.map { it.username } ?: listOf())
-            view?.coordinatorGroupPatchWorkerDropdown?.update(list, 0)
+            val list = workers?.map { it.username } ?: listOf()
+            view?.coordinatorGroupPatchWorkerDropdown?.update(list, null)
         }
     }
 
@@ -87,10 +86,10 @@ class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatch
             )
             viewModel.updateGroup(viewModel.initialGroup.safeValue, groupPatch)
         }
-        view.coordinatorGroupPatchWorkerDropdown.mSetOnItemSelectedListener {
-            val worker = viewModel.remainingWorkers.value?.getOrNull(it - 1)
-            if(worker != null)
+        view.coordinatorGroupPatchWorkerDropdown.mSetOnItemSelectedListener(editable = true) {
+            viewModel.remainingWorkers.value?.getOrNull(it)?.let { worker ->
                 viewModel.onWorkerSelected(worker)
+            }
         }
     }
 

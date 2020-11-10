@@ -78,12 +78,13 @@
             app:layout_constraintBottom_toTopOf="@id/coordinatorGroupPatchUpdateButton"
             app:layout_constraintStart_toStartOf="@id/coordinatorGroupPatchNameContainer"
             app:layout_constraintEnd_toEndOf="@id/coordinatorGroupPatchNameContainer"
+            android:hint="@string/addWorker"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/coordinatorGroupPatchWorkerDropdown"
-                android:inputType="none"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
