@@ -10,7 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.Localization
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 
 class DestinationMapFragment : BaseFragment(), OnMapReadyCallback {
 
@@ -29,7 +29,7 @@ class DestinationMapFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val destinationLocalization: Localization = arguments?.getParcelable() ?: return
+        val destinationLocalization: Localization = arguments?.get() ?: return
         val context = context ?: return
         googleMap.baseSetup(context)
         googleMap.addLocalization(context, destinationLocalization).first.showInfoWindow()

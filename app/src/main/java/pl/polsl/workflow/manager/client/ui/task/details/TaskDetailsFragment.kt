@@ -30,7 +30,7 @@ class TaskDetailsFragment: BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        task = arguments?.getParcelable<Task>()?.also {
+        task = arguments?.get<Task>()?.also {
             if(it.startDate != null && it.taskWorkerReport == null)
                 TimerHelper.register(lifecycleScope, ::updateRemainingTime)
         }
@@ -44,7 +44,7 @@ class TaskDetailsFragment: BaseFragment() {
 
     private fun initView(view: View) {
         val task = task ?: return
-        val sharedTasks: List<Task>? = arguments?.getParcelableList()
+        val sharedTasks: List<Task>? = arguments?.getList()
         view.apply {
             val managerReport = task.taskManagerReport
             val workerReport = task.taskWorkerReport

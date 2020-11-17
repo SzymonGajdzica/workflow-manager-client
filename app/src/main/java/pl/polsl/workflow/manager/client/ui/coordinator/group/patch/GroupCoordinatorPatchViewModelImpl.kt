@@ -11,7 +11,7 @@ import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.repository.GroupRepository
 import pl.polsl.workflow.manager.client.model.repository.UserRepository
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
@@ -87,7 +87,7 @@ class GroupCoordinatorPatchViewModelImpl @Inject constructor(
 
     override fun updateArguments(bundle: Bundle) {
         super.updateArguments(bundle)
-        val group: Group? = bundle.getParcelable()
+        val group: Group? = bundle.get()
         if(initialGroup.value == null && group != null) {
             initialGroup.value = group
             selectedManager.value = group.manager

@@ -11,7 +11,6 @@ abstract class AccountCoordinatorPostViewModel(application: Application): BaseVi
     abstract val usernameInputError: LiveData<String>
     abstract val passwordInputError: LiveData<String>
 
-    abstract fun onRoleSelected(role: Int)
     abstract fun createUser(userPost: UserPost)
 
 }

@@ -1,12 +1,13 @@
 package pl.polsl.workflow.manager.client.ui.coordinator.account.post
 
 import android.app.Application
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.RepositoryResult
-import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.model.repository.UserRepository
+import pl.polsl.workflow.manager.client.util.extension.get
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ class AccountCoordinatorPostViewModelImpl @Inject constructor(
         private val inputValidator: InputValidator
 ): AccountCoordinatorPostViewModel(application) {
 
-    override val selectedRole: MutableLiveData<Int> = MutableLiveData(Role.WORKER)
+    override val selectedRole: MutableLiveData<Int> = MutableLiveData()
     override val usernameInputError: MutableLiveData<String> = MutableLiveData()
     override val passwordInputError: MutableLiveData<String> = MutableLiveData()
 
@@ -34,8 +35,9 @@ class AccountCoordinatorPostViewModelImpl @Inject constructor(
         }
     }
 
-    override fun onRoleSelected(role: Int) {
-        selectedRole.value = role
+    override fun updateArguments(bundle: Bundle) {
+        super.updateArguments(bundle)
+        selectedRole.value = bundle.get()
     }
 
 }

@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_account_coordinator_post.view.*
 import pl.polsl.workflow.manager.client.App
-import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorPostBinding
-import pl.polsl.workflow.manager.client.model.data.Role
 import pl.polsl.workflow.manager.client.model.data.UserPost
 import pl.polsl.workflow.manager.client.ui.base.BaseFragmentViewModel
-import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
-import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.safeValue
 
 class AccountCoordinatorPostFragment: BaseFragmentViewModel<AccountCoordinatorPostViewModel>() {
@@ -40,14 +36,6 @@ class AccountCoordinatorPostFragment: BaseFragmentViewModel<AccountCoordinatorPo
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.coordinatorAccountPostRoleDropdown.update(
-            view.context.resources.getStringArray(R.array.coordinatorAccountRoles).toList(),
-            roleToPosition(viewModel.selectedRole.safeValue)
-        )
-    }
-
     override fun setupOnLayoutInteractions(view: View) {
         super.setupOnLayoutInteractions(view)
         view.coordinatorAccountPostRegisterButton.setOnClickListener {
@@ -56,9 +44,6 @@ class AccountCoordinatorPostFragment: BaseFragmentViewModel<AccountCoordinatorPo
                     password = view.coordinatorAccountPostPassword.text.toString(),
                     role = viewModel.selectedRole.safeValue
             ))
-        }
-        view.coordinatorAccountPostRoleDropdown.mSetOnItemSelectedListener {
-            viewModel.onRoleSelected(positionToRole(it))
         }
     }
 
@@ -69,20 +54,6 @@ class AccountCoordinatorPostFragment: BaseFragmentViewModel<AccountCoordinatorPo
         }
         viewModel.passwordInputError.observe {
             this.view?.coordinatorAccountPostPasswordContainer?.error = it
-        }
-    }
-
-    private fun positionToRole(position: Int): Int {
-        return when(position) {
-            0 -> Role.WORKER
-            else -> Role.MANAGER
-        }
-    }
-
-    private fun roleToPosition(taskStatus: Int): Int {
-        return when(taskStatus) {
-            Role.WORKER -> 0
-            else -> 1
         }
     }
 

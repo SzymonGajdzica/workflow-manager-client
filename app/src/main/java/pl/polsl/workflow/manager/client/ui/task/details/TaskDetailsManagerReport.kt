@@ -12,8 +12,8 @@ import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReport
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.util.extension.formatDate
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
-import pl.polsl.workflow.manager.client.util.extension.getParcelableList
+import pl.polsl.workflow.manager.client.util.extension.get
+import pl.polsl.workflow.manager.client.util.extension.getList
 import pl.polsl.workflow.manager.client.util.extension.toBundle
 
 class TaskDetailsManagerReport: BaseFragment() {
@@ -32,8 +32,8 @@ class TaskDetailsManagerReport: BaseFragment() {
     }
 
     private fun initView(view: View) {
-        val taskManagerReport: TaskManagerReport = arguments?.getParcelable() ?: return
-        val sharedTasks: List<Task> = arguments?.getParcelableList() ?: listOf()
+        val taskManagerReport: TaskManagerReport = arguments?.get() ?: return
+        val sharedTasks: List<Task> = arguments?.getList() ?: listOf()
         view.apply {
             val fixTask = taskManagerReport.fixTask
             taskDetailsManagerReportDate.text = taskManagerReport.date.formatDate()

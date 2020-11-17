@@ -8,7 +8,7 @@ import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskManagerReportPost
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import javax.inject.Inject
 
@@ -45,7 +45,7 @@ class TaskManagerReportPostViewModelImpl @Inject constructor(
 
     override fun updateArguments(bundle: Bundle) {
         super.updateArguments(bundle)
-        task.value = bundle.getParcelable()
+        task.value = bundle.get()
     }
 
     override fun reloadData() {

@@ -16,6 +16,7 @@ import pl.polsl.workflow.manager.client.ui.view.mSetOnItemSelectedListener
 import pl.polsl.workflow.manager.client.ui.view.setupAdapter
 import pl.polsl.workflow.manager.client.ui.view.update
 import pl.polsl.workflow.manager.client.util.extension.safeValue
+import pl.polsl.workflow.manager.client.util.extension.toBundle
 import pl.polsl.workflow.manager.client.util.extension.toHoursMinutesSeconds
 
 class AccountCoordinatorFragment: BaseFragmentViewModel<AccountCoordinatorViewModel>() {
@@ -77,7 +78,8 @@ class AccountCoordinatorFragment: BaseFragmentViewModel<AccountCoordinatorViewMo
         }
         view.coordinatorAccountAddUser.setOnClickListener {
             findNavController().navigate(
-                    R.id.action_navigation_account_coordinator_to_accountCoordinatorPostFragment
+                    R.id.action_navigation_account_coordinator_to_accountCoordinatorPostFragment,
+                    viewModel.selectedRole.safeValue.toBundle()
             )
         }
     }

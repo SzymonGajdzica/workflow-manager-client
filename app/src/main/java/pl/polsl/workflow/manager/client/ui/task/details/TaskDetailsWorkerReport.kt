@@ -10,7 +10,7 @@ import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
 import pl.polsl.workflow.manager.client.util.extension.formatDate
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 
 class TaskDetailsWorkerReport: BaseFragment() {
 
@@ -28,7 +28,7 @@ class TaskDetailsWorkerReport: BaseFragment() {
     }
 
     private fun initView(view: View) {
-        val taskWorkerReport: TaskWorkerReport = arguments?.getParcelable() ?: return
+        val taskWorkerReport: TaskWorkerReport = arguments?.get() ?: return
         view.apply {
             taskDetailsWorkerReportDate.text = taskWorkerReport.date.formatDate()
             taskDetailsWorkerReportDescription.text = taskWorkerReport.description

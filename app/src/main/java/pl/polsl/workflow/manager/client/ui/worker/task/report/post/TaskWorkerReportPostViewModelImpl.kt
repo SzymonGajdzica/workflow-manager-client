@@ -10,7 +10,7 @@ import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
 import pl.polsl.workflow.manager.client.model.data.checkDistance
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 import pl.polsl.workflow.manager.client.util.location.LocationReader
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
@@ -51,7 +51,7 @@ class TaskWorkerReportPostViewModelImpl @Inject constructor(
 
     override fun updateArguments(bundle: Bundle) {
         super.updateArguments(bundle)
-        task.value = bundle.getParcelable()
+        task.value = bundle.get()
     }
 
 }

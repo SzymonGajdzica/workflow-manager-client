@@ -10,7 +10,7 @@ import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskPost
 import pl.polsl.workflow.manager.client.model.data.User
 import pl.polsl.workflow.manager.client.model.repository.TaskRepository
-import pl.polsl.workflow.manager.client.util.extension.getParcelable
+import pl.polsl.workflow.manager.client.util.extension.get
 import pl.polsl.workflow.manager.client.util.validator.InputValidator
 import java.time.Instant
 import javax.inject.Inject
@@ -61,8 +61,8 @@ class TaskManagerPostViewModelImpl @Inject constructor(
 
     override fun updateArguments(bundle: Bundle) {
         super.updateArguments(bundle)
-        group.value = bundle.getParcelable()
-        subTask.value = bundle.getParcelable()
+        group.value = bundle.get()
+        subTask.value = bundle.get()
     }
 
 }
