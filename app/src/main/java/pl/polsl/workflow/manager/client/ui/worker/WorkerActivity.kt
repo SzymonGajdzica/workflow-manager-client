@@ -2,7 +2,6 @@ package pl.polsl.workflow.manager.client.ui.worker
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -10,11 +9,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_worker.*
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.ui.base.BaseActivity
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
 import pl.polsl.workflow.manager.client.util.location.LocationReader
 import pl.polsl.workflow.manager.client.util.location.LocationReaderImpl
 
-class WorkerActivity : AppCompatActivity() {
+class WorkerActivity : BaseActivity() {
 
     private val locationReader: LocationReader = LocationReaderImpl(this)
 

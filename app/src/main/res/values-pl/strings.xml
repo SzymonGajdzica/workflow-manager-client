@@ -81,4 +81,5 @@
     <string name="updateGroup">Aktualizuj grupę</string>
     <string name="groupUpdated">Grupa zaktualizowana</string>
     <string name="addWorker">Dodaj pracownika</string>
+    <string name="taskRemoved">Usunięto zadanie</string>
 </resources>

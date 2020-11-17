@@ -1,7 +1,6 @@
 package pl.polsl.workflow.manager.client.ui.manager
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -9,8 +8,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_manager.*
 import pl.polsl.workflow.manager.client.R
+import pl.polsl.workflow.manager.client.ui.base.BaseActivity
 
-class ManagerActivity : AppCompatActivity() {
+class ManagerActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

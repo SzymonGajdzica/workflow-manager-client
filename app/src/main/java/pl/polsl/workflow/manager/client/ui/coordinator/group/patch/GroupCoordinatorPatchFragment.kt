@@ -18,6 +18,7 @@ import pl.polsl.workflow.manager.client.util.extension.safeValue
 
 class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatchViewModel>() {
 
+    override val keyboardAboveLayout: Boolean = false
     private lateinit var viewDataBinding: FragmentGroupsCoordinatorPatchBinding
 
     override val viewModel: GroupCoordinatorPatchViewModel

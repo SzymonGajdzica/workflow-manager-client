@@ -80,5 +80,6 @@
     <string name="updateGroup">Update group</string>
     <string name="groupUpdated">Group updated</string>
     <string name="addWorker">Add worker</string>
+    <string name="taskRemoved">Task removed</string>
 
 </resources>

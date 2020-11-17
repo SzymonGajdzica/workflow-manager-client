@@ -13,6 +13,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.util.extension.getActivity
 import pl.polsl.workflow.manager.client.util.extension.hideKeyboard
@@ -51,13 +54,15 @@ fun MaterialAutoCompleteTextView.mSetOnItemSelectedListener(editable: Boolean = 
 }
 
 fun MaterialAutoCompleteTextView.update(list: List<String>, startIndex: Int?) {
-    setAdapter(ArrayAdapter(
+    CoroutineScope(Dispatchers.Main).launch {
+        setAdapter(ArrayAdapter(
             context,
             R.layout.dropdown_menu_popup_item,
             list
-    ))
-    allElements = list
-    setText(list.getOrNull(startIndex ?: -1)?.toString(), false)
+        ))
+        allElements = list
+        setText(list.getOrNull(startIndex ?: -1), false)
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

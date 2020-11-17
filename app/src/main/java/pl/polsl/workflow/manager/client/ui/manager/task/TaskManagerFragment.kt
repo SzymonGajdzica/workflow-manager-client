@@ -45,6 +45,7 @@ class TaskManagerFragment: BaseFragmentViewModel<TaskManagerViewModel>() {
 
     override fun setupViews(view: View) {
         super.setupViews(view)
+        App.log(resources.getStringArray(R.array.taskStatuses).toList())
         view.managerTaskTaskStatusDropdown.update(resources.getStringArray(R.array.taskStatuses).toList(), viewModel.selectedTaskStatus.safeValue)
         val adapter = TaskManagerListAdapter(
                 itemClickListener = ::taskSelected,

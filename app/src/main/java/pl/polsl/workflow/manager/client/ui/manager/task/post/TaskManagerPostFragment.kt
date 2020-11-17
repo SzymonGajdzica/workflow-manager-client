@@ -51,7 +51,7 @@ class TaskManagerPostFragment: BaseFragmentViewModel<TaskManagerPostViewModel>()
         super.setupViews(view)
         val list = arrayListOf(getString(R.string.autoAssign))
         list.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
-        val index = viewModel.group.safeValue.activeWorkers.indexOfOrNull(viewModel.selectedWorker.value)?.plus(1)
+        val index = viewModel.group.safeValue.activeWorkers.indexOfOrNull(viewModel.selectedWorker.value)?.plus(1) ?: 0
         view.managerTaskPostWorkerDropdown.update(
             list,
             index

@@ -2,6 +2,7 @@ package pl.polsl.workflow.manager.client.ui.manager.task
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.RepositoryResult
 import pl.polsl.workflow.manager.client.model.data.Group
 import pl.polsl.workflow.manager.client.model.data.Task
@@ -71,6 +72,7 @@ class TaskManagerViewModelImpl @Inject constructor(
             is RepositoryResult.Success -> {
                 allTasks = allTasks?.filter { it != task }
                 setFilteredTasks()
+                showSuccessMessage(getString(R.string.taskRemoved))
             }
             is RepositoryResult.Error -> showErrorMessage(result.error)
         }

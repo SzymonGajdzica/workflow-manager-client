@@ -14,7 +14,6 @@ import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.ui.account.AccountViewModel
 import pl.polsl.workflow.manager.client.ui.login.LoginActivity
-import pl.polsl.workflow.manager.client.util.extension.hideKeyboard
 import javax.inject.Inject
 
 abstract class BaseFragmentViewModel<T: BaseViewModel>: BaseFragment() {
@@ -28,7 +27,6 @@ abstract class BaseFragmentViewModel<T: BaseViewModel>: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.clearMessages()
         activity?.intent?.let { viewModel.updateSharedArguments(it) }
-        activity?.hideKeyboard()
         arguments?.let { viewModel.updateArguments(it) }
         setupViews(view)
         setupOnLayoutInteractions(view)

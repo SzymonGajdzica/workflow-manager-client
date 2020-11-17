@@ -21,8 +21,9 @@ suspend fun <T: Any>safeCall(block: suspend () -> T): RepositoryResult<T> {
     }
 }
 
-fun <T: Any>Response<T>.unwrap(): T {
-    return this.body() ?: throw HttpException(this)
+fun Response<Unit>.unwrap() {
+    if(!isSuccessful)
+        throw HttpException(this)
 }
 
 val Throwable.repositoryMessage: String?
