@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_task_manager_report_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerReportPostBinding
@@ -25,7 +24,7 @@ class TaskManagerReportPostFragment: BaseFragmentViewModel<TaskManagerReportPost
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentTaskManagerReportPostBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -38,20 +37,20 @@ class TaskManagerReportPostFragment: BaseFragmentViewModel<TaskManagerReportPost
         app.appComponent.inject(this)
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.managerTaskReportPostSuccess.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.managerTaskReportPostSuccess.setOnClickListener {
             sendReport(false)
         }
-        view.managerTaskReportPostFailure.setOnClickListener {
+        viewDataBinding.managerTaskReportPostFailure.setOnClickListener {
             sendReport(true)
         }
     }
 
-    override fun setupObservables(viewModel: TaskManagerReportPostViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.descriptionInputError.observe {
-            view?.managerTaskReportPostDescriptionContainer?.error = it
+            viewDataBinding.managerTaskReportPostDescriptionContainer.error = it
         }
         viewModel.creatingFixTask.observe { creatingFixTask ->
             if(creatingFixTask == true) {
@@ -66,7 +65,7 @@ class TaskManagerReportPostFragment: BaseFragmentViewModel<TaskManagerReportPost
     private fun sendReport(withFixTask: Boolean) {
         val report = TaskManagerReportPost(
             task = viewModel.task.safeValue,
-            description = view?.managerTaskReportPostDescription?.text?.toString() ?: ""
+            description = viewDataBinding.managerTaskReportPostDescription.text?.toString() ?: ""
         )
         viewModel.acceptTask(report, withFixTask)
     }

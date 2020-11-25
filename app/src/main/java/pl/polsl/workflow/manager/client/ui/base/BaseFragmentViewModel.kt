@@ -28,9 +28,9 @@ abstract class BaseFragmentViewModel<T: BaseViewModel>: BaseFragment() {
         viewModel.clearMessages()
         activity?.intent?.let { viewModel.updateSharedArguments(it) }
         arguments?.let { viewModel.updateArguments(it) }
-        setupViews(view)
-        setupOnLayoutInteractions(view)
-        setupObservables(viewModel)
+        setupViews()
+        setupOnLayoutInteractions()
+        setupObservables()
         if(viewModel.error.value == null && !viewModel.currentlyLoading)
             viewModel.reloadData()
     }
@@ -62,18 +62,18 @@ abstract class BaseFragmentViewModel<T: BaseViewModel>: BaseFragment() {
 
     }
 
-    open fun setupViews(view: View) {
-        view.findViewById<MaterialButton>(R.id.reloadButton)?.setOnClickListener {
+    open fun setupViews() {
+        view?.findViewById<MaterialButton>(R.id.reloadButton)?.setOnClickListener {
             viewModel.clearErrorString()
             viewModel.reloadData()
         }
     }
 
-    open fun setupOnLayoutInteractions(view: View) {
+    open fun setupOnLayoutInteractions() {
 
     }
 
-    open fun setupObservables(viewModel: T) {
+    open fun setupObservables() {
         viewModel.errorMessage.observe {
             if(it != null)
                 showErrorMessage(it)

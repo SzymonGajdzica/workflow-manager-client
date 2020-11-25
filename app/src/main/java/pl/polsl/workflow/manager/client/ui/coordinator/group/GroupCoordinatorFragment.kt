@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_groups_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorBinding
@@ -26,7 +25,7 @@ class GroupCoordinatorFragment: BaseFragmentViewModel<GroupCoordinatorViewModel>
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding =
             FragmentGroupsCoordinatorBinding.inflate(inflater, container, false).apply {
                 viewModel = createViewModel()
@@ -40,26 +39,26 @@ class GroupCoordinatorFragment: BaseFragmentViewModel<GroupCoordinatorViewModel>
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.coordinatorGroupGroupList.setupSimpleAdapter {
+    override fun setupViews() {
+        super.setupViews()
+        viewDataBinding.coordinatorGroupGroupList.setupSimpleAdapter {
             findNavController().navigate(
                     R.id.action_navigation_groups_coordinator_to_groupCoordinatorPatchFragment,
                     viewModel.groups.safeValue[it].toBundle()
             )
         }
-        view.coordinatorGroupAddGroup.setOnClickListener {
+        viewDataBinding.coordinatorGroupAddGroup.setOnClickListener {
             findNavController().navigate(
                     R.id.action_navigation_groups_coordinator_to_groupCoordinatorPostFragment
             )
         }
     }
 
-    override fun setupObservables(viewModel: GroupCoordinatorViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.groups.observe { groups ->
             val list = groups?.map { it.name } ?: listOf()
-            (view?.coordinatorGroupGroupList?.adapter as? SimpleAdapter)?.updateSingleList(list)
+            (viewDataBinding.coordinatorGroupGroupList.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
     }
 

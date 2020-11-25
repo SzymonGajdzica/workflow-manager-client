@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_task_manager.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerBinding
@@ -30,7 +29,7 @@ class TaskManagerFragment: BaseFragmentViewModel<TaskManagerViewModel>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentTaskManagerBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -43,15 +42,15 @@ class TaskManagerFragment: BaseFragmentViewModel<TaskManagerViewModel>() {
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         App.log(resources.getStringArray(R.array.taskStatuses).toList())
-        view.managerTaskTaskStatusDropdown.update(resources.getStringArray(R.array.taskStatuses).toList(), viewModel.selectedTaskStatus.safeValue)
+        viewDataBinding.managerTaskTaskStatusDropdown.update(resources.getStringArray(R.array.taskStatuses).toList(), viewModel.selectedTaskStatus.safeValue)
         val adapter = TaskManagerListAdapter(
                 itemClickListener = ::taskSelected,
                 actionButtonClickListener = ::taskActionClicked
         )
-        view.managerTaskTaskList.setupAdapter(adapter)
+        viewDataBinding.managerTaskTaskList.setupAdapter(adapter)
     }
 
     private fun taskSelected(index: Int) {
@@ -75,28 +74,28 @@ class TaskManagerFragment: BaseFragmentViewModel<TaskManagerViewModel>() {
         }
     }
 
-    override fun setupObservables(viewModel: TaskManagerViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.groups.observe { groups ->
             val groupIndex = groups?.indexOfOrNull(viewModel.selectedGroup.value) ?: 0
             val list = groups?.map { it.name } ?: listOf()
-            view?.managerTaskGroupDropdown?.update(list, groupIndex)
+            viewDataBinding.managerTaskGroupDropdown.update(list, groupIndex)
         }
         viewModel.tasks.observe { tasks ->
             val list = tasks ?: listOf()
-            (view?.managerTaskTaskList?.adapter as? TaskManagerListAdapter)?.updateList(list)
+            (viewDataBinding.managerTaskTaskList.adapter as? TaskManagerListAdapter)?.updateList(list)
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.managerTaskGroupDropdown.mSetOnItemSelectedListener { position ->
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.managerTaskGroupDropdown.mSetOnItemSelectedListener { position ->
             viewModel.groups.value?.get(position)?.let { viewModel.groupSelected(it) }
         }
-        view.managerTaskTaskStatusDropdown.mSetOnItemSelectedListener {
+        viewDataBinding.managerTaskTaskStatusDropdown.mSetOnItemSelectedListener {
             viewModel.taskStatusSelected(it)
         }
-        view.managerTaskAddTask.setOnClickListener {
+        viewDataBinding.managerTaskAddTask.setOnClickListener {
             val selectedGroup = viewModel.selectedGroup.value
             if(selectedGroup != null) {
                 findNavController().navigate(

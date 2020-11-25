@@ -30,7 +30,7 @@ class MapSelectFragment: BaseFragmentViewModel<MapSelectViewModel>(), OnMapReady
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentMapSelectBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             sharedViewModel = createSharedViewModel<SharedViewModelImpl>()
@@ -44,14 +44,14 @@ class MapSelectFragment: BaseFragmentViewModel<MapSelectViewModel>(), OnMapReady
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapSelectMapFragment) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 
-    override fun setupObservables(viewModel: MapSelectViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.localizations.observe {
             tryToFillMap(it)
         }

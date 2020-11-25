@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_task_worker_report_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerReportPostBinding
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReportPost
@@ -22,7 +21,7 @@ class TaskWorkerReportPostFragment: BaseFragmentViewModel<TaskWorkerReportPostVi
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentTaskWorkerReportPostBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -35,25 +34,25 @@ class TaskWorkerReportPostFragment: BaseFragmentViewModel<TaskWorkerReportPostVi
         app.appComponent.inject(this)
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.workerTaskReportPostSuccess.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.workerTaskReportPostSuccess.setOnClickListener {
             sendReport(true)
         }
-        view.workerTaskReportPostFailure.setOnClickListener {
+        viewDataBinding.workerTaskReportPostFailure.setOnClickListener {
             sendReport(false)
         }
     }
 
-    override fun setupObservables(viewModel: TaskWorkerReportPostViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.descriptionInputError.observe {
-            view?.workerTaskReportPostDescription?.error = it
+            viewDataBinding.workerTaskReportPostDescription.error = it
         }
     }
 
     private fun sendReport(success: Boolean) {
-        val description = view?.workerTaskReportPostDescription?.text?.toString().toString()
+        val description = viewDataBinding.workerTaskReportPostDescription.text?.toString().toString()
         val taskWorkerReportPost = TaskWorkerReportPost(
                 description = description,
                 task = viewModel.task.safeValue,

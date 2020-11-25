@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.fragment_task_details_worker_report.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.TaskWorkerReport
 import pl.polsl.workflow.manager.client.ui.base.BaseFragment
@@ -30,14 +30,14 @@ class TaskDetailsWorkerReport: BaseFragment() {
     private fun initView(view: View) {
         val taskWorkerReport: TaskWorkerReport = arguments?.get() ?: return
         view.apply {
-            taskDetailsWorkerReportDate.text = taskWorkerReport.date.formatDate()
-            taskDetailsWorkerReportDescription.text = taskWorkerReport.description
+            findViewById<TextView>(R.id.taskDetailsWorkerReportDate).text = taskWorkerReport.date.formatDate()
+            findViewById<TextView>(R.id.taskDetailsWorkerReportDescription).text = taskWorkerReport.description
             if(taskWorkerReport.success) {
-                taskDetailsWorkerReportResult.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_light))
-                taskDetailsWorkerReportResult.text = getString(R.string.success)
+                findViewById<TextView>(R.id.taskDetailsWorkerReportResult).setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_light))
+                findViewById<TextView>(R.id.taskDetailsWorkerReportResult).text = getString(R.string.success)
             } else {
-                taskDetailsWorkerReportResult.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-                taskDetailsWorkerReportResult.text = getString(R.string.failure)
+                findViewById<TextView>(R.id.taskDetailsWorkerReportResult).setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+                findViewById<TextView>(R.id.taskDetailsWorkerReportResult).text = getString(R.string.failure)
             }
         }
     }

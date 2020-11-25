@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_account_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorBinding
@@ -30,7 +29,7 @@ class AccountCoordinatorFragment: BaseFragmentViewModel<AccountCoordinatorViewMo
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding =
                 FragmentAccountCoordinatorBinding.inflate(inflater, container, false).apply {
                     viewModel = createViewModel()
@@ -44,39 +43,39 @@ class AccountCoordinatorFragment: BaseFragmentViewModel<AccountCoordinatorViewMo
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         val adapter = AccountCoordinatorListAdapter {
             val user = viewModel.users.safeValue[it]
             viewModel.updateUser(user, UserPatch(!user.enabled))
         }
-        view.coordinatorAccountUsers.setupAdapter(adapter)
-        view.coordinatorAccountUserRoleDropdown.update(
+        viewDataBinding.coordinatorAccountUsers.setupAdapter(adapter)
+        viewDataBinding.coordinatorAccountUserRoleDropdown.update(
             resources.getStringArray(R.array.coordinatorAccountRoles).toList(),
             roleToPosition(viewModel.selectedRole.safeValue)
         )
     }
 
-    override fun setupObservables(viewModel: AccountCoordinatorViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.remainingTime.observe {
-            view?.coordinatorAccountRemainingSessionTime?.text = it?.toHoursMinutesSeconds()
+            viewDataBinding.coordinatorAccountRemainingSessionTime.text = it?.toHoursMinutesSeconds()
         }
         viewModel.users.observe { users ->
             val list = users ?: listOf()
-            (view?.coordinatorAccountUsers?.adapter as? AccountCoordinatorListAdapter)?.updateList(list)
+            (viewDataBinding.coordinatorAccountUsers.adapter as? AccountCoordinatorListAdapter)?.updateList(list)
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.coordinatorAccountLogoutButton.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.coordinatorAccountLogoutButton.setOnClickListener {
             logout()
         }
-        view.coordinatorAccountUserRoleDropdown.mSetOnItemSelectedListener {
+        viewDataBinding.coordinatorAccountUserRoleDropdown.mSetOnItemSelectedListener {
             viewModel.roleSelected(positionToRole(it))
         }
-        view.coordinatorAccountAddUser.setOnClickListener {
+        viewDataBinding.coordinatorAccountAddUser.setOnClickListener {
             findNavController().navigate(
                     R.id.action_navigation_account_coordinator_to_accountCoordinatorPostFragment,
                     viewModel.selectedRole.safeValue.toBundle()

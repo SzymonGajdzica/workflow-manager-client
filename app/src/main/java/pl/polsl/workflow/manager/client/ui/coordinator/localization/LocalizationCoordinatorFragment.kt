@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.fragment_localizations_coordinator.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentLocalizationsCoordinatorBinding
@@ -31,7 +30,7 @@ class LocalizationCoordinatorFragment: BaseFragmentViewModel<LocalizationCoordin
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding =
             FragmentLocalizationsCoordinatorBinding.inflate(inflater, container, false).apply {
                 viewModel = createViewModel()
@@ -45,22 +44,22 @@ class LocalizationCoordinatorFragment: BaseFragmentViewModel<LocalizationCoordin
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         val mapFragment = childFragmentManager.findFragmentById(R.id.coordinatorLocalizationMapFragment) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 
-    override fun setupObservables(viewModel: LocalizationCoordinatorViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.localizations.observe {
             tryToFillMap(it)
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.coordinatorLocalizationAddLocalization.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.coordinatorLocalizationAddLocalization.setOnClickListener {
             findNavController().navigate(
                     R.id.action_navigation_localizations_coordinator_to_localizationCoordinatorPostFragment
             )

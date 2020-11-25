@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_task_manager_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskManagerPostBinding
@@ -33,7 +32,7 @@ class TaskManagerPostFragment: BaseFragmentViewModel<TaskManagerPostViewModel>()
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentTaskManagerPostBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             sharedViewModel = createSharedViewModel<SharedViewModelImpl>()
@@ -47,60 +46,60 @@ class TaskManagerPostFragment: BaseFragmentViewModel<TaskManagerPostViewModel>()
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         val list = arrayListOf(getString(R.string.autoAssign))
         list.addAll(viewModel.group.safeValue.activeWorkers.map { it.username })
         val index = viewModel.group.safeValue.activeWorkers.indexOfOrNull(viewModel.selectedWorker.value)?.plus(1) ?: 0
-        view.managerTaskPostWorkerDropdown.update(
+        viewDataBinding.managerTaskPostWorkerDropdown.update(
             list,
             index
         )
     }
 
-    override fun setupObservables(viewModel: TaskManagerPostViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.nameInputError.observe {
-            view?.managerTaskPostNameContainer?.error = it
+            viewDataBinding.managerTaskPostNameContainer.error = it
         }
         viewModel.nameInputError.observe {
-            view?.managerTaskPostDescriptionContainer?.error = it
+            viewDataBinding.managerTaskPostDescriptionContainer.error = it
         }
         viewModel.deadline.safeObserve {
-            view?.managerTaskPostDeadline?.text =
+            viewDataBinding.managerTaskPostDeadline.text =
                 ("${getString(R.string.deadline)}: ${it.formatDate()}")
         }
         viewModel.executionTime.safeObserve {
-            view?.managerTaskPostExecutionTime?.text =
+            viewDataBinding.managerTaskPostExecutionTime.text =
                 ("${getString(R.string.executionTime)}: ${it.toHoursMinutesSeconds()}")
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.managerTaskPostDeadline.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.managerTaskPostDeadline.setOnClickListener {
             showDateTimePicker("task_manager_deadline_picker", viewModel.deadline.value) { instant ->
                 viewModel.updateDeadline(instant)
             }
         }
-        view.managerTaskPostExecutionTime.setOnClickListener {
+        viewDataBinding.managerTaskPostExecutionTime.setOnClickListener {
             showTimePicker("task_manager_deadline_picker", viewModel.executionTime.value) { instant ->
                 viewModel.updateExecutionTime(instant)
             }
         }
-        view.managerTaskPostWorkerDropdown.mSetOnItemSelectedListener {
+        viewDataBinding.managerTaskPostWorkerDropdown.mSetOnItemSelectedListener {
             viewModel.updateSelectedWorker(viewModel.group.safeValue.activeWorkers.getOrNull(it - 1))
         }
-        view.managerTaskPostLocalization.setOnClickListener {
+        viewDataBinding.managerTaskPostLocalization.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_task_manager_post_to_mapSelectFragment)
         }
-        view.managerTaskPostCreate.setOnClickListener { _ ->
+        viewDataBinding.managerTaskPostCreate.setOnClickListener { _ ->
             val localization = viewDataBinding.sharedViewModel?.localization?.value
                     ?: return@setOnClickListener showErrorMessage(getString(R.string.selectLocalization))
             val taskPost = TaskPost(
                     group = viewModel.group.safeValue,
-                    name = view.managerTaskPostName.text.toString(),
-                    description = view.managerTaskPostDescription.text.toString(),
+                    name = viewDataBinding.managerTaskPostName.text.toString(),
+                    description = viewDataBinding.managerTaskPostDescription.text.toString(),
                     deadline = viewModel.deadline.safeValue,
                     subTask = viewModel.subTask.value,
                     localization = localization,

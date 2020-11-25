@@ -4,14 +4,13 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.base_list_item_with_action_button.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.User
 
 class AccountCoordinatorViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
-    private val username: TextView = view.listItemTitle
-    private val actionButton: ImageButton = view.listItemActionButton
+    private val username: TextView = view.findViewById(R.id.listItemTitle)
+    private val actionButton: ImageButton = view.findViewById(R.id.listItemActionButton)
 
     fun updateViews(user: User, position: Int, actionButtonClickListener: (Int) -> Unit) {
         username.text = user.username

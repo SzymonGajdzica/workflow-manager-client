@@ -9,7 +9,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Circle
-import kotlinx.android.synthetic.main.fragment_localizations_coordinator_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentLocalizationsCoordinatorPostBinding
@@ -36,7 +35,7 @@ class LocalizationCoordinatorPostFragment: BaseFragmentViewModel<LocalizationCoo
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding =
                 FragmentLocalizationsCoordinatorPostBinding.inflate(inflater, container, false).apply {
                     viewModel = createViewModel()
@@ -50,33 +49,33 @@ class LocalizationCoordinatorPostFragment: BaseFragmentViewModel<LocalizationCoo
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
+    override fun setupViews() {
+        super.setupViews()
         val mapFragment = childFragmentManager.findFragmentById(R.id.coordinatorLocalizationPostMapFragment) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-        view.coordinatorLocalizationPostRadiusSlider.value = viewModel.selectedRadius.safeValue.toFloat()
+        viewDataBinding.coordinatorLocalizationPostRadiusSlider.value = viewModel.selectedRadius.safeValue.toFloat()
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.coordinatorLocalizationPostCreateButton.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.coordinatorLocalizationPostCreateButton.setOnClickListener {
             val latLng = viewModel.selectedLatLng.value
                     ?: return@setOnClickListener showErrorMessage(getString(R.string.selectLocalization))
             viewModel.createLocalization(LocalizationPost(
-                    name = view.coordinatorLocalizationPostName.text.toString(),
+                    name = viewDataBinding.coordinatorLocalizationPostName.text.toString(),
                     latLng = latLng,
                     radius = viewModel.selectedRadius.safeValue
             ))
         }
-        view.coordinatorLocalizationPostRadiusSlider.addOnChangeListener { _, value, _ ->
+        viewDataBinding.coordinatorLocalizationPostRadiusSlider.addOnChangeListener { _, value, _ ->
             viewModel.onRadiusSelected(value.toDouble())
         }
     }
 
-    override fun setupObservables(viewModel: LocalizationCoordinatorPostViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.nameInputError.observe { inputError ->
-            view?.coordinatorLocalizationPostNameContainer?.error = inputError
+            viewDataBinding.coordinatorLocalizationPostNameContainer.error = inputError
         }
         viewModel.selectedLatLng.observe { latLng ->
             updateMarkerPosition(latLng)

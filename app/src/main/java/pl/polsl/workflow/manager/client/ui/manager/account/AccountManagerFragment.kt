@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_account_manager.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountManagerBinding
 import pl.polsl.workflow.manager.client.model.data.activeWorkers
@@ -28,7 +27,7 @@ class AccountManagerFragment: BaseFragmentViewModel<AccountManagerViewModel>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentAccountManagerBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -41,33 +40,33 @@ class AccountManagerFragment: BaseFragmentViewModel<AccountManagerViewModel>() {
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.managerAccountGroupMembersList.setupSimpleAdapter()
+    override fun setupViews() {
+        super.setupViews()
+        viewDataBinding.managerAccountGroupMembersList.setupSimpleAdapter()
     }
 
-    override fun setupObservables(viewModel: AccountManagerViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.groups.observe { groups ->
             val groupIndex = groups?.indexOfOrNull(viewModel.selectedGroup.value) ?: 0
             val list = groups?.map { it.name } ?: listOf()
-            view?.managerAccountGroupDropdown?.update(list, groupIndex)
+            viewDataBinding.managerAccountGroupDropdown.update(list, groupIndex)
         }
         viewModel.selectedGroup.observe { group ->
             val list = group?.activeWorkers?.map { it.username } ?: listOf()
-            (view?.managerAccountGroupMembersList?.adapter as? SimpleAdapter)?.updateSingleList(list)
+            (viewDataBinding.managerAccountGroupMembersList.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
         viewModel.remainingTime.observe {
-            view?.managerAccountRemainingSessionTime?.text = it?.toHoursMinutesSeconds()
+            viewDataBinding.managerAccountRemainingSessionTime.text = it?.toHoursMinutesSeconds()
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.managerAccountLogoutButton.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.managerAccountLogoutButton.setOnClickListener {
             logout()
         }
-        view.managerAccountGroupDropdown.mSetOnItemSelectedListener {
+        viewDataBinding.managerAccountGroupDropdown.mSetOnItemSelectedListener {
             viewModel.groupSelected(viewModel.groups.safeValue[it])
         }
     }

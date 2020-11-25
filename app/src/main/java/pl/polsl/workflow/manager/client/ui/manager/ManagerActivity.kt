@@ -6,7 +6,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_manager.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.ui.base.BaseActivity
 
@@ -15,7 +14,7 @@ class ManagerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager)
-        setSupportActionBar(managerActivityToolbar)
+        setSupportActionBar(findViewById(R.id.managerActivityToolbar))
         val navView: BottomNavigationView = findViewById(R.id.managerActivityNavigationView)
         val navController = findNavController(R.id.managerActivityFragment)
         val appBarConfiguration = AppBarConfiguration(setOf(

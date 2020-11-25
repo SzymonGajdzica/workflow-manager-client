@@ -1,6 +1,6 @@
 package pl.polsl.workflow.manager.client.model.data
 
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.time.Instant
 import java.util.*
 

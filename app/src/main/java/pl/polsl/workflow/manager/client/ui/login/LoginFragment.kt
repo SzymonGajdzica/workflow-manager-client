@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.fragment_login.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentLoginBinding
 import pl.polsl.workflow.manager.client.model.data.destinationActivityClass
@@ -23,7 +22,7 @@ class LoginFragment : BaseFragmentViewModel<LoginViewModel>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentLoginBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -43,23 +42,23 @@ class LoginFragment : BaseFragmentViewModel<LoginViewModel>() {
             ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 0)
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.loginLoginButton.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.loginLoginButton.setOnClickListener {
             viewModel.login(
-                username = this.view?.loginUsername?.text.toString(),
-                password = this.view?.loginPassword?.text.toString()
+                username = viewDataBinding.loginUsername.text.toString(),
+                password = viewDataBinding.loginPassword.text.toString()
             )
         }
     }
 
-    override fun setupObservables(viewModel: LoginViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.usernameInputError.observe {
-            this.view?.loginUsernameContainer?.error = it
+            viewDataBinding.loginUsernameContainer.error = it
         }
         viewModel.passwordInputError.observe {
-            this.view?.loginPasswordContainer?.error = it
+            viewDataBinding.loginPasswordContainer.error = it
         }
         viewModel.user.safeObserve {
             activity?.run {

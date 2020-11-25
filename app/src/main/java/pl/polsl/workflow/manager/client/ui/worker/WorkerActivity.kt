@@ -7,7 +7,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_worker.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.ui.base.BaseActivity
 import pl.polsl.workflow.manager.client.util.extension.hasLocationPermission
@@ -21,7 +20,7 @@ class WorkerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_worker)
-        setSupportActionBar(workerActivityToolbar)
+        setSupportActionBar(findViewById(R.id.workerActivityToolbar))
         val navView: BottomNavigationView = findViewById(R.id.workerActivityNavigationView)
         val navController = findNavController(R.id.workerActivityFragment)
         val appBarConfiguration = AppBarConfiguration(setOf(

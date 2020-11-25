@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.fragment_task_details.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
@@ -50,25 +50,25 @@ class TaskDetailsFragment: BaseFragment() {
             val workerReport = task.taskWorkerReport
             val superTask = sharedTasks?.let { task.getSuperTask(it) }
             if (managerReport != null) {
-                taskDetailsManagerReport.setOnClickListener {
+                findViewById<View>(R.id.taskDetailsManagerReport).setOnClickListener {
                     findNavController().navigate(
                             R.id.action_taskDetailsFragment_to_taskDetailsManagerReport2,
                             listOf(managerReport, sharedTasks).toBundle()
                     )
                 }
             } else
-                taskDetailsManagerReport.isEnabled = false
+                findViewById<View>(R.id.taskDetailsManagerReport).isEnabled = false
             if (workerReport != null) {
-                taskDetailsWorkerReport.setOnClickListener {
+                findViewById<View>(R.id.taskDetailsWorkerReport).setOnClickListener {
                     findNavController().navigate(
                             R.id.action_taskDetailsFragment_to_taskDetailsWorkerReport2,
                             workerReport.toBundle()
                     )
                 }
             } else
-                taskDetailsWorkerReport.isEnabled = false
+                findViewById<View>(R.id.taskDetailsWorkerReport).isEnabled = false
             if(superTask != null) {
-                taskDetailsSuperTask.setOnClickListener {
+                findViewById<View>(R.id.taskDetailsSuperTask).setOnClickListener {
                     when(superTask) {
                         is AllowableValue.NotAllowed -> showErrorMessage(getString(R.string.notAllowedToBrowseThisResource))
                         is AllowableValue.Allowed -> findNavController().navigate(
@@ -78,24 +78,24 @@ class TaskDetailsFragment: BaseFragment() {
                     }
                 }
             } else
-                taskDetailsSuperTask.isEnabled = false
-            taskDetailsLocalization.setOnClickListener {
+                findViewById<View>(R.id.taskDetailsSuperTask).isEnabled = false
+            findViewById<View>(R.id.taskDetailsLocalization).setOnClickListener {
                 findNavController().navigate(
                         R.id.action_taskDetailsFragment_to_destinationMapFragment,
                         task.localization.toBundle()
                 )
             }
-            taskDetailsLocalization.text = ("${getString(R.string.localization)}: ${task.localization.name}")
-            taskDetailsDescription.text = task.description
-            taskDetailsName.text = task.name
+            findViewById<TextView>(R.id.taskDetailsLocalization).text = ("${getString(R.string.localization)}: ${task.localization.name}")
+            findViewById<TextView>(R.id.taskDetailsDescription).text = task.description
+            findViewById<TextView>(R.id.taskDetailsName).text = task.name
             if(task.startDate == null)
-                taskDetailsRemainingTime.text = ("${getString(R.string.remainingTime)}: -")
+                findViewById<TextView>(R.id.taskDetailsRemainingTime).text = ("${getString(R.string.remainingTime)}: -")
             else workerReport?.let {
-                taskDetailsRemainingTime.text = ("${getString(R.string.executionTime)}: ${it.date.minusMillis(task.startDate.toEpochMilli()).toHoursMinutesSeconds()}")
+                findViewById<TextView>(R.id.taskDetailsRemainingTime).text = ("${getString(R.string.executionTime)}: ${it.date.minusMillis(task.startDate.toEpochMilli()).toHoursMinutesSeconds()}")
             }
-            taskDetailsEstimatedExecutionTime.text = ("${getString(R.string.estimatedExecutionTime)}: ${task.estimatedExecutionTime.toHoursMinutesSeconds()}")
-            taskDetailsDeadline.text = ("${getString(R.string.deadline)}: ${task.deadline.formatDate()}")
-            taskDetailsAssignedWorker.text = task.assignedWorker.let {
+            findViewById<TextView>(R.id.taskDetailsEstimatedExecutionTime).text = ("${getString(R.string.estimatedExecutionTime)}: ${task.estimatedExecutionTime.toHoursMinutesSeconds()}")
+            findViewById<TextView>(R.id.taskDetailsDeadline).text = ("${getString(R.string.deadline)}: ${task.deadline.formatDate()}")
+            findViewById<TextView>(R.id.taskDetailsAssignedWorker).text = task.assignedWorker.let {
                 val username = it?.username ?: getString(R.string.autoAssign)
                 "${getString(R.string.assignedWorker)}: $username"
             }
@@ -108,7 +108,7 @@ class TaskDetailsFragment: BaseFragment() {
                 ?.plusMillis(task.estimatedExecutionTime.toEpochMilli())
                 ?.minusMillis(Instant.now().toEpochMilli())
                 ?.toHoursMinutesSeconds().toString()
-        view?.taskDetailsRemainingTime?.text = ("${getString(R.string.remainingTime)}: $text")
+        view?.findViewById<TextView>(R.id.taskDetailsRemainingTime)?.text = ("${getString(R.string.remainingTime)}: $text")
     }
 
 }

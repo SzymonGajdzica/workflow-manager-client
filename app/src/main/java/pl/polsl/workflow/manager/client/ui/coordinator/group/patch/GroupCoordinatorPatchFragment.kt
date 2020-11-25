@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_groups_coordinator_patch.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentGroupsCoordinatorPatchBinding
@@ -28,7 +27,7 @@ class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatch
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding =
                 FragmentGroupsCoordinatorPatchBinding.inflate(inflater, container, false).apply {
                     viewModel = createViewModel()
@@ -42,19 +41,19 @@ class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatch
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.coordinatorGroupPatchName.setText(viewModel.initialGroup.safeValue.name)
+    override fun setupViews() {
+        super.setupViews()
+        viewDataBinding.coordinatorGroupPatchName.setText(viewModel.initialGroup.safeValue.name)
         val adapter = GroupCoordinatorPatchListAdapter {
             viewModel.onWorkerDeselected(viewModel.selectedWorkers.safeValue[it])
         }
-        view.coordinatorGroupPatchWorkerList.setupAdapter(adapter)
+        viewDataBinding.coordinatorGroupPatchWorkerList.setupAdapter(adapter)
     }
 
-    override fun setupObservables(viewModel: GroupCoordinatorPatchViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.nameInputError.observe { nameInputError ->
-            view?.coordinatorGroupPatchNameContainer?.error = nameInputError
+            viewDataBinding.coordinatorGroupPatchNameContainer.error = nameInputError
         }
         viewModel.managers.observe { managers ->
             val list = arrayListOf(getString(R.string.notSelected))
@@ -63,31 +62,31 @@ class GroupCoordinatorPatchFragment: BaseFragmentViewModel<GroupCoordinatorPatch
             val index = viewModel.selectedManager.value?.let {
                 managerIds?.indexOfOrNull(it.id)?.plus(1)
             }
-            view?.coordinatorGroupPatchManagerDropdown?.update(list, index)
+            viewDataBinding.coordinatorGroupPatchManagerDropdown.update(list, index)
         }
         viewModel.selectedWorkers.safeObserve {
-            (view?.coordinatorGroupPatchWorkerList?.adapter as? GroupCoordinatorPatchListAdapter)?.updateList(it)
+            (viewDataBinding.coordinatorGroupPatchWorkerList.adapter as? GroupCoordinatorPatchListAdapter)?.updateList(it)
         }
         viewModel.remainingWorkers.observe { workers ->
             val list = workers?.map { it.username } ?: listOf()
-            view?.coordinatorGroupPatchWorkerDropdown?.update(list, null)
+            viewDataBinding.coordinatorGroupPatchWorkerDropdown.update(list, null)
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.coordinatorGroupPatchManagerDropdown.mSetOnItemSelectedListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.coordinatorGroupPatchManagerDropdown.mSetOnItemSelectedListener {
             viewModel.onManagerSelected(viewModel.managers.value?.getOrNull(it - 1))
         }
-        view.coordinatorGroupPatchUpdateButton.setOnClickListener {
+        viewDataBinding.coordinatorGroupPatchUpdateButton.setOnClickListener {
             val groupPatch = GroupPatch(
-                    name = view.coordinatorGroupPatchName.text.toString(),
+                    name = viewDataBinding.coordinatorGroupPatchName.text.toString(),
                     manager = viewModel.selectedManager.value,
                     workers = viewModel.selectedWorkers.safeValue
             )
             viewModel.updateGroup(viewModel.initialGroup.safeValue, groupPatch)
         }
-        view.coordinatorGroupPatchWorkerDropdown.mSetOnItemSelectedListener(editable = true) {
+        viewDataBinding.coordinatorGroupPatchWorkerDropdown.mSetOnItemSelectedListener(editable = true) {
             viewModel.remainingWorkers.value?.getOrNull(it)?.let { worker ->
                 viewModel.onWorkerSelected(worker)
             }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_account_coordinator_post.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.databinding.FragmentAccountCoordinatorPostBinding
 import pl.polsl.workflow.manager.client.model.data.UserPost
@@ -36,24 +35,24 @@ class AccountCoordinatorPostFragment: BaseFragmentViewModel<AccountCoordinatorPo
         app.appComponent.inject(this)
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.coordinatorAccountPostRegisterButton.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.coordinatorAccountPostRegisterButton.setOnClickListener {
             viewModel.createUser(UserPost(
-                    username = view.coordinatorAccountPostUsername.text.toString(),
-                    password = view.coordinatorAccountPostPassword.text.toString(),
+                    username = viewDataBinding.coordinatorAccountPostUsername.text.toString(),
+                    password = viewDataBinding.coordinatorAccountPostPassword.text.toString(),
                     role = viewModel.selectedRole.safeValue
             ))
         }
     }
 
-    override fun setupObservables(viewModel: AccountCoordinatorPostViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.usernameInputError.observe {
-            this.view?.coordinatorAccountPostUsernameContainer?.error = it
+            viewDataBinding.coordinatorAccountPostUsernameContainer.error = it
         }
         viewModel.passwordInputError.observe {
-            this.view?.coordinatorAccountPostPasswordContainer?.error = it
+            viewDataBinding.coordinatorAccountPostPasswordContainer.error = it
         }
     }
 

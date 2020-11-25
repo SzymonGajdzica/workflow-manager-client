@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.base_list_item_with_action_button.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.Task
 import pl.polsl.workflow.manager.client.model.data.TaskStatus
@@ -13,8 +12,8 @@ import pl.polsl.workflow.manager.client.ui.view.setClickableBackground
 
 class TaskManagerViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
 
-    private val taskName: TextView = view.listItemTitle
-    private val actionButton: ImageButton = view.listItemActionButton
+    private val taskName: TextView = view.findViewById(R.id.listItemTitle)
+    private val actionButton: ImageButton = view.findViewById(R.id.listItemActionButton)
 
     fun updateViews(task: Task, position: Int, itemClickListener: (Int) -> Unit, actionButtonClickListener: (Int) -> Unit) {
         taskName.text = task.name

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.fragment_task_details_manager_report.view.*
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.model.data.AllowableValue
 import pl.polsl.workflow.manager.client.model.data.Task
@@ -36,10 +36,10 @@ class TaskDetailsManagerReport: BaseFragment() {
         val sharedTasks: List<Task> = arguments?.getList() ?: listOf()
         view.apply {
             val fixTask = taskManagerReport.fixTask
-            taskDetailsManagerReportDate.text = taskManagerReport.date.formatDate()
-            taskDetailsManagerReportDescription.text = taskManagerReport.description
+            findViewById<TextView>(R.id.taskDetailsManagerReportDate).text = taskManagerReport.date.formatDate()
+            findViewById<TextView>(R.id.taskDetailsManagerReportDescription).text = taskManagerReport.description
             if(fixTask != null) {
-                taskDetailsManagerReportFixTask.setOnClickListener {
+                findViewById<View>(R.id.taskDetailsManagerReportFixTask).setOnClickListener {
                     when(fixTask) {
                         is AllowableValue.NotAllowed -> showErrorMessage(getString(R.string.notAllowedToBrowseThisResource))
                         is AllowableValue.Allowed -> findNavController().navigate(
@@ -49,7 +49,7 @@ class TaskDetailsManagerReport: BaseFragment() {
                     }
                 }
             } else
-                taskDetailsManagerReportFixTask.isEnabled = false
+                findViewById<View>(R.id.taskDetailsManagerReportFixTask).isEnabled = false
         }
     }
 

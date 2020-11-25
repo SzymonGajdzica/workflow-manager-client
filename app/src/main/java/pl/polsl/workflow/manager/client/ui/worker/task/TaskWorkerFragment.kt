@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_task_worker.view.*
 import pl.polsl.workflow.manager.client.App
 import pl.polsl.workflow.manager.client.R
 import pl.polsl.workflow.manager.client.databinding.FragmentTaskWorkerBinding
@@ -30,7 +29,7 @@ class TaskWorkerFragment : BaseFragmentViewModel<TaskWorkerViewModel>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewDataBinding = FragmentTaskWorkerBinding.inflate(inflater, container, false).apply {
             viewModel = createViewModel()
             lifecycleOwner = viewLifecycleOwner
@@ -43,13 +42,13 @@ class TaskWorkerFragment : BaseFragmentViewModel<TaskWorkerViewModel>() {
         app.appComponent.inject(this)
     }
 
-    override fun setupViews(view: View) {
-        super.setupViews(view)
-        view.workerTaskTaskStatusDropdown.update(
+    override fun setupViews() {
+        super.setupViews()
+        viewDataBinding.workerTaskTaskStatusDropdown.update(
             resources.getStringArray(R.array.workerTaskStatuses).toList(),
             taskStatusToPosition(viewModel.selectedTaskStatus.safeValue)
         )
-        view.workerTaskTaskList.setupSimpleAdapter {
+        viewDataBinding.workerTaskTaskList.setupSimpleAdapter {
             val task = viewModel.tasks.safeValue[it]
             findNavController().navigate(
                     R.id.action_navigation_task_worker_to_task_details_navigation,
@@ -58,36 +57,36 @@ class TaskWorkerFragment : BaseFragmentViewModel<TaskWorkerViewModel>() {
         }
     }
 
-    override fun setupObservables(viewModel: TaskWorkerViewModel) {
-        super.setupObservables(viewModel)
+    override fun setupObservables() {
+        super.setupObservables()
         viewModel.remainingTime.observe {
-            view?.workerTaskRemainingTime?.text =
+            viewDataBinding.workerTaskRemainingTime.text =
                 ("${getString(R.string.timeToCompleteTask)}: ${it?.toHoursMinutesSeconds() ?: "-"}")
         }
         viewModel.tasks.observe { tasks ->
             val list = tasks?.map { it.name } ?: listOf()
-            (view?.workerTaskTaskList?.adapter as? SimpleAdapter)?.updateSingleList(list)
+            (viewDataBinding.workerTaskTaskList.adapter as? SimpleAdapter)?.updateSingleList(list)
         }
     }
 
-    override fun setupOnLayoutInteractions(view: View) {
-        super.setupOnLayoutInteractions(view)
-        view.workerTaskFailure.setOnClickListener {
+    override fun setupOnLayoutInteractions() {
+        super.setupOnLayoutInteractions()
+        viewDataBinding.workerTaskFailure.setOnClickListener {
             findNavController().navigate(
                 R.id.action_navigation_task_to_navigation_task_worker_report_post,
                     viewModel.task.value?.toBundle()
             )
         }
-        view.workerTaskSuccess.setOnClickListener {
+        viewDataBinding.workerTaskSuccess.setOnClickListener {
             viewModel.startTask()
         }
-        view.workerTaskLocalization.setOnClickListener {
+        viewDataBinding.workerTaskLocalization.setOnClickListener {
             findNavController().navigate(
                     R.id.action_navigation_home_to_mapsFragment,
                     viewModel.task.value?.localization?.toBundle()
             )
         }
-        view.workerTaskTaskStatusDropdown.mSetOnItemSelectedListener { position ->
+        viewDataBinding.workerTaskTaskStatusDropdown.mSetOnItemSelectedListener { position ->
             viewModel.taskStatusSelected(positionToTaskStatus(position))
         }
     }
