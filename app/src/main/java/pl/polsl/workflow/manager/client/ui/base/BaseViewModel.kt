@@ -79,7 +79,7 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
     }
 
     protected fun showErrorMessage(e: Throwable) {
-        showErrorMessage((e.repositoryMessage ?: e.message ?: getString(R.string.unknownError)).capitalize(Locale.US))
+        showErrorMessage(((e.repositoryMessage ?: e.message)?.capitalize(Locale.ROOT) ?: getString(R.string.unknownError)))
     }
 
     protected fun showError(errorText: String) {
@@ -88,7 +88,7 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
 
     protected fun showError(e: Throwable) {
         e.printStackTrace()
-        showError((e.repositoryMessage ?: e.message ?: getString(R.string.unknownError)).capitalize(Locale.US))
+        showError(((e.repositoryMessage ?: e.message)?.capitalize(Locale.ROOT) ?: getString(R.string.unknownError)).capitalize(Locale.US))
     }
 
 

@@ -15,7 +15,6 @@
     <string name="group">Group</string>
     <string name="logout">Logout</string>
     <string name="remainingSessionTime">Remaining session time</string>
-    <string name="groupMembers">Group members</string>
     <string name="start">Start</string>
     <string name="finish">Finish</string>
     <string name="timeToCompleteTask">Time to complete task</string>
@@ -54,13 +53,11 @@
     <string name="acceptWithFix">Accept with fix</string>
     <string name="createReport">Create report</string>
     <string name="ok">OK</string>
-    <string name="error">Error</string>
     <string name="delete">Delete</string>
     <string name="taskDetails">Task details</string>
     <string name="notAllowedToBrowseThisResource">Not allowed to see this value</string>
     <string name="groups">Groups</string>
     <string name="localizations">Localizations</string>
-    <string name="users">Users</string>
     <string name="addUser">Add user</string>
     <string name="worker">Worker</string>
     <string name="manager">Manager</string>
